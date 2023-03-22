@@ -228,12 +228,13 @@ static void talkto( cmd, argv )
      char *cmd;
      char **argv;
 {
-   int   to_child[2];   /* pipe descriptors from parent->child */
+      printf("%s:%d Bizzare fix for macos  DL 3/9/2023\n",__FILE__,__LINE__);
+  int   to_child[2];   /* pipe descriptors from parent->child */
    int   to_parent[2];  /* pipe descriptors from child->parent */
    int   pid;
 
 #ifdef VMS
-   int   sts, fd, fn;
+  int   sts, fd, fn;
    char  mbxname[256];
    char  mbx_to_child[256], mbx_to_parent[256];
    FILE  *fp;
@@ -317,7 +318,6 @@ static void talkto( cmd, argv )
      kc_flags.use_kxterm = 0;
      return;
    }
-
    if( pipe(to_parent) != 0 ) {
      fprintf(stderr,"Cannot open pipe to parent.\n");
      kc_flags.use_kxterm = 0;
@@ -325,9 +325,7 @@ static void talkto( cmd, argv )
      close(to_child[1]);
      return;
    }
-
    if ((pid = vfork()) == 0) {     /* in the child    */
-
       close(0);                    /* redirect stdin  */
       dup(to_child[0]);
       close(to_child[0]);
@@ -342,11 +340,11 @@ static void talkto( cmd, argv )
       _exit( 0 );
 
    } else if (pid > 0) {           /* in the parent   */
-
       close(0);                    /* redirect stdin  */
       dup(to_parent[0]);
       close(to_parent[0]);
       close(1);                    /* redirect stdout */
+      printf("%s:%d Bizzare fix for macos  DL 3/9/2023\n",__FILE__,__LINE__);
       dup(to_child[1]);
       close(2);                    /* redirect stderr */
       dup(to_child[1]);
