@@ -1,0 +1,9 @@
+
+.vscode
+build
+packlib/kuip/examples/uprogcdf.cdf.c
+patchy5/machine.f
+patchy5/p5lib.f
+patchy5/p5lib.f.bak
+patchy5/p5lib.mkfca
+patchy5/p5lib.shfca
