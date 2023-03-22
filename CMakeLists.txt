@@ -450,7 +450,7 @@ if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
     SET(CMAKE_Fortran_USE_RESPONSE_FILE_FOR_OBJECTS 0)
     set( COMPSUFFIX -g77)
   else()
-    set( COMPSUFFIX -gfortran)
+    # set( COMPSUFFIX -gfortran)
     list(APPEND F_Fortran_FLAGS_TO_CHECK    
                                "-Wno-conversion" 
                                "-Wno-implicit-function-declaration"
