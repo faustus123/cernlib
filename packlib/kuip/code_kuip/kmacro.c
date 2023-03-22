@@ -622,7 +622,8 @@ int op_macro( tos, parameter_list, null2 )
       n = strlen( name );
       if( name[0] == '[' && name[n-1] == ']' ) {
         name[n-1] = '\0';
-        strcpy( name, name + 1 );
+        // strcpy( name, name + 1 );
+        memmove( name, name + 1, strlen(name+1)+1 );
       }
 
       /*
@@ -1107,11 +1108,13 @@ char *read_line( stream, macro )
      */
     while( (p = strstr( buf, "@(" )) != NULL ) {
       *p = '[';
-      strcpy( p + 1, p + 2 );
+      // strcpy( p + 1, p + 2 );
+      memmove( p + 1, p + 2, strlen(p+2)+1 );
     }
     while( (p = strstr( buf, "@)" )) != NULL ) {
       *p = ']';
-      strcpy( p + 1, p + 2 );
+      // strcpy( p + 1, p + 2 );
+      memmove( p + 1, p + 2, strlen(p+2)+1 );
     }
 
     /* remove tabs and trailing blanks */
@@ -1198,7 +1201,8 @@ KumacStatement parse_statement( line )
     else if( strcasecmp( tok1, "IF" ) == 0 ) {
       /* check for "IF expr GOTO label" */
 
-      strcpy( tokline, line );
+      // strcpy( tokline, line );
+      memmove( tokline, line, strlen(line)+1 );
       if( (p = strrchr( tokline, ' ' )) != NULL ) {
 
         stmt_arg2 = strdup( p + 1 ); /* label */
@@ -1892,7 +1896,8 @@ KumacStatement next_statement( stream, macro )
     full_line = NULL;
   }
   else {
-    strcpy( full_line, tail );
+    // strcpy( full_line, tail );
+    memmove( full_line, tail, strlen(tail)+1);
   }
 
   return stmt;
