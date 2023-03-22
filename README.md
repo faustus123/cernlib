@@ -23,7 +23,11 @@ brew install openmotif
 n.b. this will place the binaries in a directory called `install` in your current working directory. Adjust as desired.
 ~~~
 git clone https://github.com/faustus123/cernlib
-cmake -S cernlib -B build -DCMAKE_INSTALL_PREFIX=${PWD}/install
+export CERN=${PWD}
+export CERN_LEVEL=install
+cmake -S cernlib -B build -DCMAKE_INSTALL_PREFIX=${CERN}/${CERN_LEVEL}
 cmake --build build --target install -- -j8
+export PATH=${CERN}/${CERN_LEVEL}/bin:${PATH}
 ~~~
 
+3. Run `paw` or `paw++` via command line as usual.
