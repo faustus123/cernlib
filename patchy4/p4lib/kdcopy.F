@@ -1,0 +1,30 @@
+CDECK  ID>, KDCOPY.
+      SUBROUTINE KDCOPY (MV)
+
+C-    TRANSFER NEXT CARD TO OUTPUT BUFFER, WITHOUT BLANK-FILL
+
+      PARAMETER      (KDNWT=20, KDNWT1=19,KDNCHW=4, KDBITS=8)
+      PARAMETER      (KDPOST=25,KDBLIN=32,KDMARK=0, KDSUB=63,JPOSIG=1)
+      COMMON /KDPKCM/KDBLAN,KDEOD(2)
+      COMMON /DPLINE/LTK,NWTK, KIMAPR(3), KIMA(20), KIMAPS(9)
+C--------------    END CDE                             -----------------  ------
+      DIMENSION    MV(99)
+
+
+
+      DO 16 J=1,KDNWT1
+      KIMA(J)= MV(J)
+      IF (AND(KIMA(J),z'FF000000').EQ.0)    GO TO 31
+   16 CONTINUE
+      J = KDNWT
+      KIMA(J)= MV(J)
+
+   18 NWTK = J
+      LTK  = LTK + NWTK
+      RETURN
+
+C--                SHORT CARD
+
+   31 CALL SBYT (KDBLAN,KIMA(J),KDPOST,KDBITS)
+      GO TO 18
+      END

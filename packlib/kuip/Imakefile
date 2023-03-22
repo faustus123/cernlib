@@ -1,0 +1,32 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+LIBDIRS= code_kuip 
+
+/* Commented out so that code_motif gives a separate shared library
+ * --Kevin McCarty
+#ifndef CERNLIB_WINNT
+LIBDIRS := $(LIBDIRS) code_motif
+#else
+LIBDIRS := $(LIBDIRS) code_windows
+#endif
+*/
+
+SUBDIRS= $(LIBDIRS) programs examples kuip
+
+TopOfPackage(kuip)
+
+SubdirLibraryTarget(kuip,$(LIBDIRS))
+
+InstallBinSubdirs(programs)
+
+TestSubdirs(examples)
+
+/*
+doc kuiph ykuip
+ */
+
+InstallIncludeSubdirs(kuip)
+
+DelegateTarget(bin/kuipc,programs)

@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:14  mclareni
+* Initial revision
+*
+*
+*  Version 2.15  850709
+C            Two minor corrections for formatted banks: addition of
+C            hexadecimal print (ZPBANK), bug corrected in ZPTFOR
+C            (both only if F77 on).
+C

@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 11:50:41  mclareni
+* Initial revision
+*
+*
+* Version 3.08   891110
+C
+C- Bug corrected in the handling of the '*' as a comment
+C- Introduce pilot patch *FFREAD, flags UNIX, ULTRIX
+C

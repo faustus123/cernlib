@@ -1,0 +1,12 @@
+/* this Imakefile used to get hdiff to compile within the mathlib tree */
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+LIBDIRS= hdiff
+SUBDIRS= $(LIBDIRS) hbook
+
+TopOfPackage(hbook)
+SubdirLibraryTarget(hbook,$(LIBDIRS))
+DoIncludePackage(hbook)
+InstallIncludeSubdirs(hbook)

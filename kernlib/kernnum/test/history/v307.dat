@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:48:36  mclareni
+* Initial revision
+*
+*
+*  Version 3.07  910815 16.00
+C-  Refresh P=FKERNNUM with new machines
+C
+C-  Declare GAMMA,DGAMMA intrinsic functions on IBM RISC 6000
+C

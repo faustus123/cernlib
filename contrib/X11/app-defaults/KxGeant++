@@ -1,0 +1,13 @@
+! This file gives X defaults for KXterm when run by GEANT.
+! Use light gray widgets instead of the hideous default blue
+
+KxGeant++*background:		gray
+KxGeant++*dirlist*background:	gray90
+KxGeant++*foreground:		black
+
+! and decent fonts instead of "fixed"
+KxGeant++*fontList:		*-helvetica-medium-r-normal*-120-*
+KxGeant++*XmText*fontList:	*-courier-medium-r-normal*-120-*
+
+! and make the transcript pad a reasonable size
+KxGeant++*outputForm.height:	200

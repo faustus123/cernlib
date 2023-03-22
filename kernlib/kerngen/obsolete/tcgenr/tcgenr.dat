@@ -1,0 +1,18 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:53:27  mclareni
+* Initial revision
+*
+*
+* This directory was created from kernfor.car patch tcgenr
+#if !defined(CERNLIB_TCGENR)
+
+         THIS PATCH CONTAINS OBSOLETE ROUTINES REMOVED FROM
+         P=TCGEN, IN PARTICULAR ROUTINES SPECIAL TO THE OLD TC
+         PRODUCTION PROGRAMS (THRESH - GRIND - SLICE - INDEX),
+         SUCH AS ROUTINES USING TITLE INFORMATION, RUN CARDS,
+         CODIFICATION OF PARTICLES, ...
+
+#endif

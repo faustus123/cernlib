@@ -1,0 +1,9 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/06 10:46:58  mclareni
+* Initial revision
+*
+*
+#include "brztest/btest2.F"

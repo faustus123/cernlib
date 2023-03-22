@@ -1,0 +1,14 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:32  mclareni
+* Initial revision
+*
+*
+*  Version 1.01  910419 18.00
+C- Additions/changes
+C  > P=UMONEXEC     renamed to UMUIPIBM
+C  > P=UMONDCL      renamed to UMUIPVAX
+C  > P=UMSRVIBM     VM service machine code
+C

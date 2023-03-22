@@ -1,0 +1,16 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:34  mclareni
+* Initial revision
+*
+*
+#if defined(CERNLIB_IBMVM)
+/*DECK ID>, mailuser.xedit */
+/**/
+'MACRO SETMAIL PROMPT NO'
+'MACRO SETMAIL LOG NO'
+'MACRO SETMAIL ACK NO'
+'MACRO SETMAIL MENU.NAMEFIND NO'
+#endif

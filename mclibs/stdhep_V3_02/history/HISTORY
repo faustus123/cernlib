@@ -1,0 +1,106 @@
+      STDHEP_DIR:HISTORY.LOG
+--------------------------------------------------------------------------------
+  8-Feb-96		Lynn Garren
+STDHEP 3.02
+     Fix some bugs in display package (Phase and Space)
+--------------------------------------------------------------------------------
+ 17-Nov-95		Lynn Garren
+STDHEP 3.01
+     Add ad-hoc ion numbering scheme
+--------------------------------------------------------------------------------
+  9-Oct-95		Lynn Garren
+STDHEP 3.01
+     Add c interface routines for mcfio I/O.
+     Phase and Space display programs now accept mcfio files.
+--------------------------------------------------------------------------------
+ 30-Aug-95		Lynn Garren
+STDHEP 3.00
+     Check against Jetset 7.408 and Pythia 5.717
+     Check against Herwig 5.8
+     Check against Isajet 7.13
+     Check against 1994 PDG
+--------------------------------------------------------------------------------
+ 26-Jul-95		Lynn Garren
+ Finish enabling mcfio interface
+--------------------------------------------------------------------------------
+ 21-Jun-95		Lynn Garren
+Begin development of STDHEP 3.00
+      Include mcfio I/O routines.
+      Translation for QQ 9.1.
+      Fix bug in heprd/hepwrt (affects backward compatibility)
+--------------------------------------------------------------------------------
+ 13-Jan-95		Lynn Garren
+Begin development of STDHEP 2.03
+--------------------------------------------------------------------------------
+ 5-Jul-94		Lynn Garren
+Final modifications to STDHEP 2.02
+      Modify HEP2GEANT, STDQUARKS, and STDSPIN
+      STDROTBOOST and STDCQUARKS added
+--------------------------------------------------------------------------------
+ 15-Jun-94		Lynn Garren
+Install STDHEP 2.02
+      Allow for more than one event to be read into the HEPEVT common block
+      to mimic multiple interactions.
+      Cross-section written upon request
+      Add pythia example
+      Fix a minor bug in ISTRAN, which translated states not known to ISAJET.
+--------------------------------------------------------------------------------
+ 18-May-94		Lynn Garren
+Install STDHEP 2.01
+      Modify STDDECAYQQ to spawn another routine
+      Clean up begin-run and end-run output options
+      First attempt to get cross-sections, etc. in a standard common block
+      Expand read/write options
+      Resolve Xi and Xi' translation issue
+      Add more utility routines
+      QQ translation routines
+      read/write routine changes
+      Version 2.01 is NOT BACKWARDS COMPATIBLE
+--------------------------------------------------------------------------------
+ 8-Mar-94		Lynn Garren
+Install STDHEP 2.00
+      QQ translation and utility routines are now functional.
+      Add routine to print STDHEP version number.
+      Add more diffractive particles for JETSET 7.4.
+      Replace local routines ISFLAVR and ISLABL with ISAJET routines.
+      Replace local routine ISAPRTLST with ISAJET routine PRTLST.
+      Add utility routines
+      Version 2.00 is NOT BACKWARDS COMPATIBLE
+--------------------------------------------------------------------------------
+ 11-Feb-94		Lynn Garren
+Install development version of STDHEP 1.06
+      Add utility routines
+      Modify native mode output routines to use keyword for identification
+      Add QQ translation routines
+      Add Z0' for HERWIG 5.7
+      Use HERWIG include file
+--------------------------------------------------------------------------------
+ 20-SEP-93		Lynn Garren
+Install STDHEP 1.05
+      Make compatible with new SUSY particles in ISAJET 7.02
+      Add HPTRLST subroutines to stdhep library
+      Add routines to read and print the particle info supplied by PDG
+--------------------------------------------------------------------------------
+ 1-OCT-92		Lynn Garren
+Release STDHEP 1.04 as a separate product.  Include minor changes.
+      Add new JETSET particles
+--------------------------------------------------------------------------------
+ 30-OCT-91              Lynn Garren
+Install STDHEP 1.03 with zebra I/O routines.
+      Add ZEBRA I/O routines
+      Add flag HEPDBG for extra debugging code
+      Add flag HPZTST to select ZEBRA output in test jobs
+--------------------------------------------------------------------------------
+ 29-AUG-91              Lynn Garren
+Install STDHEP 1.02 with simple I/O routines and HERWIG conversion.
+      Add I/O of HEPEVT
+      Add test programs
+      Add HERWIG event conversion
+            --- all that changes is IDHEP convention
+            --- also move from double precision to single precision
+      Improve HEPNAM and HEPCMP
+--------------------------------------------------------------------------------
+ 20-MAR-91		Lynn Garren
+First version of STDHEP translation package.
+      Convert ISAJET and JETSET events
+--------------------------------------------------------------------------------

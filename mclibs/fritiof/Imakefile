@@ -1,0 +1,19 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+TopOfPackage(fritiof)
+
+LIBDIRS= code ariadne jetset pythia 
+SUBDIRS= $(LIBDIRS) test
+
+AllTarget(fritiof)
+
+SubdirLibraryTarget(fritiof,$(LIBDIRS))
+
+InstallLibrary(fritiof,$(CERN_LIBDIR))
+InstallSharedLibrary(fritiof,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+TestSubdirs(test)
+
+install.include:

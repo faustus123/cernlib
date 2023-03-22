@@ -1,0 +1,16 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 14:31:32  mclareni
+* Initial revision
+*
+*
+* Version 2.05   910209 18.10
+C
+C- Patch/flag changes:
+C   > IBMVM    : for IBM VM/CMS. IBM=IBMVM or IBMMVS
+C   > VAXVMS   : for Vax VMS   . VAX=VAXVMS or VAXULX.
+C   > HPUX     : for HP/UX
+C   > MIPS     : for MIPS machine
+C

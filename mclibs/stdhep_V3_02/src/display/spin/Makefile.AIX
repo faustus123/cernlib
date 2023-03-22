@@ -1,0 +1,8 @@
+# SCCS ID: Makefile.ibm 1.2 4/9/92
+#
+# Makefile for spin widget (IBM version)
+#
+CC=cc
+AR=ar
+CFLAGS = $(DEBUG) -D_BSD
+LIBS = -lXm -lXt -lX11 -lbsd -lm

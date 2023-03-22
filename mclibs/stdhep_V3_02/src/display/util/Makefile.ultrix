@@ -1,0 +1,12 @@
+# SCCS ID: Makefile.ultrix 1.7 3/1/94
+#
+# Makefile for nirvana utilities (Ultrix version)
+#
+CC=cc
+#CFLAGS=-g -DFUNCPROTO -DXTFUNCPROTO
+CFLAGS=-O -DFUNCPROTO -DXTFUNCPROTO
+LIBS=-lm -lXm -lXt -lX11
+SCCS= /nirvana/ultrix_bin/sccs.nirvana -d../SCCS -p.
+MAKEDEPEND=/nirvana/scripts/nmakedepend
+
+include Makefile.common

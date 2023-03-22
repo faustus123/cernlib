@@ -1,0 +1,141 @@
+CDECK  ID>, AUXINI.
+      SUBROUTINE AUXINI
+
+C-    INITIALISE FOR PATCHY AUXILIARIES
+
+      COMMON /MQCMOV/NQSYSS
+      COMMON /MQCM/         NQSYSR,NQSYSL,NQLINK,LQWORG,LQWORK,LQTOL
+     +,              LQSTA,LQEND,LQFIX,NQMAX, NQRESV,NQMEM,LQADR,LQADR2
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      PARAMETER      (IQBITW=32, IQBITC=8, IQCHAW=4)
+      COMMON /QMACH/ NQBITW,NQCHAW,NQLNOR,NQLMAX,NQLPTH,NQRMAX,QLPCT
+     +,              NQOCT(3),NQHEX(3),NQOCTD(3)
+      COMMON /QUNIT/ IQREAD,IQPRNT,IQPR2,IQLOG,IQPNCH,IQTTIN,IQTYPE
+     +,              IQDLUN,IQFLUN,IQHLUN,IQCLUN,  NQUSED
+      COMMON /QHEADP/IQHEAD(20),IQDATE,IQTIME,IQPAGE,NQPAGE(4)
+      COMMON /IOFCOM/IOTALL,IOTOFF,IOTON,IOSPEC,IOPARF(5),IOMODE(12)
+      COMMON /LUNSLN/NSTRM,NBUFCI,LUNVL(3),LUNVN(9),NOPTVL(4),NCHCH(6)
+      COMMON /MODTT/ NMODTT,JMODTT(6),TEXTTT(10)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(4),MVOLD1,MVOLDN,  NVOLD(7),NRTOLD,NROLD,MAXEOF
+     +, IDOLDV(8),JPDOLD,JOLD, NVARRI(9),LARX,LARXE,LINBIN, NVCCP(10)
+     +, NVNEW(7),NRTNEW,NRNEW,LLASTN, IDNEWV(8),JPDNEW,NDKNEW
+     +, NVNEWL(3),NCDECK,JNEW,MODEPR,  MWK(80),MWKX(80)
+     +,            LOCALS(40),ISPACE(80000),LAST
+C--------------    END CDE                             -----------------  ------
+      EQUIVALENCE (LSVARE,LADRV(9))
+C     DIMENSION    MMTITL(1)                                             A8M
+      DIMENSION    MMTITL(2)                                            -A8M
+      DIMENSION    MMSAVE(5)
+
+
+
+      DATA  MMTITL / 4H*TIT,4HLE* /
+
+      DATA  MMSAVE /4HSVAR, 6,0,2H**, 20/
+
+
+
+      DATA  IISET  / 4HSET  /
+
+      LAST  = IISET
+      IQLOG = IQPRNT
+      ISAVE = IQREAD
+      CALL MQINIT (LAST)
+      NQLINK = IQLOCF(NVOPER(1)) - 1
+      LQWORG = IQLOCF(ISPACE(1))
+      IQREAD = ISAVE
+      LQWORK = LQWORG
+      CALL VZERO  (LQ1,LQWORK)
+      CALL PLOAD
+
+      WRITE (IQPRNT,9000) IQDATE,IQTIME
+ 9000 FORMAT                                       (1X/10H VERSION  ,
+     + 40HPATCHY  4.15 /1  911211 12.02                                     HOLD
+     F,12H.RJP, TODAY:,I8,I6/1X)
+
+C--                PRESET DATA INTO W-SPACE
+
+      IDEOF(1) = IQBLAN
+      IDEOF(2) = IQBLAN                                                 -A8M
+      IDEOF(3) = MMTITL(1)
+      IDEOF(4) = MMTITL(2)                                              -A8M
+      IDEOF(7) = MMTITL(1)
+      IDEOF(8) = MMTITL(2)                                              -A8M
+      IDEOF(9) = 3
+
+C--                PRESET OPTIONS
+
+      MOPTIO(31) = NOPTVL(4)
+      CALL UBLOW (NOPTVL(1),IQUEST(1),8)
+      DO 24  J=1,8
+      JV = IUCOMP (IQUEST(J),IQLETT(1),30)
+      IF (JV.EQ.0)           GO TO 24
+      CALL SBIT1 (MOPTIO(31),JV)
+   24 CONTINUE
+      IF (JBIT(MOPTIO(31),15)   .NE.0)  MOPTIO(31)=0                    -MSK
+C     IF ((MOPTIO(31).AND.16384).NE.0)  MOPTIO(31)=0                     MSKC
+      CALL SETOPT
+      LOGLVG = 4
+      CALL LOGLV (MOPTIO(31),0,0)
+      LOGLVG = LOGLEV
+      NMODTT = 0
+
+
+C------            INITIALISE  OLD/NEW  STREAMS
+
+      CALL UCOPY (IDEOF(1),IDOLDV(1),9)
+      CALL UCOPY (IDEOF(1),IDNEWV(1),9)
+      NVOLD(1)= LUNVL(1)
+      NVNEW(1)= LUNVN(1)
+      NRTOLD  = -1
+      NRTNEW  = -1
+      MAXEOF= 999
+      JLUN  = NSTRM
+
+C--                LIFT SAVE-AREA WITH DIRECTORY
+
+      MMSAVE(4) = (NSTRM+NSTRM) * MMSAVE(5) + 1
+      CALL LIFTBK (LSVARE,0,0,MMSAVE(1),0)
+      IQ(LSVARE+1) = MMSAVE(5)
+      LSV   = LSVARE + 2
+
+C--                LIFT NEXT BUFFFER
+
+   44 CALL CREBUF
+      IF (JLUN.EQ.0)         GO TO 51
+
+      NVOLD(1)= LUNVL(JLUN)
+      NVNEW(1)= LUNVN(JLUN)
+      JOLD  = JLUN
+      JNEW  = JLUN
+      LLAST = LBUF
+      LLASTN= LBUF
+      CALL UBLOW (7HOLD NEW,IQUEST(1),7)
+      IQUEST(4)= IQNUM2(JLUN+1)
+      IQUEST(8)= IQUEST(4)
+      CALL UBUNCH (IQUEST(1),NVOLD(6),4)
+      CALL UBUNCH (IQUEST(5),NVNEW(6),4)
+      IQ(LSVARE-JLUN)   = LSV
+      CALL UCOPY  (NVOLD(1),IQ(LSV),MMSAVE(5))
+      LSV = LSV + MMSAVE(5)
+      IQ(LSVARE-JLUN-3) = LSV
+      CALL UCOPY  (NVNEW(1),IQ(LSV),MMSAVE(5))
+      LSV = LSV + MMSAVE(5)
+      JLUN = JLUN - 1
+      GO TO 44
+
+   51 CONTINUE
+      RETURN
+      END

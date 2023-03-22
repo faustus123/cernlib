@@ -1,0 +1,158 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KXTERM 1 "January 24, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kxterm \- the CERN KUIP terminal emulator
+.SH SYNOPSIS
+.B kxterm
+.RI [ class "] [" options ]
+.SH DESCRIPTION
+.PP
+\fBkxterm\fP is a terminal emulator combining the best features of
+the (now defunct) Apollo DM pads (like: input and transcript
+pads, automatic file backup of transcript pad, string
+search in pads, etc.) and the Korn shell emacs\-style
+command line editing and command line recall mechanism.  For more detailed
+information about the program, please see the online help available from
+the kxterm Help menu.
+.PP
+kxterm has a number of X resources which can be set by the user; these are
+listed in the online help and in the file /etc/X11/app\-defaults/KXterm,
+where the default values are set.  It should be noted that when kxterm is
+acting as a client for another application, the desired X resource should be
+prefixed by "Kx" plus the class name of the application.  So for application
+"Foo" the kxterm resource class would be KxFoo, and one would set
+KxFoo*background, etc.  One can also set the resource class of a kxterm
+window via the command\-line with the
+.I class
+argument.
+.SH OPTIONS
+.TP
+.BI "\-font " fn
+Specifies the font used by kxterm.  The font
+.I fn
+must be an XLFD (X Logical Font Description), as for example displayed by
+the xlsfonts program.
+.TP
+.BI "\-geometry " geom
+Specifies the preferred size and position of the kxterm window; see
+.BR X (7x)
+for details.
+.TP
+.BR \-h ", " \-help
+Show a summary of options.
+.TP
+.BI \-iconic
+Specifies that the window manager should start kxterm as an icon.
+.TP
+.BI "\-n " iconname
+Specifies the name of the kxterm window in an iconic state.
+.TP
+.BI "\-name " name
+Specifies both the title and the iconized name of the kxterm window.
+.TP
+.BI "\-pid " pid
+Specifies the process ID of the program that kxterm should act as a client for.
+.TP
+.BI "\-prompt " prompt
+Sets the prompt displayed in the input pad of the program.
+.TP
+.BI "\-tfont " fn
+Specifies the font used by text boxes, the input pad, and the transcript
+pad of the program.  This should probably be a fixed\-width font like
+"courier" or "fixed".
+.TP
+.BI "\-title " title
+Sets the title of the kxterm window to
+.IR title .
+.SH SEE ALSO
+.RB "\[bu] " xlsfonts (1)
+\- a program to list available fonts on an X server
+.br
+.RB "\[bu] " paw++ (1)
+\- a program using kxterm for its command interface
+.br
+\[bu] the online help available from kxterm's Help menu
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KXTERM 1 "January 24, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kxterm \- the CERN KUIP terminal emulator
+.SH SYNOPSIS
+.B kxterm
+.RI [ class "] [" options ]
+.SH DESCRIPTION
+.PP
+\fBkxterm\fP is a terminal emulator combining the best features of
+the (now defunct) Apollo DM pads (like: input and transcript
+pads, automatic file backup of transcript pad, string
+search in pads, etc.) and the Korn shell emacs\-style
+command line editing and command line recall mechanism.  For more detailed
+information about the program, please see the online help available from
+the kxterm Help menu.
+.PP
+kxterm has a number of X resources which can be set by the user; these are
+listed in the online help and in the file /etc/X11/app\-defaults/KXterm,
+where the default values are set.  It should be noted that when kxterm is
+acting as a client for another application, the desired X resource should be
+prefixed by "Kx" plus the class name of the application.  So for application
+"Foo" the kxterm resource class would be KxFoo, and one would set
+KxFoo*background, etc.  One can also set the resource class of a kxterm
+window via the command\-line with the
+.I class
+argument.
+.SH OPTIONS
+.TP
+.BI "\-font " fn
+Specifies the font used by kxterm.  The font
+.I fn
+must be an XLFD (X Logical Font Description), as for example displayed by
+the xlsfonts program.
+.TP
+.BI "\-geometry " geom
+Specifies the preferred size and position of the kxterm window; see
+.BR X (7x)
+for details.
+.TP
+.BR \-h ", " \-help
+Show a summary of options.
+.TP
+.BI \-iconic
+Specifies that the window manager should start kxterm as an icon.
+.TP
+.BI "\-n " iconname
+Specifies the name of the kxterm window in an iconic state.
+.TP
+.BI "\-name " name
+Specifies both the title and the iconized name of the kxterm window.
+.TP
+.BI "\-pid " pid
+Specifies the process ID of the program that kxterm should act as a client for.
+.TP
+.BI "\-prompt " prompt
+Sets the prompt displayed in the input pad of the program.
+.TP
+.BI "\-tfont " fn
+Specifies the font used by text boxes, the input pad, and the transcript
+pad of the program.  This should probably be a fixed\-width font like
+"courier" or "fixed".
+.TP
+.BI "\-title " title
+Sets the title of the kxterm window to
+.IR title .
+.SH SEE ALSO
+.RB "\[bu] " xlsfonts (1)
+\- a program to list available fonts on an X server
+.br
+.RB "\[bu] " paw++ (1)
+\- a program using kxterm for its command interface
+.br
+\[bu] the online help available from kxterm's Help menu
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

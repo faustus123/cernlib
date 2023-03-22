@@ -1,0 +1,194 @@
+#!/bin/bash -x
+#
+# setup environment
+TOOLCHAIN=$2
+#[GNU,INTEL,NVIDIA,CLANG,etc]
+if [ "x$1" == "x32bit" ] ; then
+    echo '#define CERNLIB_32BITCROSS YES' >> config/host.def
+    export ADDFOPT='-m32'
+fi
+# check for CentOS/RHEL
+if [ -e  /etc/os-release ]; then
+    flavor=`cat /etc/os-release | grep ^ID=| sed -e 's/\"//'g| cut -d= -f 2`
+else
+    # older RH versions don't have /etc/os-release yet
+    if [ -e /etc/redhat-release ]; then
+	flavor='rhel'
+    fi
+fi
+
+if [ "x$flavor" = "xcentos" ] || [ "x$flavor" = "xrhel" ]; then
+    # there is no external libXbae available on these
+    echo '#define CERNLIB_NOLIBXBAE YES' >> config/host.def    
+fi
+if [ "$(uname)" == "Darwin" ]; then
+    echo '#define CERNLIB_NOLIBXBAE YES' >> config/host.def    
+fi
+
+export CVSCOSRC=`pwd`
+if [ -z $CERN ]; then
+ export CERN=/tmp/cern
+fi
+export CERN_LEVEL=new
+export CERN_ROOT=${CERN}/$CERN_LEVEL
+export CERN_LIB=${CERN_ROOT}/lib
+export CERN_BIN=${CERN_ROOT}/bin
+export PATH=$CVSCOSRC/scripts:/usr/X11R6/bin/:$CERN_BIN:$PATH
+if [[ $TOOLCHAIN == GNU-* ]]; then
+N=$(echo $TOOLCHAIN | cut -f 2 -d\-)
+echo 'FORTRAN  = gfortran-'$N' -g' >> lapack/make.inc
+echo 'LOADER  = gfortran-'$N' ' >> lapack/make.inc
+echo '#undef FortranCmd' >> config/host.def
+echo '#define FortranCmd gfortran-'$N' -g' >> config/host.def
+echo '#undef CcCmd' >> config/host.def
+echo '#define CcCmd gcc-'$N' -g' >> config/host.def
+echo '#define DoRanlibCmd NO' >> config/host.def
+gsed -i 's/CcCmd\ cc/CcCmd\ gcc\-'$N'/g' config/MacOSX.cf
+echo '#define ArCmd ArCmdBase clq' >> config/host.def
+cat config/MacOSX.cf
+fi
+#
+# first build lapack library
+#
+# cleanup
+find lapack -name \*.o -exec rm -f \{} \;
+# first build BLAS
+cd $CVSCOSRC/lapack/BLAS/SRC
+make || exit $?
+mkdir -p $CERN_ROOT/lib
+mv ../../blas_LINUX.a $CERN_ROOT/lib/libblas.a
+cd $CVSCOSRC/lapack/SRC
+make || exit $?
+mv ../lapack_LINUX.a $CERN_ROOT/lib/liblapack.a
+cd $CERN_ROOT/lib/
+# create compatibility links
+ln -s liblapack.a liblapack3.a
+cd $CVSCOSRC
+
+#
+# create a build directory
+mkdir build
+cd build
+cp ../Imakefile .
+
+#
+# create Makefile
+$CVSCOSRC/config/imake_boot || exit $?
+
+#
+# create the tree
+make tree  || exit $?
+
+# install the scripts
+cd scripts
+make install.bin  || exit $?
+cd ..
+
+#
+# build kuipc
+make -j 8 bin/kuipc  || exit $?
+
+#
+# build cernlib
+make -j 16  || exit $?
+
+#
+# build old patchy
+cd $CVSCOSRC/build/patchy4
+make install.lib  || exit $?
+make install.bin  || exit $?
+cd ..
+#$
+#
+# build new patchy
+cd $CVSCOSRC/build/patchy5
+make install.lib  || exit $?
+make install.bin  || exit $?
+cd ..
+
+#
+# build paw
+cd $CVSCOSRC/build/pawlib
+make install.lib  || exit $?
+make install.bin  || exit $?
+
+#
+# build and install zftp
+cd $CVSCOSRC/build/packlib/cspack/programs
+make install.bin  || exit $?
+
+#
+# build and install packlib executables
+cd $CVSCOSRC/build/packlib
+make install.lib  || exit $?
+make install.bin  || exit $?
+
+# build and install graflib executables
+cd $CVSCOSRC/build/graflib
+make install.lib  || exit $?
+make install.bin  || exit $?
+
+#
+# create a local copy of xneut.dat
+cd $CVSCOSRC
+rm -f $CERN_LIB/xsneut95.dat
+cp geant321/data/xsneut95.dat $CERN_ROOT/lib/xsneut95.dat
+
+# final checks
+rc=0
+nlibs=`ls $CERN_LIB/| wc -l| tr -d ' '`
+if [ "x$nlibs" = "x38" ]; then
+    echo "All expected libraries have been created"
+else
+    echo "FATAL: Missing or unexpected libraries"
+    echo "Found $nlibs and expected 38"
+    ls $CERN_LIB |sort
+    rc=1
+    exit $rc
+fi
+nbin=`ls $CERN_BIN/| wc -l| tr -d ' '`
+if [ "x$nbin" = "x45" ]; then
+    echo "All expected binaries have been created"
+else
+    echo "FATAL: Missing or unexpected binaries"
+    echo "Found $nbin and expected 43"
+    ls $CERN_BIN| sort
+    rc=2
+    exit $rc
+fi
+
+# make tests
+test_dirs='mclibs kernlib packlib phtools geant321 graflib'
+if [ -e __dist_failed_builds ]; then
+  rm -f __dist_failed_builds
+fi
+touch $CVSCOSRC/build/__dist_failed_build
+set -e
+for dir in $test_dirs; do
+    cd $CVSCOSRC/build/$dir;
+    make test > $CVSCOSRC/build/__$dir.log || (cat $CVSCOSRC/build/__$dir.log && exit 1)
+    ret=$?
+    if [ "x$ret" = "x3" ]; then
+        echo $dir >> $CVSCOSRC/build/__dist_failed_builds
+        echo "Tests failed for $dir with $ret"
+        rc=3
+    fi
+done
+cd $CVSCOSRC
+
+if [ "x$rc" = "x3" ]; then
+    echo "ERROR: Tests failed"
+    cat $CVSCOSRC/build/__dist_failed_build
+    exit $rc
+else
+    echo "All required tests succeeded"
+fi
+rm -f $CVSCOSRC/build/__dist_failed_build
+# pack artifacts as tar ball
+dir=`pwd`
+if [ ! -d cern ]; then
+    mkdir cern
+fi
+cd $CERN
+tar -cf - . | (cd $dir/cern; tar -xf -)
+cd $dir

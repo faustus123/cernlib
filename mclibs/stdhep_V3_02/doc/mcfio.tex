@@ -1,0 +1,1093 @@
+%Filename: manual.tex A crude documentation of the Bphys i/o package
+\input epsf
+\documentstyle[12pt]{article}
+\pagestyle{plain}
+\title{ MCFio : A machine independent i/o system for Monte-Carlo studies.}  
+\author{P Lebrun \\
+{\tt Bphys memo}}
+\begin{document}
+\bibliographystyle{plain}
+\maketitle
+ \begin{abstract}
+  An i/o system based on the XDR protocol from the RPC software has been 
+  written to exchange Physics data files across various machines. 
+  Direct access capabilities have been implemented, such as the 
+  automatic searches for specific triggers.  This note 
+  is a brief user's guide and reference manual.   
+\end{abstract}
+
+\vspace{.1in} 
+{\em Version 1.2: Full implementation of Direct Access Stream and 
+Sequential streams. Two "Physics" data structures 
+ are currently supported, STDHEP and TRACK\_OFFLINE.} 
+
+
+
+\section{Introduction and Scope of MCFio}
+
+	The basic requirement is to be able to read/write MCFast data
+structures (of ``event blocks'')  to mass media in a machine
+ transportable fashion.
+By MCFast d.s. we mean things like instances of the STDHEP COMMON, 
+ the track records, and other data block created by this program. It is 
+ implicitly understood that we want to save/restore the values for these 
+ d.s. on an event by event basis. By mass media, we either mean disks or 
+ tape, both sequential or direct access must be supported from MCFast.
+  A machine transportable (or machine  independent) image of this data,
+   once written on a specific platform, 
+ can be read from another machine without any code changes, or setting 
+ of specific environment variables.
+ 
+ 	Additional capabilities are:
+ 	
+\begin{itemize}
+\item Direct Access:  accessing specific events or 
+data blocks within an event without having to scan through the entire file,
+if the file on a direct access media ( e.g., on disk, and set for direct
+access) 
+\item  Support for a variety of sequential media: MCFio must be able to 
+interface to 8mm or DLT's or other type of serial media.
+\item  Support for 
+standard ASCII tape labels, if media is sequential, (e.g., tape)
+\item  multiple I/O streams per MCFast process, running quasi-concurently, 
+	without interference or other limitations. 
+\item Full versioning: each Data 
+Block is stamped by a unique version 4-characters string, that can is set
+by the routine encoding the block. This should guarantee to implement 
+backward compatibility for each block. 
+\end{itemize}
+
+The MCFio Direct Access files are basically UNIX files. Each opened 
+files corresponds a stream. Currently, up to 20 concurrent 
+streams can be opened at any given time (this is just a PARAMETER
+in the software, and can be redefined as needed). A given stream is either 
+Input or Output, but not both: no updates nor changes from output to 
+input are allowed without closing the stream and reopening it. 
+
+The structure of an MCFast event, from the I/O subsystem perspective, is
+extremly simple: it consists of a header and flat list of blocks, each block
+contains  a structure (or a tree of structures). An event without data blocks
+is a valid event. There is no limit on the number of blocks per events/per
+stream, but a maximum number of blocks must be declared while opening an output
+stream.    No duplicate blocks are allowed:  for instance, it will not be
+possible to store two distinct snapshots of the STDHEP COMMON block in a single
+event. The user will have to  create a second clone of STDHEP (since it will
+most likely have  slightly different set of variables, it is a different
+block).  Blocks can be fetched/stored in an  event in random order. Some
+additional blocks, such as tape labels, header or, for direct access, ``Event
+table'' blocks will have to have to be defined, but since they are used
+internally, the user needs to know about them.  
+	Unlike FarFalla, or other $C^{++}$ tools, 
+ we do not maintain a hierarchical tree of structures describing the event 
+for the user. A file consists of an ensemble of events and an event
+consists essentially in a flat list of Blocks. It is up to the user to 
+define hierarchical structure within these blocks. Such a limited design 
+comes from the fact that MCFio must be callable from FORTRAN (F77), a language
+that does not gracefully dynamically allocated hierarchical tree 
+structures.
+
+	A MCFio event does not necessarily corresponds to a single HEP 
+collision:  multiple interactions in a single ``event'' can easily be 
+supported, for instance by cloning blocks with similar structures but 
+different contents. By MCFio blocks, we mean a C or VAX FORTRAN data 
+structure that is mapped to a set of XDR filters. Rules and examples to 
+implement new MCFio blocks will be described later.   
+
+	The package is based two distinct tools: 
+	
+\begin{itemize}
+\item	XDR: The machine-independent data representation is  achieved through a
+set of translation based on the XDR Networking package. The External Data
+Representation (XDR) library functions are used to represent data structures
+in a machine independent form. The XDR protocol is documented in the 
+ARPA Network Information Center's RFC1014. An accesible version of this 
+documentation has been published by O'Reilly \& Associates, Inc\footnote{Power
+Programming with RPC, by John Bloomer, ISBN:0-93715-773}
+   XDR can handle data
+stream directly on files or to a virtual memory  segment that can be written to
+sequential media at a later stage. XDR is used simply to `convert' machine
+dependent images of character strings, floating  point, double precision,
+etc... quantities to a byte stream that can be decripted on all UNIX ( or VAX,
+if need be ( God's forbid))workstations.  A real  example on how this can be
+implemented will be shown later. 
+\item  The Fermilab RBIO package, in order to transfer an event  buffer from
+memory to Sequential Media. Sequential Media can be either files on Disk, 
+which have an internal record structure so that they can easily be transfered 
+from/to tape using RBIO calls, or a genuine sequential device, e.g., 
+8mm tapes of DLT.  These tapes will be labelled.  Most if not all
+Sequential I/O peripherals support now with variable length records,  which
+makes possible to fully contain an event in a sequence of blocks,  without
+wasting space. Thus, each record contains at most one event, an  event may
+consist of more than one record. One event consist of a contiguous bunch of
+records, each event starts  at a record boundary. This choice has been made for
+ease of implementation, and related performance consideration.  As XDR supports
+standard Unix i/o  with the capability of "seeking" position in the stream,
+RBIO would add little  for Direct Access devices ,and is not be used if Direct 
+Access files (e.g. UNIX files that are not record oriented.) are accessed.
+\end{itemize}
+
+	Note that the basic routines to build an event and doing the 
+event i/o, within the event loop, can be done using the exact same call 
+for Sequential and Direct access.  Obviously, some functionality such as 
+skipping over data blocks or entire events is not available for Sequential 
+streams, but if one simply wants to go from one event to the next, 
+the user does need to change his code in the event loop, only the opening 
+and closing calls change from Direct to Sequential.  
+
+	The package is written in C, and has a FORTRAN binding  (The 
+C binding would be trvial to write, we currently have no customers for it... ).
+Casual users obviously do not need to learn C nor XDR software. Some knowledge 
+of C and XDR are required to implement new MCFio blocks.
+
+	Many examples are provided as testing material with the package. 
+They are briefly described at the end of the tutorial section. The last 
+section consist of a crude reference manual. 
+
+\section{Tutorial and Examples}
+
+
+Here is how we plan to modify a standard user MCFast Code. Note that  some of
+these calls could be moved to the ``system'' part of MCFast (since the MCFast
+system  currently handles directly the  reading of STDHEP event, this  should
+probably be considered..) . For sake of clarity, let us assume now that the
+user is in charge.. This example is fairly lengthy, obviously many  options are
+far from minimalist.
+ 
+\vspace{.1in}
+  Let us assume that the mandatory  minimalist job
+consist of reading a disk file with only STDHEP COMMON blocks.. FORTRAN line 
+marked with a * are mandatory calls, and refer to the {\em core } MCFio 
+system. 
+ 
+
+\subsection{In User Initialisation (usr\_init)}
+ 
+\vspace{.1in} 
+ Code:
+\begin{verbatim}
+
+Notes....  VAX FORTRAN CODE
+
+1*) 	'include mcfio.inc'
+
+2)      integer ostr_tape, ostr_disk, istr_old
+        COMMON/USER_IO/ostr_disk, istr_old 
+	
+3)      Character*80 device, title, filename, blocktitle
+        Character*6 label  
+        integer numblocks, block_id, blocks_ids(3), max_evts
+	
+4)      integer BLOCKCER, mcfxdr_CerenkovPrelim
+        integer size_CerenkovBlock 
+        external mcf_xdr_CerenkovPrelim, size_CerenkovBlock
+        PARAMETER (BLOCKCER=16001) 	
+	
+4*)     call mcfio_Init
+
+1)      call mcfio_printdictionary
+
+5*)     filename ='bpsi_isajet.dat'
+        istr_old = mcfio_OpenReadDirect(filename)
+	
+5)      call mcfio_InfoStreamChar(istr_old, MCFIO_TITLE, title)
+        print *, ' Title of STDHEP run ', title
+        call mcfio_InfoStreamInt(istr_old, 
+     &               MCFIO_NUMBLOCKS, numblock)
+        if (numblock .lt. 1) then 
+             print *, ' Not much on this file, bail out'
+             call mcfio_close(istr_old)
+             return.. or stop 
+        end if
+	
+        call mcfio_InfoStreamInt(istr_old,
+     &                           MCFIO_BLOCKIDS, block_ids)
+        if (block_ids(1) .ne.
+     &       MCFIO_STDHEP .or. numblock .ne. 1) then  
+          print *,
+     &     ' STDHEP is not the first and only block, bail out'
+          call mcfio_close(istr_old)
+           return... or stop 
+        end if
+		
+4)      titleblock = 'Cerenkov Hits, Preliminary Version
+        block_cer = mcfio_DefineUserBlock(BLOCKCER, 
+    &         title,MCFIO_xdr_CerenkovPrelim, size_CerenkovBlock) 
+        max_evts = 10000 	 
+6)	ostr_disk = mcfio_OpenWriteDirect(filename, 
+    &               title, 'No Comments',max_evts, blocks_ids, 3) 
+	 
+\end{verbatim}
+
+\vspace{.1in}
+
+{\em Notes}
+
+\vspace{.1in}
+
+\begin{enumerate}
+\item The insertion of an include file is necessary, as we use strong  casting.
+More importantly,  parameters settings and information gathering about
+the Stream, events or blocks  are done through subroutine calls, 
+which is a safe, sound mechanism, that implements {\em information hiding}
+and {\em data encapsulation}, so that the user interface is not 
+bound to a particular version of the inner data structures. A subroutine 
+has been provided to print the Parameter Dictionary. 
+
+\item  The user has to keep track of the ``mcf'' I/O streams indices. In this 
+example,  istr\_old and ostr\_disk are two integers, refering to two distinct
+data streams : one input, to read an old  disk file with STDHEP blocks, and one
+output to disk.  These integers will be referenced  later in the event loop.  
+A MCFio I/O stream will be mapped to either a RBIO jfn (see RBIO 
+manual),  or to a stdio XDR stream, in the MCFio package.
+
+\item Local Variable definition. No surprise here !
+
+\item  Variables and Options settings in mcfio : There is only one  mandatory
+intialisation routine, setting all parameter default values. This routine {\em
+mcfio\_init} can be called more than once in a given  run, in which case all
+previous settings are lost. Another setting in this example consists of
+declaring a  ``User defined block''. The user must define a unique identifier. A
+title for the block is also a  good idea. Finally, the user must write an XDR
+filter for  his private data structure, and a little routine wich is 
+called by MCFio to get the current size of the data block to preallocate
+memory, in the case of sequential streams.  
+
+\item The input stream definition for this example. Obviously, none of these 
+calls are mandatory, but in a non-trivial example, we need  at least one!. This
+is a direct access stream, one will be  be able to access particular  events in
+random order. Although not required, we also whish to check that this is  not a
+trivial file, and the unique block per event is STDHEP.
+
+\item One output stream definition, going to disk. Once again, a title for the
+data set is probably a good idea. This is not mandatory, the user can always
+leave it blank (implemented by a {\em \%val(0)} argument value, on most
+systems). 
+		
+\end{enumerate}
+
+\subsection{Getting Events }
+\vspace{.1in}
+
+	Depending on the exact layout of the job, this code must be
+inserted in usr\_generate and/or usr\_analysis.
+ 
+\vspace{.1in} 
+ Code:
+\begin{verbatim}
+
+        integer ostr_all, ostr_sel, istr_old
+        COMMON/USER_IO/iostr_tape, iostr_disk, istr_old 
+
+8*)	include 'stdhep.inc'
+        integer xdr_mcfast_stdhep
+        external xdr_mcfast_stdhep
+	
+        integer iostat, event_number
+        integer store_numer, run_number
+        integer trigger_mask
+
+7a*)    iostat = mcfio_NextEvent(istr_old)
+7a)     call mcfio_InfoEvent(istr_old, 
+      &              MCFIO_EVENTNUMBER, event_number)
+        call mcfio_InfoEvent(istr_old, 
+      &              MCFIO_TRIGGERMASK, trigger_mask) 
+
+7b)     event_number = 553
+        iostat = mcfio_SpecificEvent(istr_old, event_number, 
+     &                       0,0,0)
+
+7c)     trigger_mask = 129
+        iostat = mcfio_NextSpecificEvent(istr_old, 0, 
+     &                       0,0,trigger_mask)
+
+8*)     if (iostat .gt. 0)
+     &    iostat = mcfio_Block(istr_old, MCFIO_STDHEP,
+     &    xdr_mcfast_stdhep)
+        if (iostat .gt. 0) ......
+	
+\end{verbatim}
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item  mcfio\_NextEvent is the basic routine to read or write and an event from
+a specific MCFio I/O sream. The routine  will get the event header, the user can
+now  inquire event property and decode specific blocks Returns -1 if problems (
+e.g. , I/O error or end  of the stream..), 1 if a new event has been read or
+written.  Once the event header is in memory, one can gets information  about
+its unambiguous identifiers, such as run numbers, store or splill  numbers and
+so forth. Note that we use a subroutine call to do this rather  than a FORTRAN
+COMMON, to avoid version dependencies on the exact  content of the event
+header.  Since the Input stream is Direct access,  one can search for a
+specific event starting from the beginning of the  file (SpecificEvent) or from
+the current stream position  (NextSpecificEvent). MCFio keeps internally
+a table of these  key event identifiers, it will position the XDR  stream to
+the requested location without reading  sequentially through all the events. It
+might have  to read a few more of these tables, but this will  be much faster
+than going through the entire file. If the value of one of those event 
+identifiers is set 0, this means that any value will do. Hence, if 
+event\_number, spill\_number, run\_number and trigger\_mask are all set to 
+0, this is equivalent to a call to {\em NextEvent}. 
+
+\item mcfio\_Block is the basic routine to ENCODE/DECODE a 
+a specific block, if our case, STDHEP. Returns 1 if O.K., -1 if block 
+is missing or I/O problem. The first argument is simply the stream index, 
+the second is the unique block identifier, and the last argument is the 
+external subroutine that performs the XDR transfer. Obviously, from a 
+logical stand point, this last argument is redundant: the package could 
+have figure out internally which routine to call! But this implementation
+would have implied that {\em all } FORTRAN COMMON blocks be always 
+loaded, an unnecessary cost of memory. To avoid this, it is up to the 
+user to declare the COMMON Block (include file stdhep.inc), and declare 
+explicitly the appropriate XDR filtering routine.  These routines
+check for consistency with respect to the Block I.D.
+
+\end{enumerate}
+
+\subsection{Saving Events (end of usr\_analysis)}
+\vspace{.1in}
+
+For events of interest, once the user-event analysis is done, one now has to
+block and buffer the events out. So, at the end  of user\_analysis :
+
+\begin{verbatim}
+\vspace{.1in} 
+ Code:
+ 
+8)      include 'stdhep.inc'
+        integer xdr_mcfast_stdhep
+        external xdr_mcfast_stdhep
+        
+4)      integer BLOCKCER, mcfxdr_CerenkovPrelim
+        external MCFIO_xdr_CerenkovPrelim
+        PARAMETER (BLOCKCER=16001) 	
+
+9a)     if( mcfio_Block(ostr_disk,
+     &      MCFIO_SDTHEP,xdr_mcfast_stdhep ) .lt. 1) goto 91	
+        if (mcfio_Block(ostr_disk,
+     &      BLOCKCER, MCFIO_xdr_CerenkovPrelim ).lt. 1) goto 91
+
+10)     call mcfio_SetEventInfo(ostr_disk,
+     &      MCFIO_STORENUMBER, 236)
+     
+9b)     if (mcfio_NextEvent(ostr_disk) .lt. 1) goto 91
+
+        return
+ 90     print *, ' I/O problem for stream to tape '
+        ???
+        
+\end{verbatim}
+\vspace{.1in}
+\begin{enumerate}
+\setcounter{enumi}{8}
+\item For sake of simplicity, the subroutine calls for input and output are
+identical. Since the MCF i/o stream index points to  an internal data structure
+that carries the properties of the  stream,  there is no confusion. The
+blocking routine mcfio\_Block must be called {\em before}  the  routine
+mcfio\_NextEvent.  NextEvent, in the context of an  output stream, flush the
+completed event to tape or disk.
+
+\item Note that the event number, or other unambiguous event descriptors are
+not specified throught NextEvent.  This can be done through a specific call,
+similarly  to getting information about the event. By default, upon writing, if
+no specific setting is done, all event identifiers remain unchanged except 
+the event number, which gets increased by 1. 
+
+\end{enumerate}
+
+\subsection{Termination (in user\_endjob)}
+\vspace{.1in}
+\begin{verbatim}
+
+ Code:
+
+11)      call mcfio_Rewind(istr_old)
+11*)     call mcfio_Close(istr_old)
+         call mcfio_Close(0)
+	 
+\end{verbatim}
+\vspace{.1in}
+\begin{enumerate}
+\setcounter{enumi}{10}
+\item Input streams  can be rewound at any time.  The user must also
+ close the Output streams before exiting, as 
+one needs to flush out the last few buffer(s), update the last event 
+table and update the file header (only if the stream is direct access).
+A call {\em mcfio\_close(0)}  closes all the actives streams. Once 
+a stream is closed, all pertinent information about that stream is lost.
+The user may  re-open the same file, if need be. 
+\end{enumerate}
+
+
+\subsection{Other Examples and  related Testing}
+
+Seven short testing programs have been written, and can be used as  examples.
+The first one {\em t1}, write a short file, with only STDHEP  common. Event
+number 13 looks interesting, he received a non-trivial  trigger mask. Example
+{\em t2} read the file generated by {\em t1} and dumps  some STDHEP contents.
+Example {\em t3} will look specifically for a  given type of trigger, event 13
+should be selected. Example {\em t4}  writes a new file (test4.dat), with two
+different blocks. Non-trivial values for the  store numbers are given. Example
+{\em t5} ? Well, I don't remember what that one does. Presumably checking the
+OFFLINE TRACK COMMON block from the file test4.dat .
+Example {\em t6} reads that same file, but generates 4 other files, with 
+either STDHEP common or OFFLINE COMMON, and by odd/even values of the 
+store number. Example {\em t7} checks these 4 files sequentially.
+
+\section{Reference Section}
+
+\subsection{Core routines}
+
+	These are mandatory routines to get going with some I/O job 
+
+\subsubsection{mcfio\_init}
+\begin{verbatim}
+
+        subroutine mcfio_init
+
+\end{verbatim}
+ Initialization routine, No arguments.  This routine must be called at  least
+ one time in the application. Reset the default settings for all I/O streams. 
+ All previous user setting will be  erased.   Can be called more than once in
+ the application.   If Streams are opened, they will be closed with a print
+ warning. 
+
+\subsubsection{mcfio\_OpenReadDirect}
+\begin{verbatim}
+
+        integer function mcfio_OpenReadDirect(filename)
+
+\end{verbatim}
+ Opens a MCFio  stream for input, Direct Access. {\em filename}, a  character
+ string (max. length 255), must refer to an existing standard UNIX file
+ resinding  on disk. Returns -1 if unsuccessful, or the MCF i/o stream index 
+ used for future reference and access for this stream. The user must keep
+ this information in its code. 
+ 
+\subsubsection{mcfio\_OpenWriteDirect}
+
+\begin{verbatim}
+
+        integer function mcfio_OpenWriteDirect(filename, 
+     &                      title, comment,
+     &                      numevt_expected, block_ids, numblocks)
+
+\end{verbatim}
+ Opens a mcf i/o stream for output, Direct Access. {\em filename}, a  character
+ string (max. length 255), will refer to a  standard UNIX file created on
+ on disk. Returns -1 if unsuccessful, or the MCF i/o stream index 
+ used for future reference and access for this stream. The user must keep
+ this information in its code. Additional input arguments are : 
+\begin{itemize}
+\item {\em title:} Character string., max. length = 80,a mnemonic name for the 
+stream.
+\item {\em comment:}. A comment line, max length 80 char. Both {\em title }
+and {\em comment} are optional, e.g., the value {\em \%val(0)} is allowed
+(interpreted in C as a NULL pointer).
+\item {\em numevt\_expected:} Integer.  The expected number of events for this
+output  file.
+\item {\em block\_ids:} Integer array: the expected block identifier list for 
+this run. This array must have a length of at least {\em numblocks}
+\item {\em numblocks:} Integer: The number of blocks in this list.
+\end{itemize}
+
+ 
+\subsubsection{mcfio\_OpenReadSequential}
+
+\begin{verbatim}
+
+        integer function mcfio_OpenReadSequential(device,
+     &           label, filenumber)
+
+\end{verbatim}
+
+ Opens a mcf i/o stream for input, Sequential Access. The stream corresponds
+ to a sequence of physical records, written to tape or to disk. Returns -1
+ if unsuccessful, or the MCF i/o stream index 
+ used for future reference and access for this stream. The user must keep
+ this information in its code. 
+ The Input device selection is controlled by the first two arguments 
+ in the most inelegant manner:
+\begin{itemize}
+ 
+\item {\em device} A  character
+ string (max. length 255), will refer to a  sequential UNIX device or a 
+ UNIX filename, depending on the value of {\em label}.  If {\em label} has 
+ the value ``Disk'', then it is understood the {\em device} points to 
+ a UNIX file name, and obviously no label is written. Else, {\em device} points 
+ to a tape drive, for instance {\em /dev/rmt/tps0d5nrnsv.8500} points to 
+ an 8mm EXABYTE device, located on SCSI bus 0, device number 5, no rewind 
+ device, no swap, used in the 8500 mode.  
+\item {\em label} Character string. For tapes, a standard ACII label tape, 
+made of 6 non-control characters (e.g. ZB1025). 
+\item {\em filenumber}. Integer, the sequential file number on the 
+tape. this corresponds to the ``Sequence'' key in RBIO. 
+\end{itemize}
+
+
+\subsubsection{mcfio\_OpenWriteSequential}
+
+\begin{verbatim}
+
+        integer function mcfio_OpenWriteSequential(device,
+     &           label, filenumber, title, comment,
+     &            numevt_expected, blockids, numblocks)
+\end{verbatim}
+
+	Opens a stream opened for output, Sequential mode.Returns -1
+ if unsuccessful, or the MCF i/o stream index 
+ used for future reference and access for this stream. The user must keep
+ this information in its code.
+  
+\begin{itemize} 
+\item {\em device} A  character
+ string (max. length 255), will refer to a  sequential UNIX device or a 
+ UNIX filename, depending on the value of {\em label}.  If {\em label} has 
+ the value ``Disk'', then it is understood the {\em device} points to 
+ a UNIX file name, and obviously no label is written. Else, {\em device} points 
+ to a tape drive, for instance {\em /dev/rmt/tps0d5nrnsv.8500} points to 
+ an 8mm EXABYTE device, located on SCSI bus 0, device number 5, no rewind 
+ device, no byte swap, used in the 8500 mode.  
+\item {\em label} Character string. For tapes, a standard ACII label tape, 
+made of 6 non-control characters (e.g. ZB1025). 
+\item {\em title} Character string., max. length = 80,a mnemonic name for the 
+stream.
+\item {\em comment:}. A comment line, max length 80 char. Both {\em title }
+and {\em comment} are optional, e.g., the value {\em \%val(0)} is allowed
+(interpreted in C as a NULL pointer).
+\item {\em numevt\_expected:} Integer.  The expected number of events for this
+output  file.
+\item {\em block\_ids:} Integer array: the expected block identifier list for 
+this run. This array must have a length of at least {\em numblocks}
+\item {\em numblocks:} Integer: The number of blocks in this list.
+\end{itemize}
+
+
+\subsubsection{mcfio\_NextEvent}
+
+\begin{verbatim}
+
+        integer function mcfio_NextEvent(iostream)
+	
+\end{verbatim}
+The access routine to set or get an event to or from a  stream. {\em iostream}
+is integer, returned by a mcfio\_Open* routine.  For Input Direct Access stream,
+mcfio will get the XDR position  for the next event, either from the internal
+table, or, if  need be, will get the next event table in the stream.  For Input
+Sequential, RBIO will be called to get a string  or tape records, into virtual
+memory. The XDR event filter will allow us to decode the event number, store,
+and so forth. For Output Streams, this will "close" the current event.  If 
+Direct access, mcfio will update the XDR locators on the file. If Sequential, a
+set of records will be written on tape.  In addition, the current event number
+for this Output stream will  be incremented by one, and a new (empty!) XDR
+event block will be  generated to be ready to flush the next event.
+
+	If the next event has indeed been transfered, mcfio\_NextEvent returns 
+MCFIO\_RUNNING.  If not, mcfio\_NextEvent returns -1 if an I/O error has 
+been encountered, or MCFIO\_EOF is the stream is Input, and ran past the 
+End of File mark. 
+	
+\subsubsection{mcfio\_Block}
+
+\begin{verbatim}
+
+        integer function mcfio_Block(iostr,
+     &                    blockid, XDR_filtercode)
+     
+\end{verbatim}
+The access routine to set or get a data  block to or from a  stream. Data can
+be directly decoded or encoded from the targeted  COMMON block without
+extraneous copying (Direct Access Streams). Data is converted through a set of
+XDR filters.  As module {\em NextEvent}, this routine is valid  for Input and
+Output streams. Note that, for input streams, {\em Block} must be called after
+{\em NextEvent}, while for output streams, it must be called before. All
+arguments are input:
+
+\begin{itemize} 
+\item {\em iostr:} Integer:, the Stream index, as returned by a mcfio\_Open* 
+call
+\item{\em blockid:} Integer: The unique block identifier number. Used 
+essentially for self consistency checks. 
+\item{\em XDR\_filtercode} Integer, external
+ ( to be casted later on to something else..)
+  The XDR external routine to convert the data. 
+\end{itemize}
+
+	The return code the same as {\em NextEvent}: -1 if a problem occurred,
+else 1. 
+
+\subsubsection{mcfio\_Close}
+
+\begin{verbatim}
+
+        subroutine  mcfio_Close(iostr)
+    
+\end{verbatim}
+
+Closing a stream. This is mandatory if the user expects to re-open the  file,
+or, to complete the file header if the stream is Output, Direct Access. Only 
+1 input argument:
+\begin{itemize} 
+\item {\em iostr:} Integer:, the Stream index, as returned by a mcfio\_Open* 
+call. {\em iostr = 0} is also valid, in which case all active streams are
+closed.
+\end{itemize}
+
+
+\begin{verbatim}
+
+        subroutine  mcfio_CloseSequentialFile(iostr)
+    
+\end{verbatim}
+
+Closing a file on a Sequential stream. This call is only relevant for 
+tape device, when the user whishes to keep the stream active. The file 
+on the tape is closed (e.g. an EOF is written), and the user may call 
+mcfio\_OpenWriteSequential (or Read, but the stream must be kept in the 
+same mode, e.g., an input stream can not be turned into an output one) again,
+pointing to the same device and using the same label. This calls avoid 
+closing the stream entirely, and having to reopening it, a sequence 
+that takes time in RBIO. 
+\begin{itemize} 
+\item {\em iostr:} Integer:, the Stream index, as returned by a mcfio\_Open* 
+call.
+\end{itemize}
+
+\begin{verbatim}
+
+        subroutine  mcfio_CloseSequentialTape(iostr)
+    
+\end{verbatim}
+
+Closing a sequential stream for good. All previous knowledge 
+about this stream is lost.  Upon reopening the same tape device, a rewind will 
+occur. Can also be used if the Sequential stream points to a UNIX file.  
+\begin{itemize} 
+\item {\em iostr:} Integer:, the Stream index, as returned by a mcfio\_Open* 
+call. 
+\end{itemize}
+
+\subsection{Utilities}
+
+	This subsection is devoted to ancilary modules, used to set or get 
+information about a stream, an event or a Block. 
+
+\subsubsection{mcfio\_PrintDictionary}
+
+\begin{verbatim}
+
+        subroutine  mcfio_PrintDictionary
+    
+\end{verbatim}
+
+	Print the current list of parameters controlling the streams, 
+describing the events, blocks and so forth.
+
+\subsubsection{mcfio\_InfoNumStream}
+
+\begin{verbatim}
+
+        integer function  mcfio_InfoNumStream(iostrs, nmax)
+    
+\end{verbatim}
+
+	Returns the current number of active streams and their 
+corresponding indices in the integer array {\em iostrs}, which 
+must be dimensioned to at least nmax. (to be used in case you 
+lost the Stream indices in your program).
+
+\subsubsection{mcfio\_InfoStreamInt}
+
+\begin{verbatim}
+
+        subroutine  mcfio_InfoStreamInt(iostr, key, ival)
+    
+\end{verbatim}
+
+	Returns the current integer value for a parameter associated with a 
+given stream. The list of such parameters and their key values 
+can be found by printing the dictionary. For instance, after opening 
+an Input Stream, one can find the number of events in the file 
+using the key MCFIO\_NUMEVTS. Arguments are straightforward, two input,
+one output
+
+\begin{itemize}
+\item {\em iostr:} Integer: the Stream index, as returned by a mcfio\_Open* 
+call.
+\item {\em Key:} Integer: The keyword, as defined in the Dictionary, 
+implemented in the {\em mcfio.inc} include file. 
+\item {\em ival:} the  returned value.
+\end{itemize}
+
+ 
+\subsubsection{mcfio\_InfoStreamChar}
+
+\begin{verbatim}
+
+        subroutine  mcfio_InfoStreamChar(iostr, key, answer)
+    
+\end{verbatim}
+
+	Returns the current character string value for a parameter 
+	associated with a 
+given stream. The list of such parameters and their key values 
+can be found by printing the dictionary. For instance, after opening 
+an Input Stream, one can find the title corresponding to the file 
+using the key MCFIO\_TITLE. Arguments are straightforward, two input,
+one output
+
+\begin{itemize}
+\item {\em iostr:} Integer: the Stream index, as returned by a mcfio\_Open* 
+call.
+\item {\em Key:} Integer: The keyword, as defined in the Dictionary, 
+implemented in the {\em mcfio.inc} include file. 
+\item {\em answer:} Character string,  the  returned answer.
+\end{itemize}
+	
+
+\subsubsection{mcfio\_InfoEventInt}
+
+\begin{verbatim}
+
+        subroutine  mcfio_InfoEventInt(iostr, key, ival)
+    
+\end{verbatim}
+
+Returns the current integer value for a parameter associated with the current
+event for a given  stream. The list of such parameters and their key values 
+can be found by printing the dictionary. For instance, after opening  an Input
+Stream and reading an event one can find the number of blocks in this 
+ event  using the key
+MCFIO\_NUMBLOCKS. Arguments are straightforward, two input, one output
+
+\begin{itemize}
+\item {\em iostr:} Integer: the Stream index, as returned by a mcfio\_Open* 
+call.
+\item {\em Key:} Integer: The keyword, as defined in the Dictionary, 
+implemented in the {\em mcfio.inc} include file. 
+\item {\em ival:} the  returned value.
+\end{itemize}
+
+ 
+\subsubsection{mcfio\_InfoEventChar}
+
+\begin{verbatim}
+
+        subroutine  mcfio_InfoEventChar(iostr, key, answer)
+    
+\end{verbatim}
+
+	Returns the current character string value for a parameter 
+	associated with the current event fo a 
+given stream. The list of such parameters and their key values 
+can be found by printing the dictionary. See {\em InfoStreamChar} for
+argument list. 
+
+	
+\subsubsection{mcfio\_GetBlockName}
+
+\begin{verbatim}
+
+        subroutine  mcfio_GetBlockName(blockid, answer)
+    
+\end{verbatim}
+
+	Returns the Block title/name in the character string answer
+	 for a specific block refered by integer {\em blockid}.
+	  
+
+\subsubsection{mcfio\_DefineUserBlock}
+
+\begin{verbatim}
+
+        subroutine  mcfio_DefineUserBlock(blockid, name,
+     &               XDR_filter, current_size)
+    
+\end{verbatim}
+
+Adds a new block specified by the unique identifier {\em blockid}  (integer) to
+the current dictionary. A 80 character max.  string {\em name}  should be
+given. {\em XDR\_filter} refers to the external routine used for the XDR
+filetring.  Currently implemented as a No-op. routine, because we do not check 
+the blockid validity in  routines such as  {\em NextEvent}.  In addition, the
+external  routine {\em current\_size}, which returns the length in bytes of the
+block to be loaded is only used for Sequential Output Streams.  The 
+user can go right ahead with a non-declared User block for Direct Access
+stream. 
+
+\subsubsection{mcfio\_SetEventInfo}
+
+\begin{verbatim}
+
+        subroutine  mcfio_SetEventInfo(iostr, key, ival)
+    
+\end{verbatim}
+
+Set a requested  value for a parameter associated with the current
+event for a given stream. The list of such parameters and their key values 
+can be found by printing the dictionary. For instance, after opening  an Output
+Stream and optionally writing some data blocks out, one can set the trigger
+mask for this event by using the key 
+MCFIO\_TRIGGERMASK. Arguments are straightforward, all input:
+
+\begin{itemize}
+\item {\em iostr:} Integer: the Stream index, as returned by a mcfio\_Open* 
+call.
+\item {\em Key:} Integer: The keyword, as defined in the Dictionary, 
+implemented in the {\em mcfio.inc} include file. 
+\item {\em ival:} the  set value.
+\end{itemize}
+
+\subsubsection{mcfio\_SpecifiEvent}
+
+\begin{verbatim}
+
+        integer function mcfio_SpecificEvent(iostream, 
+     &                   event_number, store_number, run_number, 
+     &                   trigger_mask)
+	
+\end{verbatim}
+The access routine to get a specific event from a Direct Access, Input stream.
+The position of the stream is set to the first event encounter in the stream, 
+starting from the beginning of the stream (e.g., after an implicit rewind),
+that satisfy the requested event criteria. Arguments (all inputs) are:
+\begin{itemize}
+\item  {\em iostream}
+is integer, returned by a mcfio\_Open* routine.
+\item {\em event\_number} is integer, the event number, as set by automatically
+by MCFio upon writing the file, or by a call to {\em  mcfio\_SetEventInfo}.
+\item {\em store\_number} is integer, the store number, as set 
+ by a call to {\em  mcfio\_SetEventInfo}.
+item {\em run\_number} is integer, the store number, as set 
+ by a call to {\em  mcfio\_SetEventInfo}.
+\item {\em trigger\_mask} is integer, the user defined trigger mask, as set 
+ by a call to {\em  mcfio\_SetEventInfo}.
+\end{itemize}
+
+If one of these arguments is set to 0, this means that no selection 
+is applied on that particular  argument. If all are set to 0, this 
+routine will return the first event on the file. 
+
+	If the requested event has indeed been found and its header 
+sucessfully decripted, mcfio\_SpecificEvent returns 
+MCFIO\_RUNNING.  If not, mcfio\_SpecificEvent returns -1 if an I/O error has 
+been encountered, or MCFIO\_EOF is the stream ran past the 
+End of File mark. 
+
+\subsubsection{mcfio\_NextSpecifiEvent}
+
+\begin{verbatim}
+
+        integer function mcfio_NextSpecificEvent(iostream, 
+     &                   event_number, store_number, run_number, 
+     &                   trigger_mask)
+	
+\end{verbatim}
+	Same as {\em mcfio\_SpecificEvent}, but starting from the current
+	position of the stream. 
+	
+\subsubsection{mcfio\_Rewind}
+
+\begin{verbatim}
+
+        subroutine  mcfio_Rewind(iostr)
+    
+\end{verbatim}
+
+Rewinding a stream. For Direct Access, this is just setting 
+one pointer, while for Sequential device, it may take some 
+times.  Only 1 input argument: 
+\begin{itemize} 
+\item {\em iostr:} Integer:, the Stream index, as returned by a mcfio\_Open* 
+call. 
+\end{itemize}
+
+
+\subsection{User Defined XDR filter for private Data Blocks}
+
+	The simplest way to start is to consider the routine that 
+filter the STDHEP COMMON block.  This module is already part of 
+the current verion of MCFio, you do not have to rewrite it, and 
+can be used as template. First, 
+we do start by translating the FORTRAN COMMON to a C structure: 
+
+\begin{verbatim}
+      INTEGER NMXHEP
+      PARAMETER (NMXHEP=4000)
+      COMMON/HEPEVT/NEVHEP,NHEP,ISTHEP(NMXHEP),IDHEP(NMXHEP),
+     &JMOHEP(2,NMXHEP),JDAHEP(2,NMXHEP),PHEP(5,NMXHEP),VHEP(4,NMXHEP)
+      INTEGER NEVHEP,NHEP,ISTHEP,IDHEP,JMOHEP,JDAHEP
+      REAL PHEP,VHEP
+      SAVE /HEPEVT/
+C...      NEVHEP       - event number
+C...      NHEP         - number of entries in this event
+C...      ISTHEP(..)   - status code
+C...      IDHEP(..)    - particle ID, P.D.G. standard
+C...      JMOHEP(1,..) - position of mother particle in list
+C...      JMOHEP(2,..) - position of second mother particle in list
+C...      JDAHEP(1,..) - position of first daughter in list
+C...      JDAHEP(2,..) - position of last daughter in list
+C...      PHEP(1,..)   - x momentum in GeV/c
+C...      PHEP(2,..)   - y momentum in GeV/c
+C...      PHEP(3,..)   - z momentum in GeV/c
+C...      PHEP(4,..)   - energy in GeV
+C...      PHEP(5,..)   - mass in GeV/c**2
+C...      VHEP(1,..)   - x vertex position in mm
+C...      VHEP(2,..)   - y vertex position in mm
+C...      VHEP(3,..)   - z vertex position in mm
+C...      VHEP(4,..)   - production time in mm/c
+\end{verbatim}
+
+... becomes: 
+
+\begin{verbatim}
+
+#define NMXHEP 4000
+
+extern struct hepevt {
+int nevhep;		/* The event number */
+int nhep;		/* The number of entries in this event */
+int isthep[NMXHEP]; 	/* The Particle id */
+int idhep[NMXHEP];      /* The particle id */
+int jmohep[NMXHEP][2];    /* The position of the mother particle */
+int jdahep[NMXHEP][2];    /* Position of the first daughter... */
+float phep[NMXHEP][5];    /* 4-Momentum, mass */
+float vhep[NMXHEP][4];    /* Vertex information */
+} hepevt_;
+\end{verbatim}
+
+	We are now in position to write the required function:
+	
+\begin{verbatim}
+#include <stdio.h>
+#include <string.h>
+#include <sys/param.h>
+#include <rpc/types.h>
+#include <sys/types.h>
+#include <rpc/xdr.h>
+#include <limits.h>
+#include <float.h>
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
+#include "mcfio_Dict.h"
+#include "mcf_xdr.h"
+#include "stdhep.h"
+#define FALSE 0
+#define TRUE 1
+/*
+** These include files are probably needed, to be able to do math, 
+** get the time and date if you feel like, and most important, 
+** access the XDR filter protocols. These are described in your 
+** workstation documentation ( for instance, a SGI documentation set,
+**  XDR is described in the IRIX Network Programming Guide. 
+*/
+
+bool_t xdr_mcfast_stdhep_(XDR *xdrs, int *blockid,
+ 				 int *ntot, char** version)
+ 				 
+/*  Translate the HEPEVT COMMON block from the STDHEP package to/from
+**  an XDR stream. Note that we do not allocate memory, because we fill
+**  directly the COMMON.  Also, the mcfio will allocate the space for the 
+** string version. 
+** 
+** Arguments:
+**
+**	XDR *xdr : pointer to an active XDR filter, set by an Open 
+**			routine.
+**	Blockid : The unique block identifier, in this case, 
+**			must be set to MCFIO_STDHEP. 
+**			Used for consistency and check only
+**
+**	ntot : Returns the total number of bytes to be filtered.
+**		Getting the exact correct number is not essential
+**		in this case, because the XDR filters won't rely 
+**		on it, they use their internal pointers. This is 
+**		used merely as a user-driven mechanism to make sure 
+**		we did not forget a particular item in the STDHEP 
+**		COMMON, and/or to compute the efficiency of the 
+**		filtering. 
+**		
+**	version : Returns the version for this block, a 4-character 
+**			string. 
+ */
+
+{
+    
+    unsigned int nn, nn2, nn4, nn5;
+    int *idat;
+    float *dat;
+    
+    if (xdrs->x_op == XDR_ENCODE) {
+       if (*blockid != MCFIO_STDHEP) {
+          fprintf (stderr, "mcf_Stdhep_xdr: Inconsistent Blockid %d \n ", 
+           (*blockid));
+          return FALSE;
+       }
+/*
+**	Obviously this routine is good for Input and Output Stream. 
+**	The XDR structure gives us which indirection is used through 
+**      the member xdrs->op
+*/       
+       nn = (unsigned int) hepevt_.nhep;
+       nn2 = 2 *(unsigned int) hepevt_.nhep;
+       nn4 = 4 *(unsigned int) hepevt_.nhep;
+       nn5 = 5 *(unsigned int) hepevt_.nhep;
+       *ntot = 20 + 4 * (2 * nn + 2* nn2 + nn4 + nn5);
+/*
+**    This is an estimate of the total number of bytes used. 
+**	
+       strcpy(*version, "1.05");
+       } 
+      
+     if     ( (xdr_int(xdrs, blockid) &&
+     	      xdr_int(xdrs, ntot) &&
+     	      xdr_string(xdrs, version, 4) &&
+     	      xdr_int(xdrs, &(hepevt_.nevhep)) &&
+              xdr_int(xdrs, &(hepevt_.nhep))) == FALSE) return FALSE;
+/*
+**
+**	The header of the block has been filtered. We now in position
+**	to use this infomration to check the blockid and/or the 
+**	version for Inpute stream
+*/
+              
+     if ((xdrs->x_op == XDR_DECODE) && ( *blockid != MCFIO_STDHEP) ) {
+          fprintf (stderr, "mcf_Stdhep_xdr: Inconsistent Blockid %d \n ", 
+           (*blockid));
+          return FALSE;
+     }
+/*
+**	We now filter the data itself. We go array by array, setting a 
+**	pointer, and filter.. We could write this in a more compact
+**	way, but it won't help to debug the stuff !
+*/
+
+     idat = hepevt_.isthep;
+     if     ( xdr_array(xdrs, (char **)  &idat,
+                &nn, NMXHEP, sizeof(int), xdr_int) == FALSE) return FALSE;
+     idat = hepevt_.idhep;
+     if     ( xdr_array(xdrs, (char **)   &idat,
+                &nn, NMXHEP, sizeof(int), xdr_int) == FALSE) return FALSE;
+     idat = (int *) hepevt_.jmohep;
+     if     ( xdr_array(xdrs, (char **)   &idat,
+                &nn2, 2*NMXHEP, sizeof(int), xdr_int) == FALSE) return FALSE;
+     idat = (int *) hepevt_.jdahep;
+     if     ( xdr_array(xdrs,  (char **)   &idat,
+                &nn2, 2*NMXHEP, sizeof(int), xdr_int) == FALSE) return FALSE;
+     dat = (float *)  hepevt_.phep;
+     if     ( xdr_array(xdrs,  (char **)   &dat,
+                &nn5, 5*NMXHEP, sizeof(int), xdr_float) == FALSE) return FALSE; 
+     dat = (float *) hepevt_.vhep;
+     if     ( xdr_array(xdrs, (char **)    &dat,
+                &nn4, 4*NMXHEP, sizeof(int), xdr_float) == FALSE) return FALSE;
+     return TRUE;
+}   
+
+\end{verbatim}
+
+The real way to do this, of course, is to send an e-mail to the 
+author of this infamous package, describing the USER COMMON, and  yell 
+at him, and he will do it for you ( That is, if you yell hard enough). 
+
+
+
+\end{document}

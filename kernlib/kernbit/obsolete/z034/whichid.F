@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:42  mclareni
+* Initial revision
+*
+*
+#include "sys/CERNLIB_machine.h"
+#include "_kernbit/pilot.h"
+#if !defined(CERNLIB_IBM)
+#endif

@@ -1,0 +1,25 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:50:46  mclareni
+* Initial revision
+*
+*
+#if !defined(CERNLIB_KERNVAX)
+
+
+       UP-DATE RECORD FOR THE PAM-FILE  KERNVAX, VERSION 2
+       ---------------------------------------------------
+
+
+UPDATE  2.47 :  18-July-95
+--------------------------
+
+Replacing file  KERNVAX  2.46  940913 14.37
+
+Correct:      on the Alpha: use the new VXINVB, VXINVC from KERNFOR
+
+---------------------------------------------------------------------
+
+#endif

@@ -1,0 +1,49 @@
+! Set some geometric constraints on UI widgets.
+! DO NOT remove or change the following six lines, or the GEANT 3.21 GUI
+! will become buggy!
+Geant++*kuipBrowser*fileScWindow.width:		100
+Geant++*kuipBrowser*fileScWindow.bottomOffset:	52
+Geant++*kuipBrowser*fileScWindow.topOffset:	59
+Geant++*kuipBrowser*dirScWindow.bottomOffset:	52
+Geant++*kuipBrowser*dirScWindow.topOffset:	59
+Geant++*kuipBrowser*separatorGadget1.topPosition:	50
+
+! Use light gray widgets with a white-background file browser
+Geant++*background:		gray
+Geant++*dirlist*background:	white
+Geant++*foreground:		black
+
+! use decent fonts
+Geant++*XmText*fontList:	*-courier-medium-r-normal-*-120-*
+Geant++*XmTextField*fontList:	*-courier-medium-r-normal-*-120-*
+Geant++*kxtermFont:		*-helvetica-medium-r-normal-*-120-*
+Geant++*kxtermTextFont:		*-courier-medium-r-normal-*-120-*
+Geant++*dirlist*fontList:	*-helvetica-medium-r-normal-*-120-*
+Geant++*matrix.fontList:	*-helvetica-medium-r-normal-*-120-*
+Geant++*helpFont:		*-courier-medium-r-normal-*-120-*
+Geant++*fontList:		*-helvetica-medium-r-normal-*-120-*
+
+! some color for the browser icons:
+
+! directory-like things
+Geant++*dirlist*dir*iconForeground:		blue
+Geant++*dirlist*DirFile*iconForeground:		blue
+Geant++*dirlist*DirUpFile*iconForeground:	blue
+Geant++*dirlist*Menu*iconForeground:		blue
+
+! executable-like things
+Geant++*dirlist*Cmd*iconForeground:		turquoise
+Geant++*dirlist*MacFile*iconForeground:		turquoise
+Geant++*dirlist*ExFile*iconForeground:		turquoise
+
+! disabled things
+Geant++*dirlist*InvCmd*iconForeground:		gray
+Geant++*dirlist*NoFile*iconForeground:		gray
+
+! various colors for histograms and ntuples
+Geant++*dirlist*1d*iconForeground:		DarkGoldenrod3
+Geant++*dirlist*2d*iconForeground:		DeepPink3
+Geant++*dirlist*ntuple*iconForeground:		SteelBlue3
+Geant++*dirlist*pict*iconForeground:		green4
+Geant++*dirlist*chain*iconForeground:		blue
+Geant++*dirlist*entry*iconForeground:		OrangeRed

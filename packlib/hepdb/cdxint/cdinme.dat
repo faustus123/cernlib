@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/28 16:24:49  mclareni
+* Initial revision
+*
+*
+#if defined(CERNLIB__CDF)
+>Name CDINME
+ 
+>Menu HEPDB
+>Guidance
+HEPDB Interactive commands
+#endif

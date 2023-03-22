@@ -1,0 +1,12 @@
+# SCCS ID: Makefile.sgi 1.7 3/1/94
+#
+# Makefile for nirvana utilities (Silicon Graphics version)
+#
+CC=cc
+#CFLAGS=-g -DFUNCPROTO -DXTFUNCPROTO
+CFLAGS=-O -DFUNCPROTO -DXTFUNCPROTO
+LIBS= -lm -lXm -lXt -lX11 -lPW
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system
+SCCS=xxxx Use sccs on ultrix system
+
+include Makefile.common

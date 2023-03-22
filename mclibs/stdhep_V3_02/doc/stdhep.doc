@@ -1,0 +1,935 @@
+							October 13, 1995
+
+      This file contains a list of StdHep include files and routines.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> include files <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+   (stdhep.inc)
+
+      INTEGER NMXHEP
+      PARAMETER (NMXHEP=4000)
+      COMMON/HEPEVT/NEVHEP,NHEP,ISTHEP(NMXHEP),IDHEP(NMXHEP),
+     &JMOHEP(2,NMXHEP),JDAHEP(2,NMXHEP),PHEP(5,NMXHEP),VHEP(4,NMXHEP)
+      INTEGER NEVHEP,NHEP,ISTHEP,IDHEP,JMOHEP,JDAHEP
+      DOUBLE PRECISION PHEP,VHEP
+      SAVE /HEPEVT/
+C
+      COMMON/HEPEV2/NMULTI,JMULTI(NMXHEP)
+      INTEGER NMULTI,JMULTI
+      SAVE /HEPEV2/
+
+C...      NEVHEP       - event number
+C...      NHEP         - number of entries in this event
+C...      ISTHEP(..)   - status code
+C...      IDHEP(..)    - particle ID, P.D.G. standard
+C...      JMOHEP(1,..) - position of mother particle in list
+C...      JMOHEP(2,..) - position of second mother particle in list
+C...      JDAHEP(1,..) - position of first daughter in list
+C...      JDAHEP(2,..) - position of last daughter in list
+C...      PHEP(1,..)   - x momentum in GeV/c
+C...      PHEP(2,..)   - y momentum in GeV/c
+C...      PHEP(3,..)   - z momentum in GeV/c
+C...      PHEP(4,..)   - energy in GeV
+C...      PHEP(5,..)   - mass in GeV/c**2
+C...      VHEP(1,..)   - x vertex position in mm
+C...      VHEP(2,..)   - y vertex position in mm
+C...      VHEP(3,..)   - z vertex position in mm
+C...      VHEP(4,..)   - production time in mm/c
+
+C	ISTHEP = 0        null
+C	ISTHEP = 1        final state particle
+C	ISTHEP = 2        intermediate state
+C	ISTHEP = 3        documentation line
+C	ISTHEP = 4-10     reserved for future use
+C	ISTHEP = 11-200   reserved for specific model use
+C	ISTHEP = 201-...  reserved for users
+
+C...The following definitions apply for Isajet:
+C	JMOHEP(2,..)	contains the jet identification.
+C	ISTHEP = 11	for initial jets from the Isajet /PJETS/ common block
+C	ISTHEP = 12	for the W jet from the Isajet /PJETS/ common block
+C	ISTHEP = 13	for pair jets from the Isajet /PJETS/ common block
+C	ISTHEP = 21	for "final" partons from the Isajet /JETSET/ common block
+C	ISTHEP = 22	for decaying partons from the Isajet /JETSET/ common block
+
+C...      NMULTI       - number of interactions in the list
+C...      JMULTI(..)   - multiple interaction number
+C
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+  (stdcm1.inc)
+
+C   STDECOM  - center-of-mass energy
+C   STDXSEC  - cross-section
+C   STDSEED1 - random number seed
+C   STDSEED2 - random number seed
+C   NEVTREQ  - number of events to be generated
+C   NEVTGEN  - number of events actually generated
+C   NEVTWRT  - number of events written to output file
+C
+      REAL STDECOM,STDXSEC
+      DOUBLE PRECISION STDSEED1,STDSEED2
+      INTEGER NEVTREQ,NEVTGEN,NEVTWRT
+      COMMON /STDCM1/ STDECOM,STDXSEC,STDSEED1,STDSEED2,
+     1                NEVTREQ,NEVTGEN,NEVTWRT
+
+---------------------------------------------------------------------------
+  (stdlun.inc)
+
+C The logical unit numbers used by HEPWRT, HEPRD, HEPZRD, HEPZWRT and HEPLST 
+C	LNHWRT - output unit for standard format events
+C	LNHRD  - input unit for standard format events
+C	LNHOUT - lineprinter output unit
+C	LNHDCY - input unit for standard decay table
+C	         (not yet implemented)
+C	LNHRDM - list of input unit numbers to be used if reading multiple
+C		 input files
+C	IXDRSTR - list of xdr I/O streams
+
+      integer lnhwrt,lnhrd,lnhout,lnhdcy,lnhrdm,ixdrstr
+      common/heplun/lnhwrt,lnhrd,lnhout,lnhdcy,lnhrdm(15)
+      common/stdstr/ixdrstr(15)
+      save /heplun/,/stdstr/
+
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> general routines <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE HEPLST(MLST)
+
+C...Purpose: to list an event from the standard common block.
+C
+C... MLST = 1   -- print all parameters except vertex
+C... MLST = 2   -- print all parameters, including vertex
+
+---------------------------------------------------------------------------
+      SUBROUTINE HEPTREE
+
+C...Purpose: to write the tree structure of an event 
+C...         from the standard common block.
+C
+
+
+---------------------------------------------------------------------------
+      SUBROUTINE HEPNAM(ID,CHAU)
+
+C...Purpose: to give the particle/parton name as a character string.
+
+C       ID   = particle ID
+C       CHAU = particle name
+
+      CHARACTER CHAU*20
+
+
+---------------------------------------------------------------------------
+     INTEGER FUNCTION HEPCMP(ID)
+
+C...Purpose: to compress the standard ID codes for use in mass and decay
+C...arrays; also to check whether a given code actually is defined.
+
+C      ID     = particle ID
+C      HEPCMP = compressed index
+
+---------------------------------------------------------------------------
+      INTEGER FUNCTION HEPCHG(ID)
+
+C...Purpose: to give three times the charge for a particle/parton.
+
+C      ID     = particle ID
+C      HEPCHG = particle charge times 3
+
+---------------------------------------------------------------------------
+      FUNCTION STDCHG(ID)
+
+C...Purpose: to give the charge for a particle/parton.
+
+C      ID     = particle ID
+C      STDCHG = particle charge (real number)
+
+---------------------------------------------------------------------------
+      subroutine stdlst
+C
+C    list particles known to StdHep 
+C
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>> machine independent binary I/O - Fortran binding <<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      subroutine stdxrinit(filename,ntries,istream,lok)
+c
+c  initialize xdr reading
+c
+c	filename = output file
+c	ntries = estimate of events to be read
+C	istream = number of this input stream (position in array ixdrstr)
+C	lok = 0 if no problems were encountered
+C
+---------------------------------------------------------------------------
+      subroutine stdxropen(filename,ntries,istream,lok)
+c
+c  open xdr input file - called by stdxrinit
+c
+c	fills ixdrstr array
+C	istream = number of this input stream (position in array ixdrstr)
+c
+---------------------------------------------------------------------------
+      subroutine stdxrd(ilbl,istream,lok)
+
+C...Purpose: to read the next xdr record
+C
+C       returns ilbl & lok
+C
+C		ilbl = 1   - standard HEPEVT common block
+C		ilbl = 2   - standard HEPEVT common block and HEPEV2
+C		ilbl = 100 - STDHEP begin run record
+C		ilbl = 200 - STDHEP end run record
+C
+C		lok = 0 if no problems were encountered
+C
+C	istream = number of this input stream (position in array ixdrstr)
+---------------------------------------------------------------------------
+      subroutine stdxrdm(ilbl,istream,lok)
+
+C...Purpose: to read the next xdr record
+C...         handle multiple input streams
+C
+C       returns ilbl & lok
+C
+C		ilbl = 1   - standard HEPEVT common block
+C		ilbl = 2   - standard HEPEVT common block and HEPEV2
+C		ilbl = 100 - STDHEP begin run record
+C		ilbl = 200 - STDHEP end run record
+C
+C		lok = 0 if no problems were encountered
+C
+C	istream = number of this input stream (position in array ixdrstr)
+
+---------------------------------------------------------------------------
+      subroutine stdzero
+
+C...Purpose: to zero the standard common block.
+C
+C   This routine must be called by the user if HEPRDM or stdxrdm is used.
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+      subroutine stdxwinit(filename,title,ntries,istream,lok)
+c
+c  initialize xdr output file
+c  WARNING:  this routine cannot be used if you want to write anything
+c            besides stdhep records
+c
+c		filename = output file
+c		title = short description of file contents
+c		ntries = estimate of events to be written
+C		lok = 0 if no problems were encountered
+C	istream = number of this input stream (position in array ixdrstr)
+c
+---------------------------------------------------------------------------
+      subroutine stdxwopen(filename,title,ntries,istream,lok)
+c
+c  open xdr output file - called by stdxwinit
+c  WARNING:  this routine cannot be used if you want to write anything
+c            besides stdhep records
+c
+c	fills ixdrstr array
+C	istream = number of this input stream (position in array ixdrstr)
+c
+---------------------------------------------------------------------------
+      subroutine stdxwrt(ilbl,istream,lok)
+
+C...Purpose: to write an xdr record
+C
+C	if ilbl = 1	write HEPEVT common block
+C	   ilbl = 2	write HEPEVT common block and HEPEV2 common block
+C          ilbl = 100   write STDHEP begin run record
+C          ilbl = 200	write STDHEP end run record
+C	   otherwise,	don't do anything
+C
+C	lok = 0 if no problems were encountered
+C	istream = number of this input stream (position in array ixdrstr)
+
+---------------------------------------------------------------------------
+      subroutine stdxend(istream)
+c
+c  end xdr I/O and close stream
+c
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>> machine independent binary I/O - C binding <<<<<<<<<<<<<<<<<
+-------------------------------------------------------------------------------
+int StdHepXdrReadInit(char *filename, int ntries, int ist)
+/*   
+  initialize xdr reading
+
+	filename = output file
+	ntries = estimate of events to be read
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+----------------------------------------------------------------------
+int StdHepXdrReadOpen(char *filename, int ntries, int ist)
+/*   
+  open xdr input file - called by StdHepXdrReadInit
+
+	fills ixdrstr array
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+-------------------------------------------------------------------------------
+int StdHepXdrRead(int *ilbl, int ist)
+/*   
+ Purpose: to read the next xdr record
+
+       returns ilbl 
+		ilbl = 1   - standard HEPEVT common block
+		ilbl = 2   - standard HEPEVT common block and HEPEV2
+		ilbl = 100 - STDHEP begin run record
+		ilbl = 200 - STDHEP end run record
+	ist = number of this input stream (position in array ixdrstr)
+
+  return int is 0 if no problems were encountered
+*/
+-------------------------------------------------------------------------------
+int StdHepXdrReadMulti(int *ilbl, int ist)
+/*   
+ Purpose: to read the next xdr record
+          handle multiple input streams
+       returns ilbl 
+		ilbl = 1   - standard HEPEVT common block
+		ilbl = 2   - standard HEPEVT common block and HEPEV2
+		ilbl = 100 - STDHEP begin run record
+		ilbl = 200 - STDHEP end run record
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+int StdHepXdrWriteInit(char *filename, char *title, int ntries, int ist)
+/*   
+  initialize xdr output file
+  WARNING:  this routine cannot be used if you want to write anything
+            besides stdhep records
+
+	filename = output file
+	title = short description of file contents
+	ntries = estimate of events to be written
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+-------------------------------------------------------------------
+int StdHepXdrWriteOpen(char *filename, char *title, int ntries, int ist)
+/*   
+  open xdr output file - called by StdHepXdrWriteInit
+  WARNING:  this routine cannot be used if you want to write anything
+            besides stdhep records
+
+	fills ixdrstr array
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+--------------------------------------------------------------------------
+int StdHepXdrWrite(int ilbl, int ist)
+/*   
+  Purpose: to write an xdr record
+
+	if ilbl = 1	write HEPEVT common block
+	   ilbl = 2	write HEPEVT common block and HEPEV2 common block
+           ilbl = 100   write STDHEP begin run record
+           ilbl = 200	write STDHEP end run record
+	   otherwise,	don't do anything
+
+	ist = number of this input stream (position in array ixdrstr)
+  return int is 0 if no problems were encountered
+*/
+---------------------------------------------------------------------------
+void StdHepXdrEnd(int ist)
+/*  
+    end xdr I/O and close stream 
+	ist = number of this input stream (position in array ixdrstr)
+*/
+---------------------------------------------------------------------------
+void StdHepZero(void)
+/*  
+   zero the standard common block.
+   This routine must be called by the user if StdHepXdrReadMulti is used.
+*/
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>> native mode binary I/O <<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE HEPRD(ILBL,LOK)
+
+C...Purpose: to read a buffer or an event from the standard common block.
+C
+C       returns ILBL & LOK
+C
+C		ILBL = 1   - standard HEPEVT common block
+C		ILBL = 100 - STDHEP begin run record
+C		ILBL = 101 - PYTHIA begin run record
+C		ILBL = 102 - JETSET begin run record
+C		ILBL = 103 - HERWIG begin run record
+C		ILBL = 104 - ISAJET begin run record
+C		ILBL = 105 - QQ begin run record
+C		ILBL = 200 - STDHEP end run record
+C		ILBL = 201 - PYTHIA end run record (not implemented)
+C		ILBL = 202 - JETSET end run record (not implemented)
+C		ILBL = 203 - HERWIG end run record (not implemented)
+C		ILBL = 204 - ISAJET end run record
+C		ILBL = 205 - QQ end run record     (not implemented)
+C               if ILBL is anything else, read the next record into a buffer
+C
+C		LOK = 0 if no problems were encountered
+
+C	HEPRD calls STDZERO
+---------------------------------------------------------------------------
+      SUBROUTINE HEPWRT(ILBL,LOK)
+
+C...Purpose: to write a buffer or an event from the standard common block.
+C
+C	IF ILBL = 1	write HEPEVT common block
+C          ILBL = 100   write STDHEP begin run record
+C          ILBL = 101	write PYTHIA begin run record
+C          ILBL = 102	write JETSET begin run record
+C          ILBL = 103	write HERWIG begin run record
+C          ILBL = 104	write ISAJET begin run record
+C          ILBL = 105	write QQ begin run record
+C          ILBL = 200	write STDHEP end run record
+C          ILBL = 201	write PYTHIA end run record (not implemented)
+C          ILBL = 202	write JETSET end run record (not implemented)
+C          ILBL = 203	write HERWIG end run record (not implemented)
+C          ILBL = 204	write ISAJET end run record
+C          ILBL = 205	write QQ end run record     (not implemented)
+C	   otherwise,	write buffer
+C
+C	LOK = 0 if no problems were encountered
+
+      INTEGER I,ILBL,LOK
+
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+      SUBROUTINE HEPRDM(ILBL,LOK,IUN)
+
+C...Purpose: to read a buffer or an event from the standard common block.
+C   This routine is the same as heprd, except that it allows the user
+C   to fake multiple interactions by reading several events into the 
+C   HEPEVT common block.
+C
+C       returns ILBL & LOK
+C
+C		ILBL = 1   - standard HEPEVT common block
+C		ILBL = 100 - STDHEP begin run record
+C		ILBL = 101 - PYTHIA begin run record
+C		ILBL = 102 - JETSET begin run record
+C		ILBL = 103 - HERWIG begin run record
+C		ILBL = 104 - ISAJET begin run record
+C		ILBL = 105 - QQ begin run record
+C		ILBL = 200 - STDHEP end run record
+C		ILBL = 201 - PYTHIA end run record (not implemented)
+C		ILBL = 202 - JETSET end run record (not implemented)
+C		ILBL = 203 - HERWIG end run record (not implemented)
+C		ILBL = 204 - ISAJET end run record
+C		ILBL = 205 - QQ end run record     (not implemented)
+C
+C		LOK = 0 if no problems were encountered
+C		IUN = file to read this event from (index to LNHRDM)
+C
+
+      INTEGER ILBL,LOK,IUN
+
+C	HEPRDM relies on the user to call STDZERO
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> zebra I/O <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE HEPZRD(LOK)
+C
+C...read an event from a zebra FZ file
+C
+C	LOK = 0 if no problems were encountered
+
+---------------------------------------------------------------------------
+      SUBROUTINE HEPZWRT(LOK)
+C
+C... write an event in zebra FZ format
+C
+C	LOK = 0 if no problems were encountered
+
+---------------------------------------------------------------------------
+      SUBROUTINE HEPZINIT
+C
+C   Initialize HEPZEB (event data Zebra common)
+C
+
+---------------------------------------------------------------------------
+      SUBROUTINE HPZFLB
+C
+C  create and fill zebra data banks
+C
+C  called by HEPZWRT
+---------------------------------------------------------------------------
+      SUBROUTINE HPZFLC
+C
+C...fill HEPEVT from zebra banks
+C
+C  called by HEPZRD
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> utility routines <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE STDQUARKLST(IQ,NQRK,LSIZE,LQRK)
+
+C...Search the HEPEVT common block for all mesons and baryons with
+C...quark content IQ
+C
+C     IQ  = quark type
+C     NQRK = number of particles with quark type IQ
+C     LQRK(LSIZE) = list of particles with quark type IQ
+
+      INTEGER IQ,NQRK,LSIZE
+      INTEGER LQRK(LSIZE)
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDPARENTLST(IP,NPRNT,LSIZE,LPRNT)
+
+C...Search the HEPEVT common block for all ancestors of IP
+C
+C     IP = index to HEPEVT common block
+C     NPRNT = number of ancestors found
+C     LPRNT(LSIZE) = list of ancestors of IP
+
+      INTEGER IP,NPRNT,LSIZE
+      INTEGER LPRNT(LSIZE)
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDPARENT(IP,IPC,LYN)
+
+C...Is IPC a parent of IP
+C
+C       IP and IPC are indices to the HEPEVT common block
+C
+C	LYN = true/false
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDDAUTRLST(IP,NDAU,LSIZE,LDTR)
+
+C...Search the HEPEVT common block for the immediate daughters of IP
+C
+C     IP = index to HEPEVT common block
+C     NDAU = number of daughters found
+C     LDTR(LSIZE) = list of daughters of IP
+
+      INTEGER IP,NDAU,LSIZE
+      INTEGER LDTR(LSIZE)
+
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDDSCNDLST(IP,ND2,LSZ2,LD2)
+
+C...Search the HEPEVT common block for all the descendants of IP
+C
+C     IP = index to HEPEVT common block
+C     ND2 = number of descendants found
+C     LD2(LSZ2) = list of descendants of IP
+
+      INTEGER IP,ND2,LSZ2
+      INTEGER LD2(LSZ2)
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDSTDSCLST(IP,NDAU,LSIZE,LDTR)
+
+C...Search the HEPEVT common block for all the stable descendants of IP
+C
+C     IP = index to HEPEVT common block
+C     NDAU = number of stable descendants found
+C     LDTR(LSIZE) = list of stable descendants of IP
+
+      INTEGER IP,NDAU,LSIZE
+      INTEGER LDTR(LSIZE)
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDCHGDSCLST(IP,NDAU,LSIZE,LDTR)
+
+C...Search the HEPEVT common block for all the charged, stable descendants of IP
+C
+C     IP = index to HEPEVT common block
+C     NDAU = number of charged, stable descendants found
+C     LDTR(LSIZE) = list of charged, stable descendants of IP
+
+      INTEGER IP,NDAU,LSIZE
+      INTEGER LDTR(LSIZE)
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDDAUTR(IP,IDC,LYN)
+
+C...Is IDC a daughter of IP
+C
+C       IP and IDC are indices to the HEPEVT common block
+C
+C	LYN = true/false
+
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDQUARKCNT(IT,IQ,IRET,IPAR)
+
+C...Find out if particle IT or any of it's parents contain quark IQ
+C...    IT = index to HEPEVT common block
+C...    IQ = quark type 
+C
+C...	IRET = 0	no match
+C...	IRET = 1	this particle contains quark IQ
+C...	IRET = 2	parent IPAR contains quark IQ
+C...	IPAR = 0 unless IRET = 2
+
+      INTEGER IT,IQ,IRET,IPAR
+---------------------------------------------------------------------------
+      SUBROUTINE STDQUARKS(IT,KQ1,KQ2,KQ3,KQX,KQJ)
+
+C...Get constituent quarks of particle IT
+C
+C      IT = index to HEPEVT common block
+C      For particle ID, +/- IJKLM
+C            KQX = I = to differentiate otherwise identically named particles
+C            KQ3 = J = quark
+C            KQ2 = K = quark
+C            KQ1 = L = quark
+C            KQJ = M = 2*Jspin + 1
+
+      INTEGER IT,KQX,KQ3,KQ2,KQ1,KQJ
+---------------------------------------------------------------------------
+      SUBROUTINE STDSPIN(IT,JSP)
+
+C...Get the spin of particle IT
+C
+C      IT = index to HEPEVT common block
+C      For particle ID, +/- IJKLM
+C            KQJ = M = 2*Jspin + 1
+C      JSP = Jspin
+
+      INTEGER IT
+      REAL JSP
+---------------------------------------------------------------------------
+      SUBROUTINE STDCQUARKS(IT,KQ1,KQ2,KQ3,KQX,KQJ)
+
+C...Get signed constituent quarks of particle IT
+C
+C      IT = index to HEPEVT common block
+C      For particle ID, +/- IJKLM
+C            KQX = I = to differentiate otherwise identically named particles
+C            KQ3 = J = quark
+C            KQ2 = K = quark
+C            KQ1 = L = quark
+C            KQJ = M = 2*Jspin + 1
+
+      INTEGER IT,KQX,KQ3,KQ2,KQ1,KQJ
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+      CHARACTER*(*) FUNCTION STDEXPNAME(IT,LMX)
+
+C...Purpose: get the padded particle name
+C...         used by event list subroutines
+C
+C      IT = index to HEPEVT common block
+C      LMX = lenght of character variable to be filled
+
+      INTEGER LMX,IT
+---------------------------------------------------------------------------
+      SUBROUTINE STDVERSN
+C
+C...print STDHEP version number
+C
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDSORT
+
+C...sort HEPEVT by daughter list
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDROTBOOST(THE,PHI,BEX,BEY,BEZ)
+*
+* modified version of LUROBO from JETSET to work with STDHEP common block
+* Doug Wright, March 1994
+*
+* JETSET feature that is not supported: MSTU(33)=1 is used to set 
+*        the vertex to zero before boosting
+*
+C...Purpose: to perform rotations and boosts.
+
+      REAL THE,PHI,BEX,BEY,BEZ
+
+C...Entry for specific range and double precision boost.
+      ENTRY STDDBROTB(IMI,IMA,THE,PHI,DBEX,DBEY,DBEZ)
+
+      INTEGER IMI,IMA
+      DOUBLE PRECISION DBEX,DBEY,DBEZ
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Geant interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE HEP2GEANT
+************************************************************************
+*     
+*     Put all undecayed STDHEP particles in GEANT KINE stack.
+*
+*     The first user word in the KINE structure is
+*     the STDHEP record number for the particle. 
+*     This permits a GEANT/HEP cross reference.
+*
+*     Remember STDHEP vertices are in mm's 
+*     and GEANT vertices are in cm's.
+*
+*     Particles unknown to GEANT are entered as geantino's.
+*     A warning message is also printed.
+*
+*     Doug Wright, LLNL   Nov 1993
+*     wright20@llnl.gov
+*
+*     July 94  D.Wright, NWHINE added, GEANTINO fixed
+*     Oct. 95  L.Garren, move particle id translation to gtran
+*
+************************************************************************
+---------------------------------------------------------------------------
+      integer function gtran(id,mconv)
+c
+c convert (mconv=1) from Geant numbering scheme to StdHep numbering scheme
+c      or (mconv=2) from StdHep numbering scheme to Geant numbering scheme
+c
+c
+c           id = particle identification number
+************************************************************************
+*
+*     Particles unknown to GEANT are entered as geantino's.
+*     A warning message is also printed.
+*
+*     Doug Wright, LLNL   Nov 1993
+*     wright20@llnl.gov
+*
+*     July 94  D.Wright, NWHINE added, GEANTINO fixed
+*
+************************************************************************
+
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Isajet interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE ISAHEP(MCONV)
+
+C...Purpose: to convert ISAJET event record contents to or from
+C...the standard event record common block.
+C...convert (MCONV=1) from ISAJET numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to ISAJET numbering scheme
+
+      INTEGER MCONV
+---------------------------------------------------------------------------
+      INTEGER FUNCTION ISTRAN(ID,MCONV)
+C...convert (MCONV=1) from ISAJET numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to ISAJET numbering scheme
+C...called by ISAHEP
+C
+C           ID = particle identification number
+
+      INTEGER ID,MCONV
+---------------------------------------------------------------------------
+      SUBROUTINE ISAPRTLST(JTLIS)
+C
+C      list defined particles for ISAJET
+C
+C  2/24/94  LAG  OBSOLETE - use ISAJET PRTLST subroutine
+C
+      INTEGER JTLIS
+---------------------------------------------------------------------------
+      SUBROUTINE HPTRLSTI
+
+C...writes a table of corresponding ISAJET and STDHEP particle ID's
+
+---------------------------------------------------------------------------
+      SUBROUTINE STDFLISXSEC
+
+C   fill stdhep common block 1 with Isajet information
+C
+C   STDECOM  - center-of-mass energy
+C   STDXSEC  - cross-section
+C   STDSEED1 - random number seed
+C   STDSEED2 - random number seed
+C   NEVTREQ  - number of events to be generated
+C   NEVTGEN  - number of events actually generated
+C   NEVTWRT  - number of events written to output file
+C
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Jetset interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE LUNHEP(MCONV)
+
+C...Purpose: to convert JETSET event record contents to or from
+C...the standard event record common block.
+C...convert (MCONV=1) from JETSET numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to JETSET numbering scheme
+
+      INTEGER MCONV
+---------------------------------------------------------------------------
+      INTEGER FUNCTION LUTRAN(ID,MCONV)
+C...convert (MCONV=1) from JETSET numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to JETSET numbering scheme
+C...called by LUNHEP
+C
+C           ID = particle identification number
+
+      INTEGER ID,MCONV
+---------------------------------------------------------------------------
+      SUBROUTINE HPTRLSTJ
+C
+C    compare particle ID for jetset and standard
+C
+---------------------------------------------------------------------------
+      SUBROUTINE STDFLPYXSEC(N1)
+
+C   fill stdhep common block 1 with Pythia information
+C
+C   STDECOM  - center-of-mass energy
+C   STDXSEC  - cross-section
+C   STDSEED1 - random number seed
+C   STDSEED2 - random number seed
+C   NEVTREQ  - number of events to be generated
+C   NEVTGEN  - number of events actually generated
+C   NEVTWRT  - number of events written to output file
+C
+C   N1 - number of events to be generated
+C
+      INTEGER N1
+
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Herwig interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE HWGHEP(MCONV)
+
+C...Purpose: to convert HERWIG event record contents to or from
+C...the standard event record common block.
+C...convert (MCONV=1) from HERWIG numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to HERWIG numbering scheme
+
+C...Transfer between single (STDHEP) and double (HERWIG) precision
+
+      INTEGER MCONV
+---------------------------------------------------------------------------
+      INTEGER FUNCTION HWTRAN(ID,MCONV)
+C...convert (MCONV=1) from HERWIG numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to HERWIG numbering scheme
+C...called by HWGHEP
+C
+C           ID = particle identification number
+
+      INTEGER ID,MCONV
+
+---------------------------------------------------------------------------
+      SUBROUTINE HPTRLSTH
+C
+C    compare particle ID for herwig and standard
+C
+---------------------------------------------------------------------------
+      SUBROUTINE STDFLHWXSEC
+
+C   fill stdhep common block 1 with Herwig information
+C
+C   STDECOM  - center-of-mass energy
+C   STDXSEC  - cross-section
+C   STDSEED1 - random number seed
+C   STDSEED2 - random number seed
+C   NEVTREQ  - number of events to be generated
+C   NEVTGEN  - number of events actually generated
+C   NEVTWRT  - number of events written to output file
+C
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> QQ interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE QQHEP(MCONV)
+
+C...Convert QQ event record to and from the HEPEVT common block
+C...convert (MCONV=1) from QQ numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to QQ numbering scheme
+C...     or (MCONV=3) from PDG numbering scheme to QQ numbering scheme
+C...                  but allow "stable" particles to decay
+
+      INTEGER MCONV
+---------------------------------------------------------------------------
+      INTEGER FUNCTION QQTRAN(ID,MCONV)
+C...convert (MCONV=1) from QQ numbering scheme to PDG numbering scheme
+C...     or (MCONV=2) from PDG numbering scheme to QQ numbering scheme
+C
+C           ID = particle identification number
+
+      INTEGER ID,MCONV
+---------------------------------------------------------------------------
+      SUBROUTINE STDDECAYQQ
+
+C...search HEPEVT list for particles which QQ can decay
+C...one by one, decay these particles and add the results to the HEPEVT common
+---------------------------------------------------------------------------
+      SUBROUTINE STDQQDCY(IT)
+
+C... decay particle IT via QQ and add the results to the HEPEVT common block
+C... called by STDDECAYQQ
+
+C       IT = index to HEPEVT common block
+
+      INTEGER IT
+---------------------------------------------------------------------------
+      SUBROUTINE STDZEROQQ
+C
+C... zero elements of QQTRAK, etc.
+---------------------------------------------------------------------------
+      SUBROUTINE STDQQADD(IHEP)
+
+C...add QQ tracks to HEPEVT common
+C...the first QQ particle corresponds to HEPEVT particle IHEP
+
+      INTEGER IHEP
+---------------------------------------------------------------------------
+      SUBROUTINE STDQQUSET
+
+C  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+C    Initialize QQ stuff
+C  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+---------------------------------------------------------------------------
+      SUBROUTINE HPTRLSTQ
+C
+C    compare particle ID for QQ and standard
+C
+---------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> PDG table interface <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+---------------------------------------------------------------------------
+      SUBROUTINE PDGRDTB
+C
+C   read mass and width table supplied by PDG
+C   fill two common blocks 
+C	PDGTBL - complete list of particles in PDG table
+C	STDTBL - list of particles in PDG table defined by STDHEP
+
+---------------------------------------------------------------------------
+      SUBROUTINE PDGPRTB(ITYP,LUN)
+C
+C   print mass and width table from appropriate common block
+C   actions:
+C	ITYP = 1	print table to LUN in STD format
+C	ITYP = 2	print table to LUN in PDG format
+
+      INTEGER ITYP,LUN
+---------------------------------------------------------------------------
+      INTEGER FUNCTION PDGTRAN(ID,MCONV)
+C...convert (MCONV=1) from PDG92 numbering scheme to STD numbering scheme
+C...     or (MCONV=2) from STD numbering scheme to PDG92 numbering scheme
+C...called by PDGRDTB
+C
+C           ID = particle identification number
+
+      INTEGER ID,MCONV
+---------------------------------------------------------------------------

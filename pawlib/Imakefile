@@ -1,0 +1,19 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+export LIB_SONAME := 2
+
+LIBDIRS= comis paw sigma
+SUBDIRS= $(LIBDIRS)
+
+MakeSubdirs($(SUBDIRS))
+
+SubdirLibraryTarget(pawlib,$(LIBDIRS))
+
+InstallLibrary(pawlib,$(CERN_LIBDIR))
+InstallSharedLibrary(pawlib,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+InstallIncludeSubdirs($(LIBDIRS))
+
+InstallBinSubdirs(paw)

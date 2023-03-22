@@ -1,0 +1,36 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 15:17:35  mclareni
+* Initial revision
+*
+*
+#if defined(CERNLIB_IBMVM)
+/*EXEC to run FATSIZE program*/
+Arg throng .
+If Strip(throng) = '' then exit
+'MAKEBUF'
+'QUERY TXTLIB (STACK'
+Pull . . txtlib
+if index(txtlib,'FAT') = 0 then 'EXEC CERNLIB FATLIB'
+'DROPBUF'
+'DROP F (QUIET)'
+'MAKEBUF'
+'LISTFILE CERN FATRZ * (STACK'
+Do queued()
+   Pull line
+   mode = word(line,3)
+   'DROP' mode '(QUIET)'
+   End
+'DROPBUF'
+If substr(throng,1,2) ^= 'FM' then throng = 'FM' || throng
+Signal on error
+'EXEC GIME 'throng' F (NONOTICE QUIET)'
+'DROP F (QUIET)'
+throng = substr(throng,3)
+'LOAD FATSIZE (NOMAP NOAUTO START)'
+ Exit
+Error:
+ Say 'Aaaarrrrrghhh!'
+#endif

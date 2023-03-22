@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:51:39  mclareni
+* Initial revision
+*
+*
+*  Version 1.08  930227  1.40
+Correct:      P=Z264   , D=GETARG        Treat quote-delimited strings
+                                         as single arguments
+              P=Z264   , D=IARGC         Ditto
+ 
+Add:          P=FCASPLIT                 New, until placed in KERNFOR
+ 

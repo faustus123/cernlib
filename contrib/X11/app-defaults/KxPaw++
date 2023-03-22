@@ -1,0 +1,13 @@
+! This file gives X defaults for KXterm when run by Paw++.
+! Use light gray widgets instead of the hideous default blue
+
+KxPaw++*background:		gray
+KxPaw++*dirlist*background:	gray90
+KxPaw++*foreground:		black
+
+! and decent fonts instead of "fixed"
+KxPaw++*fontList:		*-helvetica-medium-r-normal*-120-*
+KxPaw++*XmText*fontList:	*-courier-medium-r-normal*-120-*
+
+! and make the transcript pad a reasonable size
+KxPaw++*outputForm.height:	200

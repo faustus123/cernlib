@@ -1,0 +1,14 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 11:40:53  mclareni
+* Initial revision
+*
+*
+* Version 2.14   901031 15.30
+C- Introduce the following patches/flags:
+C   > SKAPACK   : source patch
+C   > FKAPACK   : flags  patch (renamed from KAFLAGS)
+C   > DKAPACK   : documentation patch
+C

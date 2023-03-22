@@ -1,0 +1,56 @@
+CDECK  ID>, JEDTYP.
+      FUNCTION JEDTYP (ITP)
+
+C-                                               NEAR-COPY OF  JARTPX
+C-    FIND C/C-TYPE, CHECK FOR C/C-CHARACTER SUBSTITUTION
+C-    EVEN IN CASE OF SUBSTITUTION, DO NOT CHANGE OLD CARD
+
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      PARAMETER      (IQBITW=32, IQBITC=8, IQCHAW=4)
+      COMMON /QMACH/ NQBITW,NQCHAW,NQLNOR,NQLMAX,NQLPTH,NQRMAX,QLPCT
+     +,              NQOCT(3),NQHEX(3),NQOCTD(3)
+      COMMON /EDTEXT/NEDVEC,MEDVEC(22),MEDDF(22), JEDDEF,JEDREP
+      COMMON /CCPARU/MCCTOU,JCCLOW,JCCTPX
+      COMMON /CCHCH/ IFORPL,NOTHCC,MORGCC(6),MREPCC(6)
+C--------------    END CDE                             --------------
+      DIMENSION    MM(4), ITP(9)
+
+      IT     = ITP(1)
+      JEDTYP = -1
+      CALL UBLOW (IT,MM,4)
+      IF (MM(1).EQ.IQPLUS)   GO TO 21
+      IF (NOTHCC.EQ.0)       RETURN
+
+C--                CHECK OTHER CONTROL CHAR
+
+      J = IUCOMP (MM(1),MORGCC(1),NOTHCC)
+      IF (J.EQ.0)            RETURN
+
+C--                IF SO, GO TO CHECK LEGAL PATCHY C/C
+
+      NEWCC = MREPCC(J)
+      MM(1) = IQPLUS
+      JCCLOW = 0
+      CALL CCTOUP (MM(2),3)
+      GO TO 23
+
+C----              SEEN CONTROL-CHAR   '+'
+
+   21 NEWCC = 0
+      JCCLOW = 0
+      CALL CCTOUP (MM(2),3)
+      IF (JCCLOW.EQ.0)       GO TO 24
+   23 CALL UBUNCH (MM(1),IT,4)
+   24 JTYP = IUCOMP (IT,MEDVEC,NEDVEC)
+      IF (JTYP.EQ.0)         RETURN
+      IF (NEWCC.NE.0)        GO TO 31
+   27 JEDTYP = JTYP - 1
+      RETURN
+
+C----              SUBSTITUTE REPLACEMENT CHAR.
+
+   31 IF (NEWCC.EQ.IQPLUS)   GO TO 27
+      RETURN
+      END

@@ -1,0 +1,8 @@
+# SCCS ID: Makefile.sgi 1.2 4/9/92
+#
+# Makefile for nirvana utilities (Silicon Graphics version)
+#
+CC=cc
+AR=ar
+CFLAGS = $(DEBUG) -DSYSV
+LIBS = -lXm -lXt -lX11 -lbsd -lm

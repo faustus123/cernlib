@@ -1,0 +1,11 @@
+CERNLIB 2022 Extensions
+
+Adding the flag ```CERNLIB_2022``` at compile time adds explicitly typed version of some frequently used functions, namely:
+
+* vzeroi, vzerol, vzeror and vzerod: integer, logical, real and double precision version of vzero
+* ucopyi, ucopyl, ucopyr and ucopyd: integer, logical, real and double precision version of ucopy
+* vfilli, vfilll, vfillr and vfilld:  integer, logical, real and double precision version of vfill
+* uzeroi, uzeror and uzerod:  integer, real and double precision version of uzero
+
+The main use of these is to reduce compiler warnings about different types used when calling these functions, as well as proper treatment of double precision arrays.
+

@@ -1,0 +1,44 @@
+name: CERNLIB on MacOSX
+
+on: [push, pull_request]
+
+jobs:
+  cmakeosx:
+    name: "CERNLIB on MacOSX-12 with cmake"
+    runs-on: macos-12
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run:  |
+        brew install wget coreutils gcc gnu-sed
+        which -a gcc || echo 0
+        which -a gcc12 || echo 0
+        which -a gcc-12 || echo 0
+        which -a gfortran12 || echo 0
+        which -a gfortran-12 || echo 0
+        brew install --cask xquartz
+        brew install openmotif
+        ls /usr/local/Cellar/openmotif/
+        sh CI/build.sh cmake tarball GNU-12 do 
+  imakeosx:
+    name: "CERNLIB on MacOSX-12 with imake"
+    runs-on: macos-12
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run:  |
+        brew install wget coreutils gcc gnu-sed
+        brew install imake makedepend
+        which -a gcc || echo 0
+        which -a gcc12 || echo 0
+        which -a gcc-12 || echo 0
+        which -a gfortran12 || echo 0
+        which -a gfortran-12 || echo 0
+        brew install --cask xquartz
+        brew install openmotif
+        ls /usr/local/Cellar/openmotif/
+        sh CI/build.sh imake tarball GNU-12 do 

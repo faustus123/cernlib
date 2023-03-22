@@ -1,0 +1,41 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+
+LIBDIRS= cspack epio fatmen ffread hbook hepdb kapack kuip \ @@\
+	 minuit zbook zebra
+
+SUBDIRS= $(LIBDIRS)
+
+TopOfPackage(packlib)
+
+SubdirLibraryTarget(packlib,$(LIBDIRS))
+
+InstallLibrary(packlib,$(CERN_LIBDIR))
+InstallLibraryAlias(packlib,packlib-shift,$(CERN_LIBDIR))
+InstallSharedLibrary(packlib,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+TestSubdirs($(LIBDIRS))
+
+#ifdef CERNLIB_VAXVMS
+SUBDIRS := $(SUBDIRS) vmslibfiles
+InstallLibSubdirs(vmslibfiles)
+#endif
+
+
+/* Build executables */
+#ifndef CERNLIB_VAXVMS
+
+InstallBinSubdirs(cspack fatmen hepdb kuip)
+
+#else
+
+InstallBinSubdirs(vmslibfiles cspack fatmen hepdb kuip)
+
+#endif
+INCLUDEDIRS= $(LIBDIRS)
+
+InstallIncludeSubdirs($(INCLUDEDIRS))
+
+DelegateTarget(bin/kuipc,kuip)

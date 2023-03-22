@@ -1,0 +1,550 @@
+#!/bin/bash
+
+# This script is a completely rewritten version of the cernlib script supplied
+# with the original CERNLIB source.  It now does recursive library dependency
+# checking, removes duplicate entries, and makes breakfast. (Well, not really.)
+# This script is provided under the GNU General Public License.
+
+# I have tried to maintain cross-platform compatibility, but I don't have
+# any other architectures handy to test things on, so it might have broken.
+# But this is not a big deal, since it's doubtful that someone would use
+# Debian packages on HP-UX, Solaris, etc. anyway.
+
+# Author: Kevin McCarty, 2002/06/12
+# Last revision 2007/01/08
+
+print_help() {
+	cat <<- EOF
+	Usage: cernlib [OPTIONS] LIBRARIES
+	List the linker options required to compile a CERNLIB program with the given
+	library dependencies.  Example: "cernlib -G Motif pawlib" on Linux outputs
+	"-Wl,-static -lpawlib-lesstif -lpawlib -lmathlib -lgraflib -lpacklib-lesstif
+	 -lgrafX11 -lpacklib -lkernlib -Wl,-dy -L/usr/X11R6/lib -lXbae -lXm -lXaw
+	 -llapack -lm -lXt -lX11 -lnsl -lcrypt -ldl -lgfortran".
+	
+	  -a <arch>	Specify an architecture, e.g. Linux (default), AIX, HP-UX, etc.
+	  -dy, -safe	Don't assume CERN libraries should be linked against statically.
+	  		This flag is also required when using the compiler -static flag.
+	  -G <driver>	Specify a graphics driver.  Options: X11, Motif, GPHIGS,
+	  		GKS, GL, GPR.  Only the first two are available on Linux.
+	  -P, -s	Ignored; for backwards compatibility.
+	  -u		Do not include arch-specific libraries in the output.
+	  -v <version>	Specify version of \$CERN_LEVEL.  This is meaningless unless
+	  		you have installed non-Debian versions of CERNLIB.  In that
+	                case you should export \$CERN or \$CERN_ROOT first.
+	  -?, --help	Print this help message and exit.
+	EOF
+}
+
+# Function to determine system name
+sysname() {
+	local ARCH
+	
+	[ -d /NextAdmin ] && ARCH="NeXT" || ARCH=`uname -s`
+        case $ARCH in
+                SunOS)  [ `uname -r | awk '{ print substr($1,1,1) }'` -ge 5 ] \
+                                && ARCH="SunSol"
+                        ;;
+                    *)  ;;
+        esac
+	echo $ARCH
+}
+
+# Function to find system-specific libraries
+# Usage: find_sysdeps [ $ARCH ]
+find_sysdeps() {
+	local ARCH SYSLIBS
+	
+	[ $# -lt 1 ] && ARCH=`sysname` || ARCH=$1
+	[ "$ARCH" = "default" ] && ARCH=`sysname`
+	SYSLIBS=""
+	
+	#     SGI needs -lsun, to see yellow pages 
+	#   As of 5.x, the yp version is in libc, so -lsun is no longer needed.
+	#     GF. 18-7-96
+	#     [ -f /usr/lib/libsun.a -o -f /usr/lib/libsun.so    ] \
+	#                                       && SYSLIBS="-lsun"
+	[ -f /usr/lib/libulsock.a -o -f /usr/lib/libulsock.so ] \
+						&& SYSLIBS="$SYSLIBS -lulsock"
+	#     Solaris, many things won't link without -lsocket -lnsl
+	if [ "$ARCH" = "SunSol" ] ; then
+	        [ -f /usr/lib/libw.so -o -f /usr/lib/libw.a ] \
+                                                && SYSLIBS="$SYSLIBS -lw"
+	        [ -f /usr/ccs/lib/libgen.so -o -f /usr/ccs/lib/libgen.a ] \
+                                                && SYSLIBS="$SYSLIBS -lgen"
+	        [ -f /usr/lib/libsocket.so -o -f /usr/lib/libsocket.a ] \
+                                                && SYSLIBS="$SYSLIBS -lsocket"
+	        [ -f /usr/lib/libnsl.so -o -f /usr/lib/libnsl.a ] \
+                                                && SYSLIBS="$SYSLIBS -lnsl"
+	        [ -f /usr/lib/libintl.so -o -f /usr/lib/libintl.a ] \
+                                                && SYSLIBS="$SYSLIBS -lintl"
+		SYSLIBS="$SYSLIBS -ldl"
+	fi
+
+	if [ "$ARCH" = "HP-UX" ] ; then
+		if   [ -f /usr/lib/libU77.a -o -f /usr/lib/libU77.sl ] ; then
+			SYSLIBS="$SYSLIBS -lU77"
+		elif [ -f /opt/fortran/lib/libU77.a ] ; then
+			SYSLIBS="$SYSLIBS /opt/fortran/lib/libU77.a"
+		elif [ -f /opt/fortran/lib/libU77.sl ] ; then
+			SYSLIBS="$SYSLIBS /opt/fortran/lib/libU77.sl"
+		fi
+
+		SYSLIBS="$SYSLIBS /usr/lib/libdld.sl"
+		[ -f /lib/pa1.1/libm.a ] && SYSLIBS="$SYSLIBS /lib/pa1.1/libm.a"
+	fi
+	
+	[ "$ARCH" = "AIX"   ] && SYSLIBS="$SYSLIBS -lld"
+	[ "$ARCH" = "Linux" ] && SYSLIBS="$SYSLIBS -lnsl -lcrypt -ldl -lgfortran"
+	[ "$ARCH" = "Darwin" ] && SYSLIBS="$SYSLIBS -ldl"
+
+	echo $SYSLIBS
+}
+
+# Function to find graphics libraries
+# Usage: find_grafdeps [ $DRIVER [ $ARCH ] ]
+find_grafdeps() {
+	local DRIVER ARCH GRAFLIBS
+	
+	[ $# -lt 1 ] && DRIVER=X11 || DRIVER=$1
+	[ $# -lt 2 ] && ARCH=`sysname` || ARCH=$2
+	[ "$DRIVER" = "default" ] && DRIVER=X11
+	[ "$ARCH" = "default" ] && ARCH=`sysname`
+	
+	case $ARCH in
+		AIX)
+			SYSGGL="-lfgl -lgl" ;
+			[ -f /usr/lib/libgP.a ] && SYSGGKS="-lgksco -lgP -lX11"
+			SYSGMOTIF="-lXm -lXt -lX11 -lPW"
+			;;
+		ALLIANT)
+			SYSGX11="-lX11 -lcurses -lm"
+			;;
+		HP-UX)
+			if [ -d /usr/lib/X11R5 -a -d /usr/lib/Motif1.2 ] ; then
+				X11="/usr/lib/X11R5"
+				Motif="/usr/lib/Motif1.2"
+				SYSGMOTIF="-L$Motif -lXm -L$X11 -lXt -lX11 -lm -lc -lPW"
+			else
+				X11="/usr/lib/X11R4"
+				Motif="/usr/lib/Motif1.1"
+				# Xm must appear late, else you get
+				# unresolved extrernals
+				SYSGMOTIF="-L$Motif -L$X11 -lXm -lXt -lX11 -lm -lc -lPW"
+			fi
+			SYSGX11="-L$X11 -lX11 -lm"
+			;;
+		IBMAIX)
+			SYSGX11="-lX11 -lm"
+			;;
+		IRIX)
+			SYSGX11="-lX11 -lbsd"
+			SYSGGL="-lfgl -lgl_s -lm -lbsd"
+			SYSGMOTIF="-lXm -lXt -lX11 -lPW"
+			;;
+		IRIX64)
+			SYSGX11="-lX11 -lbsd"
+			SYSGGL="-lfgl -lgl_s -lm -lbsd"
+			SYSGMOTIF="-lXm -lXt -lX11 -lPW"
+			;;
+		Linux)
+			SYSGX11=-lX11
+			SYSGMOTIF="-lXm -lXt -lX11"
+			XDIR=/usr/X11R6/lib
+			XDIR64=/usr/X11R6/lib64
+			if [ -d $XDIR64 ] ; then
+				SYSGX11="-L$XDIR64 $SYSGX11"
+				SYSGMOTIF="-L$XDIR64 $SYSGMOTIF"
+			fi
+			if [ -d $XDIR ] ; then
+				SYSGX11="-L$XDIR $SYSGX11"
+				SYSGMOTIF="-L$XDIR $SYSGMOTIF"
+			fi
+			;;
+		Darwin)
+			SYSGX11=-lX11
+			SYSGMOTIF="-lXm -lXt -lXp -lXext -lX11 -lSM -lICE"
+			XDIR=/usr/X11R6/lib
+			XDIR64=/usr/X11R6/lib64
+			if [ -d $XDIR64 ] ; then
+				SYSGX11="-L$XDIR64 $SYSGX11"
+				SYSGMOTIF="-L$XDIR64 $SYSGMOTIF"
+			fi
+			if [ -d $XDIR ] ; then
+				SYSGX11="-L$XDIR $SYSGX11"
+				SYSGMOTIF="-L$XDIR $SYSGMOTIF"
+			fi
+			;;
+
+		NeXT)
+			SYSGX11="/usr/lib/X11/libX11.r"
+			SYSGMOTIF="-lXm -lXt /usr/lib/X11/libX11.r"
+			;;
+		OSF1)
+			SYSGX11="-lX11 -ldnet_stub"
+			SYSGMOTIF="-lXm -lXt -lX11 -ldnet_stub -lPW -lXmu"
+			;;
+		SunOS)
+			[ -d /usr/motif/lib ] && Motif="-L/usr/motif/lib" \
+				|| Motif=" "
+			if [ -d /usr/motif12/usr/lib ] ; then
+				Motif="-L/usr/motif12/usr/lib"
+				# motif12 needs X11R5 from usr/local/lib
+				X11="-L/usr/local/lib"
+			else
+				X11=""
+			fi
+			SYSGMOTIF="$Motif -lXm $X11 -lXt -lX11"
+			[ -f /usr/lib/libgks77.a ] && \
+				SYSGGKS="-lgks77 -lgks -lsuntool -lsunwindow -lpixrect -lm"
+			;;
+		SunSol)
+			[ -d /usr/motif/lib ] && Motif="-L/usr/motif/lib" \
+				|| Motif=" "
+			[ -d /usr/motif12/usr/lib ] && \
+				Motif="-L/usr/motif12/usr/lib"
+			[ -d /usr/dt/lib ] && \
+				Motif="-L/usr/dt/lib -R/usr/dt/lib -Bdynamic"
+			[ -d /usr/openwin/lib ] && \
+				X11="-L/usr/openwin/lib" || X11=""
+			SYSGX11="$X11 -Bdynamic -lX11"
+			SYSGMOTIF="$Motif -lXm $X11 -Bdynamic -lXt -lX11"
+			[ -f /usr/lib/libgks77.a ] && \
+				SYSGGKS="-lgks77 -lgks -lsuntool -lsunwindow -lpixrect -lm"
+			;;
+		ULTRIX)
+			[ -f /usr/lib/libGKS3D.a ] && \
+				SYSGGKS="-lGKS3Dforbnd -lGKS3D -lddif -ldwt -lc -lX11 -lcursesX -lm"
+			;;
+		DomainOS)
+			SYSGX11=""
+			SYSGMOTIF="-L/usr/lib/X11 -lXm -lXt -lX11 -lm"
+			;;
+	esac # case `sysname` in
+	[ -z "$SYSGX11" ] && SYSGX11="-lX11"
+
+	GRAFLIBS=""
+	case $DRIVER in
+		GL)	GRAFLIBS="$GRAFLIBS $SYSGGL"  ;;
+		GPR)	GRAFLIBS="$GRAFLIBS $SYSGGPR" ;;
+		X11)	GRAFLIBS="$GRAFLIBS $SYSGX11" ;;
+		Lesstif|Motif)
+			[ -z "$SYSGMOTIF" ] && SYSGMOTIF="-lXm -lXt $SYSGX11"
+			GRAFLIBS="$GRAFLIBS $SYSGMOTIF"
+			;;
+		GPHIGS)
+			[ -z "$SYSGPHIGS" ] && \
+				SYSGPHIGS="_-L$CERN/phigs/$_ver/lib _-lgphigsf2c _-lgphigsc"
+			GRAFLIBS="$GRAFLIBS $SYSGPHIGS"
+			;;
+		GKS)
+			[ -z "$SYSGGKS" ] && \
+				SYSGGKS="_-L$CERN/gks/$_ver/lib _-lGKS _-lGKSdriv $SYSGX11"
+			GRAFLIBS="$GRAFLIBS $SYSGGKS"
+			;;
+		--)	break ;;
+		*)	break ;;
+	esac # case $DRIVER in
+
+	echo $GRAFLIBS
+}
+
+# Function to find a library
+find_library() {
+	# $1 = library to find
+
+	# if $2 = "cern", search only in CERNLIB dirs if $CERN exists.
+	# This behavior is currently commented out since it causes breakage
+	# when compiling Debianized out-of-tree CERNLIB modules. :-(
+
+	local dirlist="/lib /usr/lib /usr/X11R6/lib /lib64 /usr/lib64 /usr/X11R6/lib64 @LIBPREFIX@"
+	if [ ! "$CERN" = "@PREFIX@" ] ; then
+		#if [ "$2" = cern ] ; then
+		#	dirlist="$CERN_ROOT/shlib $CERN_ROOT/lib"
+		#else
+			dirlist="$dirlist $CERN_ROOT/shlib $CERN_ROOT/lib"
+		#fi
+	fi
+	for ext in so a ; do for dir in $dirlist ; do
+		if [ -e "$dir/lib$1.$ext" ] ; then return 0 ; fi
+	done ; done
+	return 1
+}
+
+# Function to calculate library dependencies for given library names
+# Usage: depend $DRIVER $ARCH $libs
+depend() {
+	local DEPS=""
+	local d=$1 ; shift
+	local a=$1 ; shift
+
+	while [ $# -gt 0 ] ; do
+		case $1 in
+			# obsolete libnames that no longer exist AFAIK
+			bvsl|mpalib)
+				DEPS="$DEPS `depend $d $a mathlib`" ;;
+			genlib)
+				DEPS="$DEPS `depend $d $a phtools`" ;;
+			
+			# current libraries
+			blas)
+				if [ "$a" = "Darwin" ] ; then
+					DEPS="$DEPS -lcblas -lf77blas -latlas"
+				else
+					DEPS="$DEPS -l$1"
+				fi
+				DEPS="$DEPS -lm"
+				;;
+			cojets|pdflib804|phtools)
+				DEPS="$DEPS _-l$1 `depend $d $a mathlib`" ;;
+			eurodec|kernlib|photos202)
+				DEPS="$DEPS _-l$1 -lm" ;;
+			geant321)
+				if find_library jetset cern ; then
+					DEPS="$DEPS `depend $d $a jetset`"
+				fi
+				DEPS="$DEPS _-l$1 `depend Motif $a pawlib`" ;;
+			herwig59|isajet758)
+				DEPS="$DEPS _-l$1 `depend $d $a pdflib`" ;;
+			lapack*)
+				DEPS="$DEPS -llapack -lm"
+				if [ ! "$a" = Linux ] ; then
+					DEPS="$DEPS `depend $d $a blas`"
+				fi
+				;;
+			mathlib)
+				DEPS="$DEPS _-l$1 `depend $d $a lapack packlib`"
+				;;
+			packlib)
+				if find_library packlib-lesstif cern \
+					&& [ "$d" = Motif -o "$d" = Lesstif ]
+				then
+					DEPS="$DEPS _-lpacklib-lesstif \
+					_-lgrafX11 `find_grafdeps Motif $a`"
+				elif [ "$d" = X11 ] ; then
+					DEPS="$DEPS _-lgrafX11 \
+					`find_grafdeps X11 $a`"
+				fi
+				DEPS="$DEPS _-l$1 `depend $d $a kernlib`" ;;
+
+			# these are not in the Debian distribution of CERNLIB,
+			# but may be installed via the Debian packages 
+			# ancis and montecarlo-installer-data
+			ariadne)
+				DEPS="$DEPS _-l$1 `depend $d $a pythia6`" ;;
+			ariadne-p5)
+				DEPS="$DEPS _-l$1 `depend $d $a lepto`" ;;
+			jetset|pythia|fritiof)
+				DEPS="$DEPS _-l$1 -lm" ;;
+			lepto)
+				DEPS="$DEPS _-l$1 `depend $d $a pythia5 \
+					mathlib`" ;;
+			pythia5)
+				DEPS="$DEPS _-l$1 `depend $d $a jetset`" ;;
+				
+			# graphical libraries
+
+			GKS|gks)
+				DEPS="$DEPS `find_grafdeps GKS $a`" ;;
+			naglib)
+				DEPS="$DEPS _-L$CERN/nag/$_ver/lib _-l$1" ;;
+			graflib*)
+				local drv="`echo $1 | sed 's,/, ,g' | \
+					awk '{ print $2 }'`"
+				[ -z "$drv" ] && drv="$d" || d="$drv"
+				[ "$drv" = "default" -o "$drv" = "Motif" \
+					-o "$drv" = "Lesstif" ] && drv="X11"
+				DEPS="$DEPS _-lgraflib _-lgraf$drv \
+					`depend $d $a packlib` \
+					`find_grafdeps $d $a`"
+				;;
+			pawlib)
+				if find_library pawlib-lesstif cern \
+					&& [ "$d" = Motif -o "$d" = Lesstif ] ;
+				then
+					DEPS="$DEPS _-lpawlib-lesstif -lXbae -lXaw"
+				fi
+				DEPS="$DEPS _-l$1 \
+					`depend $d $a mathlib` \
+					`depend $d $a graflib/$d` \
+					`find_grafdeps $d $a`"
+				;;
+
+			# needed only for compiling libraries
+			grafX11)
+				DEPS="$DEPS _-l$1 `depend $d $a packlib` \
+					`find_grafdeps $d $a`" ;;
+			packlib-lesstif)
+				DEPS="$DEPS `depend Motif $a packlib` \
+					`find_grafdeps Motif $a`"  ;;
+			pawlib-lesstif)
+				DEPS="$DEPS `depend Motif $a pawlib` \
+					`find_grafdeps Motif $a`"  ;;
+				
+			# aliases
+			ar)	 DEPS="$DEPS `depend $d $a ariadne`"    ;;
+			arp5)	 DEPS="$DEPS `depend $d $a ariadne-p5`" ;;
+			geant)	 DEPS="$DEPS `depend $d $a geant321`"	;;
+			herwig)	 DEPS="$DEPS `depend $d $a herwig59`"	;;
+			isajet)  DEPS="$DEPS `depend $d $a isajet758`"	;;
+			pdflib)  DEPS="$DEPS `depend $d $a pdflib804`"	;;
+			photos)  DEPS="$DEPS `depend $d $a photos202`"	;;
+			pythia6) DEPS="$DEPS `depend $d $a pythia`"     ;;
+
+			# anything that we don't know what it is and doesn't
+			# start with a "-", turn into a library
+			*)	 DEPS="$DEPS -l$1"			;;
+		esac
+		shift
+	done
+
+	[ "$d" != default ] && DEPS="$DEPS `find_grafdeps $d $a`"
+	echo $DEPS
+}
+
+# Function to take a list of strings and prefix "-l" to any of them that
+# do not begin with "-"
+liblink() {
+	local LIST=""
+	while [ $# -gt 0 ] ; do
+		case $1 in
+			-*) LIST="$LIST $1"   ;;
+			*)  LIST="$LIST -l$1" ;;
+		esac
+		shift
+	done
+	echo $LIST
+}
+
+
+# Function to take a list of strings and remove all but the last occurrence
+# of each -l<libname> and all but the first occurrence of each other string
+uniquify() {
+	local RESULT="" RESULT2="" SEARCHDIRS="" LIBXBAE="" LIBXM="" LIBXAW=""
+
+	# CERN-related linker options have all been prepended with a "_";
+	# put them all first and remove the underscore.
+	for (( num=1 ; num <= $# ; num++ )) ; do
+		case ${!num} in
+			_*)	RESULT="$RESULT ${!num#_}" ;;
+			-L*)	SEARCHDIRS="$SEARCHDIRS ${!num}" ;;
+
+			# Note: Xbae, Xm and Xaw must appear in the following
+			# order: -lXbae -lXm -lXaw, so check for them separately
+			-lXbae) LIBXBAE=${!num} ;;
+			-lXm)	LIBXM=${!num} ;;
+			-lXaw)	LIBXAW=${!num} ;;
+
+			# All other libs or command flags go last
+			*)	RESULT2="$RESULT2 ${!num}" ;;
+		esac
+	done
+	LIBXM="$LIBXBAE $LIBXM $LIBXAW"
+
+	if [ -z "$_dynamic" ] ; then
+		RESULT="-Wl,-static $RESULT -Wl,-dy $SEARCHDIRS $LIBXM $RESULT2"
+	else
+		RESULT="$RESULT $SEARCHDIRS $LIBXM $RESULT2"
+	fi
+	set - $RESULT
+	RESULT=""
+	
+	# decrement and remove duplicate libnames
+	for (( num=$# ; num > 0 ; num-- )) ; do
+		case ${!num} in
+			-l*|-L*)
+				[ -z "`echo $RESULT | grep -- ${!num}`" ] && \
+					RESULT="${!num} $RESULT" ;;
+			*)	RESULT="${!num} $RESULT" ;;
+		esac
+	done
+
+	set - $RESULT
+	RESULT=""
+
+	# increment and remove other duplicate strings
+	for (( num=1 ; num <= $# ; num++ )) ; do
+                case ${!num} in 
+                        -l*)    RESULT="$RESULT ${!num}" ;;
+			*)	[ -z "`echo $RESULT | grep -- ${!num}`" ] && \
+                                        RESULT="$RESULT ${!num}" ;;
+                esac
+        done
+	
+	echo $RESULT
+}
+
+
+[ -z "$CERN" ] && CERN="@CERN@"
+_ver="$CERN_LEVEL"
+_u="" ; _arch="`sysname`" ; _driver="default"
+_argsdone=false
+ARGS=""
+COMPFLAGS=""
+
+while [ $# -gt 0 ] ; do
+	if [ "$_argsdone" = false ] ; then
+		case $1 in
+			-a)    _arch="$2" ; shift	;;
+			-dy|-safe) _dynamic=true	;;
+			-G)    _driver="$2" ; shift 	;;
+			-P|-s) shift ; continue		;;
+			-u)    _u=1			;;
+			-v)    _ver="$2" ; shift	;;
+			--)    _argsdone=true ; shift	;;
+			--help) print_help ; exit 0	;;
+			-*)    print_help ; exit 1	;;
+			*)     _argsdone=true		;;
+		esac
+	fi
+
+	if [ "$_argsdone" = true ] ; then
+		case $1 in
+			-l*)   ARGS="$ARGS ${1#-l}"	;;
+			-*)    COMPFLAGS="$COMPFLAGS $1" ;;
+			*)     ARGS="$ARGS $1"		;;
+		esac
+	fi
+	shift
+done
+
+if [ -z "$_ver" ]; then 
+	_ver="@VERSION@"
+fi
+
+if [ -z "$CERN_ROOT" ] ; then
+	if [ "$CERN" = "@PREFIX@" ] ; then
+		CERN_ROOT="@PREFIX@" 
+	else
+		CERN_ROOT="$CERN/$_ver"
+	fi
+fi
+
+CERNLIB=""
+OTHERLIBS=""
+
+for lib in `echo "$ARGS" | sed -e 's/,/ /g'` ; do
+	DEPS="`depend $_driver $_arch $lib`"
+	if [ -n "$DEPS" ] ; then
+		CERNLIB="$CERNLIB $DEPS"
+	else
+		OTHERLIBS="$OTHERLIBS `liblink $lib`"
+	fi
+done
+
+LIBDIR=""
+if [ "$CERN_ROOT" != "@PREFIX@" ] ; then
+	[ -d "$CERN_ROOT/shlib" ] && [ -n "$_dynamic" ] && \
+		LIBDIR="$LIBDIR -L$CERN_ROOT/shlib"
+	[ -d "$CERN_ROOT/lib" ]   && LIBDIR="$LIBDIR -L$CERN_ROOT/lib"
+	[ -d "$CERN_ROOT/lib64" ]   && LIBDIR="$LIBDIR -L$CERN_ROOT/lib64"
+	if [ -z "$LIBDIR" ] ; then
+		echo "Can't find CERNLIB libraries in $CERN_ROOT!" 1>&2
+		exit 1
+	fi
+fi
+[ -z "$_u" ] && SYSDEPS=`find_sysdeps $_arch` || SYSDEPS=""
+
+echo $COMPFLAGS $LIBDIR `uniquify $CERNLIB $OTHERLIBS $SYSDEPS`
+exit 0
+

@@ -1,0 +1,13 @@
+# SCCS ID: Makefile.sunos 1.3 5/12/94
+#
+# Makefile for Nirvana Utilities (Sun version)
+#
+AR=/usr/5bin/ar
+CC=acc
+#CFLAGS=-g -DSUN -DUSE_LPR_PRINT_CMD -DMOTIF12
+CFLAGS=-O -DSUN -DUSE_LPR_PRINT_CMD -DMOTIF12
+LIBS= -Bstatic -lXm -lXt -lX11
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system xxxx 
+SCCS=xxxx Use sccs on ultrix system xxxx 
+
+include Makefile.common

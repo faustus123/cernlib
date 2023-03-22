@@ -1,0 +1,38 @@
+DoIncludePackage(paw)
+#include "paw/pilot.h"
+
+export LIB_SONAME := 3
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+MotifDependantMakeVar(MOTIF_DIRS,cmotif fmotif fpanelsc)
+MotifDependantMakeVar(PAWPP_DIRS,fpanelsf      uimx)
+
+LIBDIRS= code cdf
+
+#ifndef CERNLIB_WINNT
+LIBDIRS :=$(LIBDIRS) $(MOTIF_DIRS) $(PAWPP_DIRS)
+#endif
+
+#if defined(CERNLIB_NOLIBXBAE) /* we want to use external libXbae if possible*/
+#if defined(CERNLIB_UNIX) && !defined(CERNLIB_WINNT)
+MotifDependantMakeVar(PAWPP_DIRS,xbae)
+LIBDIRS := $(LIBDIRS) $(PAWPP_DIRS)
+#endif
+
+#if defined(CERNLIB_VAXVMS)
+MotifDependantMakeVar(PAWPP_DIRS,xbaevms)
+LIBDIRS := $(LIBDIRS) $(PAWPP_DIRS)
+#endif
+#endif
+
+SUBDIRS= $(LIBDIRS)
+
+TopOfPackage(pawlib-lesstif)
+
+SubdirLibraryTarget(pawlib-lesstif,$(LIBDIRS))
+
+InstallLibrary(pawlib-lesstif,$(CERN_LIBDIR))
+InstallSharedLibrary(pawlib-lesstif,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+

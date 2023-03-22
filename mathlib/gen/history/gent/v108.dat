@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/04/01 15:01:42  mclareni
+* Initial revision
+*
+*
+C  Deletions:
+C  ----------
+C
+C  D115 deactivated corresponding to deletion of routine from MATHLIB
+C

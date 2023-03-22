@@ -1,0 +1,11 @@
+#
+# IRIX specific portion of mcfio makefile
+#
+CC=cc
+AR=ar
+F77=f77
+CFLAGS= -g2 -DXTFUNCPROTO -DFUNCPROTO
+FFLAGS=-g2
+BIGGER_STRINGS=-Wf,-XNl6000
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system xxxx
+

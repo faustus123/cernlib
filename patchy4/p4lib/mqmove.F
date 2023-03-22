@@ -1,0 +1,77 @@
+CDECK  ID>, MQMOVE.
+      SUBROUTINE MQMOVE
+
+C-    GARBAGE COLLECTOR - MEMORY MOVE
+
+      PARAMETER      (NQFNAE=2, NQFNAD=1, NQFNAU=3)
+      PARAMETER      (IQFSTR=19, NQFSTR=6,  IQFSYS=25, NQFSYS=8)
+      COMMON /MQCF/  NQNAME,NQNAMD,NQNAMU, IQSTRU,NQSTRU, IQSYSB,NQSYSB
+      COMMON /MQCMOV/NQSYSS
+      COMMON /MQCM/         NQSYSR,NQSYSL,NQLINK,LQWORG,LQWORK,LQTOL
+     +,              LQSTA,LQEND,LQFIX,NQMAX, NQRESV,NQMEM,LQADR,LQADR2
+      COMMON /MQCT/  IQTBIT,IQTVAL,LQTA,LQTB,LQTE,LQMTB,LQMTE,LQMTH
+     +,              IQPART,NQFREE
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+C--------------    END CDE                             -----------------  ------
+
+
+C----              MOVE LOW BANKS
+
+      IF (LQMTB.EQ.LQMTH)  GO TO 21
+      LQWORK= LQ(LQMTH-1) + LQ(LQMTH-2)
+      JTB = LQMTB
+      JEND= LQMTH
+      NSTP= 3
+      GO TO 41
+
+C----              MOVE HIGH BANKS
+
+   19 LQSTA= LQ(LQMTH)
+      GO TO 51
+
+   21 LQWORK= LQ(LQMTB-2)
+   24 IF (LQMTE.LT.LQMTH)  GO TO 19
+      JTB = LQMTE
+      JEND= LQMTH-3
+      NSTP= -3
+
+   41 LOLD = LQ(JTB)
+      LNEW = LQ(JTB+2) + LOLD
+      N    = LQ(JTB+1) - LOLD
+      CALL UCOPY2 (LQ(LOLD),LQ(LNEW),N)
+      JTB = JTB + NSTP
+      IF (JTB.NE.JEND)  GO TO 41
+
+      IF (JEND.EQ.LQMTH)  GO TO 24
+      LQSTA= LNEW
+   51 LQTOL= LQSTA - NQMEM
+
+C----              RELOCATE  LQEND, LQFIX
+
+      IFL= 7
+      L  = LQEND
+   52 LN = LQ(LQMTE+3)
+      IF (L.GE.LN)           RETURN
+      IF (LQMTE.LT.LQMTH)    GO TO 58
+
+      DO 55 JTB=LQMTH,LQMTE,3
+      IF (L.LT.LQ(JTB+1))    GO TO 56
+   55 CONTINUE
+      GO TO 58
+
+   56 LN =  MAX (L,LQ(JTB))   + LQ(JTB+2)
+   58 IF (IFL.EQ.0)          GO TO 59
+      LQEND= LN
+      L    = LQFIX
+      IFL  = 0
+      GO TO 52
+
+   59 LQFIX= LN
+      RETURN
+      END

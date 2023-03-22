@@ -1,0 +1,157 @@
+CDECK  ID>, YEDMAT.
+      SUBROUTINE YEDMAT
+
+C-    COPY  JOLD  WITH REPLACEMENT FROM  N=NOLD
+
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      PARAMETER      (IQBITW=32, IQBITC=8, IQCHAW=4)
+      COMMON /QMACH/ NQBITW,NQCHAW,NQLNOR,NQLMAX,NQLPTH,NQRMAX,QLPCT
+     +,              NQOCT(3),NQHEX(3),NQOCTD(3)
+      COMMON /QUNIT/ IQREAD,IQPRNT,IQPR2,IQLOG,IQPNCH,IQTTIN,IQTYPE
+     +,              IQDLUN,IQFLUN,IQHLUN,IQCLUN,  NQUSED
+      COMMON /ARRCOM/LUNPAM,NCHKD,NWKD,NCARDP,NAREOF,NSKIPR,KDHOLD(20)
+     +,              NTRUNC,IPROMU,IPROMI
+      COMMON /CCPARA/NCHCCD,NCHCCT,KARDCC(84),   JCCTYP,JCCPRE,JCCEND
+     +,              MCCPAR(120),NCCPAR,MXCCIF,JCCIFV,JCCBAD,JCCWK(4)
+     +,              JCCPP,JCCPD,JCCPZ,JCCPT,JCCPIF,JCCPC,JCCPN
+     +,              NCCPP,NCCPD,NCCPZ,NCCPT,NCCPIF,NCCPC,NCCPN
+      COMMON /CCTYPE/MCCQUI,MCCPAM,MCCTIT,MCCPAT,MCCDEC,MCCDEF,MCCEOD
+     +,              MCCASM,MCCOPT,MCCUSE
+      COMMON /DPLINE/LTK,NWTK, KIMAPR(3), KIMA(20), KIMAPS(9)
+      COMMON /LUNSLN/NSTRM,NBUFCI,LUNVL(3),LUNVN(9),NOPTVL(4),NCHCH(6)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(4),MVOLD1,MVOLDN,  NVOLD(7),NRTOLD,NROLD,MAXEOF
+     +, IDOLDV(8),JPDOLD,JOLD, NVARRI(9),LARX,LARXE,LINBIN, NVCCP(10)
+     +, NVNEW(7),NRTNEW,NRNEW,LLASTN, IDNEWV(8),JPDNEW,NDKNEW
+     +, NVNEWL(3),NCDECK,JNEW,MODEPR,  MWK(80),MWKX(80)
+C--------------    END CDE                             -----------------  ------
+      EQUIVALENCE (LBUFM,LADRV(8))
+
+
+      JFINE = 0
+      IF (NVCCP(9).EQ.0)  NVCCP(9)=2
+      JMATCH = MIN  (NVCCP(9),3)
+      IF (JMATCH.EQ.JOLD)    GO TO 91
+      IF (LBUFM.NE.0)        GO TO 14
+      LBUFM  = LBUF
+      NBUFCI = 1
+      CALL CREBUF
+
+
+C--                SKIP INITIAL TITLE ON JMATCH
+
+   14 JMAIN  = JOLD
+      CALL YEDXCH (JMATCH)
+      CALL VZERO (NVCCP(1),9)
+      IF (NROLD.NE.0)        GO TO 31
+   15 MVOLDN = 1
+      CALL YEDRIV
+      IF (NVOLD(7).GE.MAXEOF)   GO TO 86
+      IF (JPDOLD.GE.3)          GO TO 15
+
+C----              READY NEXT DECK ON JMATCH
+
+   31 IQ(LBUF+3) = IDOLDV(7)
+      IQ(LBUF+4) = IDOLDV(8)                                            -A8M
+      IQ(LBUF+1) = 7
+      CALL POPIN
+
+      LTK = IQ(LBUF-2) + IQ(LBUF+13)
+      CALL KDCOPY (IQ(LTK))
+      NCHKD  = IQCHAW*NWTK
+      JCCTYP = MCCDEF - IQ(LBUF+5)
+      CALL CCKRAK (KIMA(1))
+
+      CALL VBLANK (IQUEST(1),26)
+      NVCCP(1) = IQBLAN
+      NVCCP(2) = IQBLAN                                                 -A8M
+      NVCCP(3) = 0
+      NVCCP(4) = 0                                                      -A8M
+      NVCCP(5) = 0
+      NVCCP(6) = 0                                                      -A8M
+
+      DO 36 J=1,3
+      JCC = JCCPD
+      JD  = 1
+      JP  = 1
+      IF (J.EQ.1)            GO TO 35
+      JCC = JCCPP
+      JD  = 3
+      JP  = 10
+      IF (J.EQ.2)            GO TO 35
+      JCC = JCCPZ
+      JD  = 5
+      JP  = 19
+   35 IF (JCC.EQ.0)          GO TO 36
+      N  = JP + 7
+      NVCCP(JD)   = MCCPAR(JCC+1)
+      NVCCP(JD+1) = MCCPAR(JCC+2)                                       -A8M
+      CALL UBLOW (MCCPAR(JCC+1),IQUEST(JP),8)
+   36 CONTINUE
+      WRITE (IQPRNT,9036) (IQUEST(J),J=1,N)
+
+
+C----              COPY JMAIN TO NEW UNTIL MATCHING DECK
+
+      J     = LBUF
+      LBUF  = LBUFM
+      LBUFM = J
+      CALL YEDXCH (JMAIN)
+
+      MVOLDN = 1
+      CALL YEDRIV
+      IF (NVOLD(7).LT.MAXEOF)   GO TO 46
+      JFINE = -7
+      WRITE (IQPRNT,9044) JMATCH
+
+   46 J     = LBUF
+      LBUF  = LBUFM
+      LBUFM = J
+      CALL YEDXCH (JMATCH)
+      CALL UCOPY (IQ(LBUF+5),NVARRI(1),9)
+
+C----              COPY MATCHING DECK FROM JMATCH TO NEW
+
+      MODEPR = IQPLUS
+   54 IF (JFINE.NE.0)        GO TO 55
+      IQ(LBUF+1) = 0
+      CALL POPOFF
+   55 IF (NVARRI(3).NE.0)    GO TO 57
+      IQ(LBUF+1) = 7
+      CALL POPIN
+      GO TO 54
+
+   57 CALL SETID (IDOLDV(1))
+      IF (JFINE.NE.0)        GO TO 89
+      IF (NVARRI(3).LT.3)    GO TO 31
+      CALL AUXFIL (0,NVOLD(1),0)
+      WRITE (IQPRNT,9057)
+      GO TO 89
+
+C----              EXITS
+
+   86 WRITE (IQPRNT,9086) JOLD
+   89 CALL YEDXCH (JMAIN)
+      RETURN
+
+   91 WRITE (IQPRNT,9091) JOLD
+      CALL PABEND
+
+ 9036 FORMAT (40X,'MATCH FOR  D=',9A1,2HP=,9A1,2HF=,8A1)
+ 9044 FORMAT (1X/40X,'MATCHING DECK NOT FOUND'/
+     F40X,'SKIP PENDING DECK ON OLD',I1,' AND STOP MATCHING.')
+ 9057 FORMAT (40X,'MATCHING NORMAL STOP FOR EOF.')
+ 9086 FORMAT (40X,'MATCHING ABNORMAL STOP FOR EOI ON OLD',I1)
+ 9091 FORMAT (1X/' *** OLD',I1,' BOTH FOR MAIN- AND MATCH-STREAM.')
+      END

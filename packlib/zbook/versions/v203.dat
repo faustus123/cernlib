@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:15  mclareni
+* Initial revision
+*
+*
+*  Version 2.03
+C          ZEPIN TIMING OPTIMIZED
+C          USING NEW FAST EPIO ROUTINES
+C          NEW ROUTINE ZBOOKT (RETURNS ZBOOK VERSION)
+C

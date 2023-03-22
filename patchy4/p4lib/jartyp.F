@@ -1,0 +1,31 @@
+CDECK  ID>, JARTYP.
+      FUNCTION JARTYP (ITP)
+
+C-    FIND C/C TYPE OF YPATCHY CONTROL-CARD
+
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      COMMON /CCPARU/MCCTOU,JCCLOW,JCCTPX
+      COMMON /CCTEXT/NCCVEC,MCCVEC(28),MCCSW(29),NCCDFI,MCCDF(24)
+C--------------    END CDE                             --------------
+      DIMENSION    MM(4), ITP(9)
+
+
+      IT = ITP(1)
+      MM(2) = AND(IT,255)
+      IF (MM(2).EQ.43)       GO TO 21
+      JARTYP = 0
+      RETURN
+
+   21 CONTINUE
+      IF (MCCTOU.EQ.0)       GO TO 41
+      CALL UBLOW (IT,MM,4)
+      JCCLOW = 0
+      CALL CCTOUP (MM(2),3)
+      IF (JCCLOW.EQ.0)       GO TO 41
+   39 CALL UBUNCH (MM,IT,4)
+   41 J = IUCOMP (IT,MCCVEC,NCCVEC)
+      JARTYP = MCCSW(J+1)
+      RETURN
+      END

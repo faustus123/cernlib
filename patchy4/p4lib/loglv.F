@@ -1,0 +1,48 @@
+CDECK  ID>, LOGLV.
+      SUBROUTINE LOGLV (ITPAR,JFLAG,LV)
+
+C-    SET LOGGING LEVEL ACCORDING TO JFLAG
+C-        .GT. 0  LOGLEV = LV
+C-        .LT. 0  IF LOG-BIT IN ITPAR PRESENT :  LOGLEV = LV
+C-                IF NOT :  AS FOLLOWS :
+C-        .EQ. 0  IF QUICK OR PONLY BIT PRESENT :  LOGLEV = 0 OR 1
+C-                IF NOT :  LOGLEV = LOGLVG  THE GLOBAL DEFAULT LEVEL
+
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(6), NVOLD(10), IDOLDV(10), NVARRI(12), NVCCP(10)
+     +, NVNEW(10), IDNEWV(10), NVNEWL(6),  MWK(80),MWKX(80)
+C--------------    END CDE                             -------------------------
+      DIMENSION    ITPAR(9)
+
+
+C--                HANDLE PARAMETER  T=PONLY, QUICK
+
+      IF (JFLAG.NE.0)        GO TO 21
+   12 J = JRSBYT (0,ITPAR(1),16,2)
+      IF (J.NE.0)            GO TO 14
+      LOGLEV = LOGLVG
+      RETURN
+
+   14 LOGLEV = 2 - J
+      RETURN
+
+C--                HANDLE PARAMETER  LEV=N
+
+   21 IF (JFLAG.LT.0)        GO TO 24
+      LOGLEV = LV
+      RETURN
+
+   24 J = JRSBYT (0,ITPAR(1),12,1)
+      IF (J.EQ.0)            GO TO 12
+      LOGLEV = LV
+      RETURN
+      END

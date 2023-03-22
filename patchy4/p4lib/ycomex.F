@@ -1,0 +1,241 @@
+CDECK  ID>, YCOMEX.
+      SUBROUTINE YCOMEX
+
+C-    YCOMPAR, COMPARE 2 PAM-FILES FOR IDENTICAL CONTENT
+
+      COMMON /QUNIT/ IQREAD,IQPRNT,IQPR2,IQLOG,IQPNCH,IQTTIN,IQTYPE
+     +,              IQDLUN,IQFLUN,IQHLUN,IQCLUN,  NQUSED
+      COMMON /DPLINE/LTK,NWTK, KIMAPR(3), KIMA(20), KIMAPS(9)
+      COMMON /IOFCOM/IOTALL,IOTOFF,IOTON,IOSPEC,IOPARF(5),IOMODE(12)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(4),MVOLD1,MVOLDN,  NVOLD(7),NRTOLD,NROLD,MAXEOF
+     +, IDOLDV(8),JPDOLD,JOLD, NVARRI(9),LARX,LARXE,LINBIN, NVCCP(10)
+     +, NVNEW(7),NRTNEW,NRNEW,LLASTN, IDNEWV(8),JPDNEW,NDKNEW
+     +, NVNEWL(3),NCDECK,JNEW,MODEPR,  MWK(80),MWKX(80)
+     +,            NAME1(8),NAME2(8),LASTP(8),LASTD(8)
+C--------------    END CDE                             -----------------  ------
+      DIMENSION    JTYPV(3)
+      DATA  JTYPV  /4HDECK,4HPAT ,4HPAM /
+      DATA  MMNEW  /4HNEW /, MMOLD/4HOLD /
+
+C-    LBUF+16    1ST WORD, 1ST CARD
+C-        +17    NO. OF CARD-WORDS
+C-        +21/29 COPY OF FILE DESCRIPTION VECTOR
+
+      NVNEW(6) = MMNEW
+      NVOLD(6) = MMOLD
+      CALL UCOPY (NVNEW(1),IQ(LBUF+21), 9)
+      CALL UCOPY (NVOLD(1),IQ(LLAST+21),9)
+      IQ(LBUF-1)  = LLAST
+      IQ(LLAST-1) = LBUF
+      IQ(LBUF+1)  = 7
+      IQ(LLAST+1) = 7
+      LBUFOR = LBUF
+      IOTON  = 256
+      NFAILM = 10
+
+
+C------            READ FILE-IDENT RECORDS
+
+   31 LBUF   = LBUFOR
+      JSV    = IOTON
+   32 CALL UCOPY  (IQ(LBUF+21),NVOLD(1),9)
+      IOTON  = JSV
+      CALL AUXFIL (0,NVOLD(1),0)
+      CALL POPIN
+      IF (NVARRI(1).EQ.4)    GO TO 91
+      CALL UCOPY (NVOLD(1),IQ(LBUF+21),9)
+      LBUF = IQ(LBUF-1)
+      IF (LBUF.NE.LBUFOR)    GO TO 32
+      LASTP(1) = 0
+      LASTD(1) = 0
+      GO TO 54
+
+C-------           RECOVER FAILURE, RE-START AT NEXT UNIT
+
+   41 WRITE (IQPRNT,9041) JTYPV(JPDOLD)
+
+      LBUF = LBUFOR
+   43 CALL UCOPY (IQ(LBUF+21),NVOLD(1),9)
+   44 IF (IQ(LBUF+7).GE.JPDOLD)  GO TO 46
+      CALL POPIN
+      GO TO 44
+
+   46 CALL UCOPY (NVOLD(1),IQ(LBUF+21),9)
+      LBUF = IQ(LBUF-1)
+      IF (LBUF.NE.LBUFOR)    GO TO 43
+
+C-------           START NEXT RECORD
+
+   51 NPDSUM = IQ(LBUF+7) + IQ(LLAST+7)
+      IF (NPDSUM.EQ.0)                 GO TO 54
+      IF (NPDSUM.EQ.6)                 GO TO 31
+      JFAULT = 1
+      IF (IQ(LBUF+7) .NE.IQ(LLAST+7))  GO TO 61
+      IF (IQ(LBUF+9) .NE.IQ(LLAST+9))  GO TO 61
+      IF (IQ(LBUF+10).NE.IQ(LLAST+10)) GO TO 61                         -A8M
+
+      IF (IQ(LBUF+7).EQ.1)   GO TO 52
+      LASTD(1) = 0
+      CALL UBLOW (IQ(LLAST+9),LASTP(1),8)
+      IF (LOGLEV.LT.1)       GO TO 54
+      WRITE (IQPRNT,9051) LASTP
+      LASTP(1) = 0
+      GO TO 54
+   52 CALL UBLOW (IQ(LLAST+9),LASTD(1),8)
+      IF (LOGLEV.LT.3)       GO TO 54
+      WRITE (IQPRNT,9052) LASTD
+      LASTD(1) = 0
+
+
+C--                READ NEXT RECORDS
+
+   54 LBUF = LBUFOR
+   55 CALL UCOPY (IQ(LBUF+21),NVOLD(1),9)
+      CALL POPIN
+      IQ(LBUF+16) = LINBIN     + NVARRI(9)
+      IQ(LBUF+17) = IQ(LINBIN) - NVARRI(9) + 1
+
+C--                PRINT TITLE FOR FIRST TITLE RECORD
+
+      IF (NROLD.NE.2)        GO TO 57
+      IF (LBUF.EQ.LLAST)     GO TO 57
+      L = IQ(LBUF+16)
+      CALL KDCOPY (IQ(L))
+      J = NVOLD(7) + 1
+      WRITE (IQPRNT,9056) J
+      WRITE (IQPRNT,9073) IDEOF(1),(KIMA(J),J=1,NWTK)
+   57 CALL UCOPY (NVOLD(1),IQ(LBUF+21),9)
+      LBUF = IQ(LBUF-1)
+      IF (LBUF.NE.LBUFOR)    GO TO 55
+
+C--                VERIFY COMMON CONTENT
+
+      JFAULT= 2
+      NFAILR= 0
+      INSEQ = 0
+      NWXX  = MIN  (IQ(LBUF+17),IQ(LLAST+17))
+      LLGO  = IQ(LLAST+16)
+      LBGO  = IQ(LBUF+16)
+      JCGO  = JCARD
+      JWGO  = 1
+
+   58 LL = LLGO
+      LB = LBGO
+      DO 59 J=JWGO,NWXX
+      IF (IQ(LL).NE.IQ(LB))  GO TO 61
+      LL = LL+1
+   59 LB = LB+1
+      JCARD = JCARD + IQ(LLAST+12)
+      IF (IQ(LBUF+17).EQ.IQ(LLAST+17))  GO TO 51
+      JFAULT = 3
+
+
+C----------        FAILURES
+
+C--                PRINT DELAYED PATCH/DECK
+
+   61 IF (LASTP(1).EQ.0)     GO TO 62
+      WRITE (IQPRNT,9051) LASTP
+      LASTP(1) = 0
+   62 IF (LASTD(1).EQ.0)     GO TO 63
+      WRITE (IQPRNT,9052) LASTD
+      LASTD(1) = 0
+   63 NVWARX(1) = NVWARX(1) + 1
+      GO TO (85,66,81), JFAULT
+
+C--                CARD-CONTENT MIS-MATCH
+
+   66 NFAILR = NFAILR + 1
+      IF (NFAILR.GE.NFAILM)  GO TO 75
+      JCF = JCGO
+      L   = LLGO
+      GO TO 68
+
+   67 JCF = JCF + 1
+      L   = L   + N
+   68 N = KDSTEP (IQ(L),1)
+      IF (L+N.LE.LL)         GO TO 67
+      IF (JCF.NE.JCGO)  INSEQ=0
+      IF (JCF.EQ.JCGO)  INSEQ=INSEQ+1
+
+      WRITE (IQPRNT,9071) NVWARX(1),JCF
+
+      LTK = LBGO + (L-LLGO)
+      CALL KDCOPY (IQ(LTK))
+      WRITE (IQPRNT,9073) NVNEW(6),(KIMA(J),J=1,NWTK)
+      JWGO = JWGO + (LTK-LBGO)
+      LBGO = LTK
+      N    = NWTK
+
+      LTK = L
+      CALL KDCOPY (IQ(LTK))
+      WRITE (IQPRNT,9073) NVOLD(6),(KIMA(J),J=1,NWTK)
+      LLGO = LTK
+      JCGO = JCF + 1
+      IF (MOPTIO(20).EQ.0)   GO TO 75
+      IF (JWGO.GT.NWXX)      GO TO 75
+      IF (N.NE.NWTK)         GO TO 75
+      IF (INSEQ.LT.5)        GO TO 58
+
+   75 JPDOLD = 1
+      GO TO 41
+
+
+C--                RECORD LENGTH MIS-MATCH
+
+   81 JC = JCARD + (IQ(LBUF+12)-IQ(LLAST+12))
+      WRITE (IQPRNT,9081) NVWARX(1),JC,JCARD
+      JPDOLD = 1
+      GO TO 41
+
+C--                PATCH/DECK MIS-MATCH
+
+   85 CALL UBLOW (IQ(LBUF+9),NAME1(1),8)
+      CALL UBLOW (IQ(LLAST+9),NAME2(1),8)
+      WRITE (IQPRNT,9085) NVWARX(1),IQ(LBUF+7),NAME1,IQ(LLAST+7),NAME2
+
+      JPDOLD = MAX  (IQ(LLAST+7),IQ(LBUF+7))
+      IF (IQ(LLAST+7).EQ.IQ(LBUF+7))  JPDOLD=JPDOLD+1
+      JPDOLD = MIN  (JPDOLD,3)
+      GO TO 41
+
+C----              END OF INFORMATION
+
+   91 CALL AUXFIL (512,NVOLD(1),0)
+      LBUF = IQ(LBUF-1)
+      CALL AUXFIL (512,IQ(LBUF+21),0)
+      WRITE (IQPRNT,9092) NVWARX(1)
+      IF (IQTYPE.EQ.0)       GO TO 94
+      IF (IQTYPE.EQ.IQPRNT)  GO TO 94
+      WRITE(IQTYPE,9093) NVWARX(1)
+   94 CONTINUE
+
+      RETURN
+
+ 9041 FORMAT (1X/' ---------',20X,'SKIP TO NEXT ',A4,'  -----'/1X)
+ 9051 FORMAT (8X,2HP=,8A1,4H  D=)
+ 9052 FORMAT (20X,2HD=,8A1)
+ 9056 FORMAT (1X/23X,8HPAM-FILE,I4)
+ 9071 FORMAT (1X/1X,I5,4H ***,17X,2HC=,I6)
+C9073 FORMAT (36X,A4,8A10)                                               A10
+C9073 FORMAT (36X,A4,10A8)                                               A8
+C9073 FORMAT (36X,A4,14A6)                                               A6
+C9073 FORMAT (36X,A4,16A5)                                               A5
+ 9073 FORMAT (36X,A4,20A4)                                               A4
+ 9081 FORMAT (1X/I6,4H ***,20X,'RECORD LENGTH MIS-MATCH,  NEW/OLD C=',
+     F2I7)
+ 9085 FORMAT (1X/1X,I5,4H ***,20X,'PATCH/DECK MIS-MATCH  NEW=',
+     FI2,1X,8A1,'  OLD=',I2,1X,8A1)
+ 9092 FORMAT (1X/24X,20(1H-),I6,' FAILURES.')
+ 9093 FORMAT (1X,4H----,I6,' FAILURES.')
+      END

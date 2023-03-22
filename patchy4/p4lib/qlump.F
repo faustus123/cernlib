@@ -1,0 +1,30 @@
+CDECK  ID>, QLUMP.
+      SUBROUTINE QLUMP (L)
+      PARAMETER      (NQFNAE=2, NQFNAD=1, NQFNAU=3)
+      PARAMETER      (IQFSTR=19, NQFSTR=6,  IQFSYS=25, NQFSYS=8)
+      COMMON /MQCF/  NQNAME,NQNAMD,NQNAMU, IQSTRU,NQSTRU, IQSYSB,NQSYSB
+      COMMON /QCN/   IQLS,IQID,IQNL,IQNS,IQND,IQFOUL
+      PARAMETER      (IQBITW=32, IQBITC=8, IQCHAW=4)
+      COMMON /QMACH/ NQBITW,NQCHAW,NQLNOR,NQLMAX,NQLPTH,NQRMAX,QLPCT
+     +,              NQOCT(3),NQHEX(3),NQOCTD(3)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+C--------------    END CDE                             -----------------  ------
+
+
+      LQ(L)  = IQID
+      LQ(L+1)= IQND
+      CALL SBYT  (IQNS,LQ(L+1),16,6)
+      CALL SBYT  (IQNL,LQ(L+1),22,9)
+      CALL SBIT1 (LQ(L+1),NQBITW)
+      IQLS = L + IQNL + 2
+      IQ(IQLS)= 0
+      CALL SBYT (IQNS,IQ(IQLS),IQSTRU,NQSTRU)
+C     CALL SBYT (IQNL,IQ(IQLS),34,9)                                    B48M
+      RETURN
+      END

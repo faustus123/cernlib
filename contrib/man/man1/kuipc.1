@@ -1,0 +1,92 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KUIPC 1 "April 2, 2004"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kuipc \- the CERN KUIP compiler
+.SH SYNOPSIS
+.B kuipc
+.RI " [ " options " ] [ " inputfile " [ " outputfile " ] ]"
+.SH DESCRIPTION
+.PP
+\fBkuipc\fP, the Kit for a User Interface Package Compiler, is a tool to
+simplify the writing of a program's user interface code.  It takes as input a
+Command Definition File (CDF) that describes the commands to be understood by
+the program, and outputs C or FORTRAN code that makes the appropriate function
+calls to set up the user interface.  This code can then be compiled and linked
+with the rest of the program.  Since the generated code uses KUIP routines, the
+program must also be linked against the Packlib library that contains them.
+.PP
+If no output file is specified, kuipc will output generated code to a file
+whose name is the same as the input file's, with the ending '.cdf' replaced
+by '.f' or '.c' as appropriate.  If neither input nor output file are given,
+kuipc will prompt for them.  Be careful because kuipc overwrites existing
+files with no warning.
+.SH OPTIONS
+.TP
+.B \-c
+Generate C code.
+.TP
+.B \-f
+Generate FORTRAN code (the default).
+.TP
+.B \-split
+Output several files, one for each time the >Name control line is used in
+the CDF input.  The names of the output files will correspond to the
+arguments given on the >Name control lines.
+.SH SEE ALSO
+The KUIP manual: http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/kuip.ps.gz
+.br
+.SH BUGS
+When the \-split option is used, kuipc will still create an output file
+that it would have made if \-split was not used; the file will be of zero
+size.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KUIPC 1 "April 2, 2004"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kuipc \- the CERN KUIP compiler
+.SH SYNOPSIS
+.B kuipc
+.RI " [ " options " ] [ " inputfile " [ " outputfile " ] ]"
+.SH DESCRIPTION
+.PP
+\fBkuipc\fP, the Kit for a User Interface Package Compiler, is a tool to
+simplify the writing of a program's user interface code.  It takes as input a
+Command Definition File (CDF) that describes the commands to be understood by
+the program, and outputs C or FORTRAN code that makes the appropriate function
+calls to set up the user interface.  This code can then be compiled and linked
+with the rest of the program.  Since the generated code uses KUIP routines, the
+program must also be linked against the Packlib library that contains them.
+.PP
+If no output file is specified, kuipc will output generated code to a file
+whose name is the same as the input file's, with the ending '.cdf' replaced
+by '.f' or '.c' as appropriate.  If neither input nor output file are given,
+kuipc will prompt for them.  Be careful because kuipc overwrites existing
+files with no warning.
+.SH OPTIONS
+.TP
+.B \-c
+Generate C code.
+.TP
+.B \-f
+Generate FORTRAN code (the default).
+.TP
+.B \-split
+Output several files, one for each time the >Name control line is used in
+the CDF input.  The names of the output files will correspond to the
+arguments given on the >Name control lines.
+.SH SEE ALSO
+The KUIP manual: http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/kuip.ps.gz
+.br
+.SH BUGS
+When the \-split option is used, kuipc will still create an output file
+that it would have made if \-split was not used; the file will be of zero
+size.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

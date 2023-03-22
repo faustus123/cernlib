@@ -1,0 +1,18 @@
+SRCS_F= main.F steerd.F steerf.F testd.F testf.F
+
+DefinePackageLibrary(NullParameter)
+
+FORTRANSAVEOPTION = FortranSaveFlags
+
+#if defined(CERNLIB_LINUX) && defined(CERNLIB_QMLXIA64)
+CernlibFortranStaticTarget(eudtest,$(OBJS),NullParameter,NullParameter,eurodec packlib kernlib)
+#else
+CernlibFortranProgramTarget(eudtest,$(OBJS),NullParameter,NullParameter,eurodec packlib kernlib)
+#endif
+
+TestTarget(eudtest,eurodec.dat,eutitle.dat)
+
+CopyFile(eutitle.data,eutitle.dat)
+
+LinkFileFromDir($(TOP)$(PACKAGETOP),eurodec.dat)
+

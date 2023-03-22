@@ -1,0 +1,50 @@
+CDECK  ID>, NOTITL.
+      SUBROUTINE NOTITL
+
+C-    CONSTRUCT ARTIFICIAL TITLE IN BUFFER  LBUF
+
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      COMMON /CONST/ MPAK2(2),MPAK5(2),MPAK9(2),MPAK15(2),DAYTIM(3)
+     +,              NWNAME,NWSENM,NWSEN1,LARGE
+      PARAMETER      (KDNWT=20, KDNWT1=19,KDNCHW=4, KDBITS=8)
+      PARAMETER      (KDPOST=25,KDBLIN=32,KDMARK=0, KDSUB=63,JPOSIG=1)
+      COMMON /KDPKCM/KDBLAN,KDEOD(2)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(6), NVOLD(10), IDOLDV(10), NVARRI(12), NVCCP(10)
+     +, NVNEW(7),NRTNEW,NRNEW,LLASTN, IDNEWV(8),JPDNEW,NDKNEW
+     +, NVNEWL(3),NCDECK,JNEW,MODEPR,  MWK(80),MWKX(80)
+C--------------    END CDE                             -----------------  ------
+
+
+      IQ(LBUF+1) = 0
+      IQ(LBUF+3) = IDEOF(3)
+      IQ(LBUF+4) = IDEOF(4)                                             -A8M
+      IQ(LBUF+5) = 3
+      IQ(LBUF+6) = 0
+      IQ(LBUF+13)= NWSEN1
+
+      L       = IQ(LBUF-2)
+      IQ(L)   = NWSENM + KDNWT
+      L       = L + NWSEN1
+      IQ(L-1) = 0
+      CALL SBIT1       (IQ(L-1),19)
+C     CALL SBYT (NWSEN1,IQ(L-1),28,9)                                    B36M
+
+      CALL VBLANK (MWK(1),80)
+      CALL UCTOH1 ('ARTEFACT      /0',MWK(1),16)
+      CALL UBLOW  (DAYTIM(1),MWK(19),12)
+      CALL UBUNCH (MWK(1),IQ(L),80)
+      MODEPR = IQPLUS
+      RETURN
+      END

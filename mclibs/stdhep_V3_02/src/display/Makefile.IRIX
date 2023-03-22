@@ -1,0 +1,13 @@
+# SCCS ID: Makefile.sgi 1.3 4/10/92
+#
+# Makefile for phase space event display (Silicon Graphics version)
+#
+CC=cc
+AR=ar
+CFLAGS=$(DEBUG) -I../../stdhep
+FFLAGS=$(DEBUG)
+FFLAGS2=$(DEBUG) -I../../stdhep
+BIGGER_STRINGS=-Wf,-XNl6000
+LIBS=-lXm -lXt -lX11 -lm -lF77 -lI77 -lU77 -lisam -lsun -lPW -lm
+MAKEDEPEND=depend
+SCCS=xxxx Use sccs on ultrix system xxxx

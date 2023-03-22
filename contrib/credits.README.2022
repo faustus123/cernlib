@@ -1,0 +1,11 @@
+The 2022 updates to the code are implemented and/or authored by: 
+
+Ulrich Schwickerath, CERN
+Andrii Verbytskyi, Max-Planck Institute for Physics 
+
+and use the code by
+
+Kevin B. McCarty et al. provided for the Debian project.
+
+We are also grateful to the Fedora and Debian projects and their contributors for maintaining the builds of
+the CERNLIB package in their repositories.

@@ -1,0 +1,12 @@
+# SCCS ID: Makefile.sun 1.3 4/10/92
+#
+# Makefile for phase space event display (Sun version)
+#
+CC=/opt/SUNWspro/bin/cc
+AR=ar
+DEBUG=-g
+LIBS= -L/usr/openwin/lib -L/usr/dt/lib -lm -lXm -lXt -lX11 -lgen \
+       -lF77 -lM77 -lsunmath -lsocket -lnsl -R /usr/openwin/lib -R /usr/dt/lib
+CFLAGS=$(DEBUG) -Xa -I/usr/openwin/include -I/usr/dt/include \
+	-DMOTIF12 -I../../stdhep
+FFLAGS2=$(DEBUG) -I../../stdhep

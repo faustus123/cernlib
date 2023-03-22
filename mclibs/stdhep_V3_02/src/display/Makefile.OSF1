@@ -1,0 +1,10 @@
+# SCCS ID: Makefile.osf 1.1 3/4/94
+#
+# Makefile for nirvana utilities (OSF/1 version)
+#
+CC=cc
+F77=f77
+AR=ar
+CFLAGS=$(DEBUG) -DUSE_DIRENT -DFUNCPROTO -DXTFUNCPROTO -I../../stdhep
+LIBS=-lXm -lXt -lX11 -lm -lfor -lots
+FFLAGS2=$(DEBUG) -I../../stdhep

@@ -1,0 +1,20 @@
+CDECK  ID>, XINB.
+      SUBROUTINE XINB  (LUN,XBV,NXB)
+C
+C CERN PROGLIB# Z203    XINB            .VERSION KERNVMI  1.01  891208
+C ORIG.  4/01/89  JZ
+C
+      DIMENSION    XBV(99)
+
+      READ (LUN,IOSTAT=JSTAT) N, (XBV(J),J=1,MIN(N,NXB))
+      IF   (JSTAT)           61, 24, 64
+   24 N   = MIN (N,NXB)
+      NXB = MAX (N,1)
+      RETURN
+
+   61 NXB = 0
+      RETURN
+
+   64 NXB = -JSTAT
+      RETURN
+      END

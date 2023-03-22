@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/04 16:12:52  mclareni
+* Initial revision
+*
+*
+*  Version 1.01  910816 13.20
+C- Introduction of DZDOC v4.75
+C- Introduction of DZDOC v4.76  on 910728  21.40
+C- Introduction of DZDOC v4.91  on 910816  13.20
+C
+C- Suppress dummy RZEBRA section; it will stay in ZEBRA
+C

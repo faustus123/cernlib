@@ -1,0 +1,17 @@
+/*
+ *  Special Imakefile building patchy modules
+ *
+ */
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+#ifdef CERNLIB_32BITCROSS
+FCLDOPTIONS += -m32
+#endif
+
+LIBDIRS= p4lib
+SUBDIRS= $(LIBDIRS) patchy
+
+SubdirLibraryTarget(p4lib, $(LIBDIRS))
+InstallLibrary(p4lib, $(CERN_LIBDIR))
+InstallBinSubdirs(patchy)

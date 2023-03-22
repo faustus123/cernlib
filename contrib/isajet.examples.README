@@ -1,0 +1,33 @@
+Building the Isajet examples
+----------------------------
+
+cd examples/isarun
+gfortran isarun.F `cernlib isajet` -o $HOME/isarun
+
+
+Running the Isajet examples
+---------------------------
+
+cd $HOME
+./isarun
+
+This will start an interactive program.  When prompted to "Enter file name
+for the decay table", you should enter the following (requires the
+montecarlo-data binary package to be installed):
+
+/usr/share/montecarlo-data/isajet.dat
+
+For explanations of other questions, please refer to the Isajet manual
+shipped in the documentation of this Debian package.
+
+
+Examples in isassrun and iszrun subdirectories will not compile as is, due to
+an apparent corruption of the files (the first several lines of each source
+file have gone missing) when converted from PATCHY to tar.gz format at CERN
+(sometime prior to 2000).  In the future, time permitting, I intend to fix the
+file corruption by obtaining the missing lines from here:
+
+http://www.hep.fsu.edu/~isajet/isajet.car
+
+-- Kevin B. McCarty <kmccarty@debian.org>
+

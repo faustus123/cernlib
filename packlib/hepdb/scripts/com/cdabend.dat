@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/28 16:23:56  mclareni
+* Initial revision
+*
+*
+#if defined(CERNLIB_VAXVMS)
+$!DECK ID>, CDABEND.COM
+$SET NOON
+$MAIL/SUBJECT="HEPDB server abending: ''CDSERV' " _NL: VXCERN::JAMIE
+#endif

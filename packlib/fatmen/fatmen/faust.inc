@@ -1,0 +1,55 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 15:17:51  mclareni
+* Initial revision
+*
+*
+#ifndef CERNLIB_FATMEN_FAUST_INC
+#define CERNLIB_FATMEN_FAUST_INC
+*
+*
+* faust.inc
+*
+*
+*     FATMEN USer STatistics
+*
+*     Adds, MKDIRS, RMDIRS etc.
+*
+      INTEGER      NFADDD,NFADDL,NFADDT,NFMDIR,NFRDIR,NFRLNK,NFRTRE,
+     +             NFRMFL,NFCPFL,NFMVFL,NFMODI,NFTOUC
+*
+*     OPENs, CLOSEs, COPYs etc.
+*
+      INTEGER      NFOPEN,NFCLOS,NFCOPY,NFCOPR,NFCOPQ
+*
+*     TMS operations
+*
+      INTEGER      NFSREQ,NFQVOL,NFAVOL,NFASPC,NFPOOL,NFLOCK,NFULOK,
+     +             NFDTAG,NFGTAG,NFSTAG
+*
+*     Catalogue operations
+*
+      INTEGER      NFBANK,NFGET, NFGETK,NFSHOW,NFSCAN,NFLOOP,NFLDIR,
+     +             NFLFIL,NFSORT,NFRANK,NFSELK,NFMTCH
+*
+*     # MB read/written
+*
+      REAL         FATMBR,FATMBW,FATMZR,FATMZW,FATMBC,FATMBQ,FATMBN
+*
+*     Stuff
+*
+      INTEGER      NFSTAD,NFSTAT
+ 
+      COMMON/FAUST/NFADDD,NFADDL,NFADDT,NFMDIR,NFRDIR,NFRLNK,NFRTRE,
+     +             NFRMFL,NFCPFL,NFMVFL,NFMODI,NFTOUC,
+     +             NFOPEN,NFCLOS,NFCOPY,NFCOPR,NFCOPQ,
+     +             NFSREQ,NFQVOL,NFAVOL,NFASPC,NFPOOL,NFLOCK,NFULOK,
+     +             NFDTAG,NFGTAG,NFSTAG,
+     +             NFBANK,NFGET, NFGETK,NFSHOW,NFSCAN,NFLOOP,NFLDIR,
+     +             NFLFIL,NFSORT,NFRANK,NFSELK,NFMTCH,
+     +             NFSTAD,NFSTAT,
+     +             FATMBR,FATMBW,FATMZR,FATMZW,FATMBC,FATMBQ,FATMBN
+
+#endif

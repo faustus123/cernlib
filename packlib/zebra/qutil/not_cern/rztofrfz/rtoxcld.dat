@@ -1,0 +1,19 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/06 10:47:19  mclareni
+* Initial revision
+*
+*
+#if !defined(CERNLIB_DCLTABLES)
+MODULE RTOX_CLD
+#endif
+define verb RTOX
+#if defined(CERNLIB_DCLTABLES)
+       image "CERN_ROOT:[EXE]RTOX"
+#endif
+              parameter       P1,LABEL=FIN,PROMPT="RZ_File",
+                              VALUE(NOCONCATENATE,REQUIRED,TYPE=$FILE)
+              parameter       P2,LABEL=FOUT,PROMPT="FX_File",
+                              VALUE(NOCONCATENATE,REQUIRED,TYPE=$FILE)

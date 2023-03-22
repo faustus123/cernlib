@@ -1,0 +1,12 @@
+SRCS_F=	 beamin.F breitw.F chmove.F delsq.F dumpme.F /* finish.F */ \ @@\
+	fmass.F fmassq.F fowl.F fowlmp.F fowlpr.F genev.F histey.F \ @@\
+	labsys.F pdk.F qqstrt.F rangnr.F redat2.F redata.F rotes2.F \ @@\
+	scout.F teedia.F tranch.F xplsdx.F
+
+SRCS_C= dummy.c /*"fake" defn of start, user, finish to avoid undefined syms*/
+
+#if !defined(CERNLIB_UNIX)
+SRCS_F := $(SRCS_F) /* start.F */
+#endif
+
+SubdirLibraryTarget(fowl,NullParameter)

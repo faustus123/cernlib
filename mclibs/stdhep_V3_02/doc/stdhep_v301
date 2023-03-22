@@ -1,0 +1,41 @@
+StdHep 3.01 is now available as current.
+
+StdHep 3.01 is not backwards compatible.  It uses double precision variables
+instead of real variables.  This version was created with 
+common blocks from HERWIG 5.8, ISAJET 7.13, LUND 7.0408, and QQ 9.1.
+
+Modifications from 2.02:
+
+      PHEP and VHEP are now double precision arrays.
+
+      Add xdr I/O option and interface routines for both C and Fortran.
+
+      Add QQ translation routines QQHEP and QQTRAN.
+
+      Fix a minor bug in ISTRAN, which translated states not known to ISAJET.
+
+      Add HEP2GEANT to fill geant KINE structure (supplied by Doug Wright).
+      Include gtran for translation between Geant and StdHep.
+
+      Clean up the definitions of heavy quark cascade particles.
+
+      Add general utility routines to get daughter lists, etc.
+
+      Modify generic read/write routines HEPRD and HEPWRT to use
+      identifying labels for each output record.
+
+      Add HEPRDM to allow multiple input streams.
+
+      Add routines to get and read/write some begin and end run information.
+
+      Modify stdhep.inc to contain only the HEPEVT and HEPEV2 common blocks.
+      Stdlun.inc contains the HEPLUN common block.
+
+The manual, PM0091, is available from the Fermilab Computing Department 
+Program Librarian.  A postscript version is included in the product
+distribution.
+
+Please send any complaints or comments to:
+			Lynn Garren
+			garren@fnal.gov
+			708-840-2061

@@ -1,0 +1,25 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:50:44  mclareni
+* Initial revision
+*
+*
+* This directory was created from kernlnx.car patch kernlnx
+#if !defined(CERNLIB_KERNLNX)
+
+              KERNLIB routines particular to LINUX
+
+---------------------------------------------------------------------
+
+             This file contains the following patches :
+
+      *KLNX     Pilot-patch selecting KERNLIB for LINUX
+
+      QMLNX     Machine patch LINUX
+
+      LNXGS     LINUX variants of KERNLIB routines
+
+=====================================================================
+#endif

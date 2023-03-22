@@ -1,0 +1,29 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 15:17:49  mclareni
+* Initial revision
+*
+*
+/*DECK ID>, FATGIME.EXEC */
+/*-------------------------------------------------------------*/
+/*                                                             */
+/*                       F A T   G I M E                       */
+/*                                                             */
+/* Simple GIME exec to handle numeric userids.                 */
+/* No interface to GIME names files etc.                       */
+/*                                                             */
+/*-------------------------------------------------------------*/
+Parse arg user addr . '(' options ')' .
+If user = '' then exit 99
+If addr = '' then addr = 191
+slot = QDISK("?","SLOT")
+If RC ^= 0 then exit RC
+Parse var slot mode vaddr
+access = 'RR'
+If index(options,'MR') ^= 0 then access = 'MR'
+'CP LINK 'user addr vaddr access
+If RC ^= 0 then exit RC
+'ACCESS 'vaddr mode
+If RC ^= 0 then exit RC

@@ -1,0 +1,16 @@
+SRCS_F= gukine.F guout.F gustep.F gutrev.F main.F  \ @@\
+	ufiles.F ugeom.F uginit.F uglast.F uinit.F viewyz.F
+
+DefinePackageLibrary(NullParameter)
+
+#if defined(CERNLIB_LINUX) && defined(CERNLIB_QMLXIA64)
+CernlibFortranProgramTarget(exam5,$(OBJS),$(PACKAGE_LIB),$(PACKAGE_LIB),graflib packlib kernlib  grafX11 packlib kernlib)
+#else
+CernlibFortranProgramTarget(exam5,$(OBJS),NullParameter,NullParameter,graflib packlib geant321 kernlib  grafX11 packlib kernlib)
+#endif
+
+TestTarget(exam5,gexam5.dat,gexam5.input)
+
+CopyFile(g321x5.inp,gexam5.input)
+
+CopyFile(exam5.dat,gexam5.dat)

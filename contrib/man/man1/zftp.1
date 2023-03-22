@@ -1,0 +1,88 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH ZFTP 1 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+zftp \- CERNLIB program to transfer ZEBRA formatted files over a network
+.SH SYNOPSIS
+.B zftp
+.RI [ hostname ]
+.br
+.SH DESCRIPTION
+.PP
+\fBzftp\fP is a file transfer program that supports the transfer of
+formatted, unformatted and ZEBRA RZ files. 
+(If you have no idea what ZEBRA files are, it is highly unlikely that you
+want to use this program instead of a standard FTP client.)
+Formatted files are typically KUIP macros, command or EXEC files, source code
+or even FZ ALPHA exchange format files.  Unformatted files may be FZ binary
+exchange format or EPIO files or any other binary file with fixed length
+records.
+.PP
+\fBzftp\fP also provides LS, CD, PWD and RSHELL commands.  It provides a
+common interface on all systems and the possibility of macros (via KUIP).
+It avoids the problems of file format conversion that occur when transferring
+binary files between VMS and UNIX systems.
+\fBzftp\fP comes with the traditional KUIP user interface, including a HELP
+function that describes the available commands.
+.PP
+Please note that, like many other FTP programs, \fBzftp\fP transfers unencrypted
+passwords over the network.  It should therefore be used only within a trusted
+LAN.
+.SH SEE ALSO
+\[bu] \fBzftp\fP online HELP command
+.br
+.RB "\[bu] " ftp (1)
+.br
+.RB "\[bu] " zserv (8)
+.PP
+\fBzftp\fP is part of the CERNLIB CSPACK package, documented fully at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH ZFTP 1 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+zftp \- CERNLIB program to transfer ZEBRA formatted files over a network
+.SH SYNOPSIS
+.B zftp
+.RI [ hostname ]
+.br
+.SH DESCRIPTION
+.PP
+\fBzftp\fP is a file transfer program that supports the transfer of
+formatted, unformatted and ZEBRA RZ files. 
+(If you have no idea what ZEBRA files are, it is highly unlikely that you
+want to use this program instead of a standard FTP client.)
+Formatted files are typically KUIP macros, command or EXEC files, source code
+or even FZ ALPHA exchange format files.  Unformatted files may be FZ binary
+exchange format or EPIO files or any other binary file with fixed length
+records.
+.PP
+\fBzftp\fP also provides LS, CD, PWD and RSHELL commands.  It provides a
+common interface on all systems and the possibility of macros (via KUIP).
+It avoids the problems of file format conversion that occur when transferring
+binary files between VMS and UNIX systems.
+\fBzftp\fP comes with the traditional KUIP user interface, including a HELP
+function that describes the available commands.
+.PP
+Please note that, like many other FTP programs, \fBzftp\fP transfers unencrypted
+passwords over the network.  It should therefore be used only within a trusted
+LAN.
+.SH SEE ALSO
+\[bu] \fBzftp\fP online HELP command
+.br
+.RB "\[bu] " ftp (1)
+.br
+.RB "\[bu] " zserv (8)
+.PP
+\fBzftp\fP is part of the CERNLIB CSPACK package, documented fully at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

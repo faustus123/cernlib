@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:32  mclareni
+* Initial revision
+*
+*
+*  Version 1.03  930303 20.30
+C- Additions/changes
+C  > P=UMONFTN ,D=UMLOGUX UNIX version, make dummy for NeXT
+C

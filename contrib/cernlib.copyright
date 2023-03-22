@@ -1,0 +1,349 @@
+
+COPYRIGHT
+---------
+
+Cernlib is copyright (C) CERN and others.  As of this writing (13 Jan 2005),
+the web page http://wwwinfo.cern.ch/asd/cernlib/conditions.html (which gives
+the terms under which Cernlib may be used) states:
+
+  CERNLIB Availability
+
+  (C) Copyright CERN except where explicitly stated otherwise. Permission to
+  use and/or redistribute this work is granted under the terms of the GNU
+  General Public License. FLUKA routines included in GEANT3 are joint copyright
+  of INFN and CERN and are not licensed under the GPL: permission to use and/or
+  redistribute outside GEANT3 should be negotiated. The software and
+  documentation made available under the terms of this license are provided
+  with no warranty.
+
+  Last modified: 18-March-2004
+
+On Debian systems, the complete text of the GNU General Public License can be
+found in the file `/usr/share/common-licenses/GPL'.
+
+The aforementioned FLUKA routines have been excised from the Cernlib source
+code.  It should also be noted
+that the above license supersedes the non-free license stated in the file
+located at  mclibs/pdf/doc/pdfdoc.dat
+
+
+EXCEPTIONS
+----------
+
+Some source files of Cernlib are provided (in parts, or in entirety) under
+different licenses which are compatible with the GPL.  See the table and
+licenses below for details.   Most of the
+differences in the licenses below are only in the exact wordings.  The
+"Package(s)" column lists the binary Debian packages in which each piece of
+code is compiled or otherwise included.
+
+Copyright codes are as follows:
+
+LGPL    - Library GPL
+BSD     - BSD style license
+NO AD   - BSD style license with negative advertising clause
+GPLv2+  - GNU Public License version 2 or higher
+
+Package codes are as follows:
+
+Dev   = most development packages
+Kx    = kxterm
+Graf  = libgrafx11-1, libgrafx11-1-dev, paw, paw++
+Pack  = libpacklib1, libpacklib1-dev, paw, paw++
+KuiM  = libpacklib1-lesstif, libpacklib1-lesstif-dev, paw, paw++
+Paw++ = libpawlib2-lesstif, libpawlib2-lesstif-dev, paw++
+Src   = [not included in binary packages, only source package]
+
+File(s)                    Package(s)    License type    Owner
+-------                    ----------    ------------    -----
+cfortran/*                            Dev        LGPL [1]       [a]
+graflib/higz/higzcc/rotated.c         Graf        BSD [3]       [b]
+graflib/higz/higzcc/tkhigz.c          Graf        BSD [4]       [c]
+packlib/cspack/sysreq/telnet.h        Pack        BSD [2]       [c]
+packlib/kuip/code_kuip/getline.c      Pack        BSD [5]       [d]
+packlib/kuip/code_motif/icbox.h       KuiM        NO AD [6]     [e]
+packlib/kuip/code_motif/icboxp.h      KuiM        NO AD [6]     [e]
+packlib/kuip/code_motif/iconbox.c     KuiM        NO AD [6]     [e]
+packlib/kuip/code_motif/iconwidget.c  KuiM        NO AD [7]     [f]
+packlib/kuip/code_motif/icwid.h       KuiM        NO AD [7]     [f]
+packlib/kuip/code_motif/icwidp.h      KuiM        NO AD [7]     [f]
+packlib/kuip/code_motif/kuxxt.c       KuiM        NO AD [8]     [g]
+packlib/kuip/code_motif/mkuxxt.h      KuiM        NO AD [8]     [g]
+packlib/kuip/programs/kxterm/uxxt.c   Kx          NO AD [8]     [g]
+packlib/kuip/programs/kxterm/uxxt.h   Kx          NO AD [8]     [g]
+pawlib/paw/hmotif/uxxt.h              Paw++       NO AD [8]     [g]
+pawlib/paw/paw/tree.h                 Paw++       BSD [9]       [h]
+pawlib/paw/tree/tree.c                Paw++       BSD [9]       [h]
+pawlib/paw/tree/treep.h               Paw++       BSD [9]       [h]
+pawlib/paw/xbae/caption.c             Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/caption.h             Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/captionp.h            Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/cell.c                Paw++       NO AD [11]    [j]
+pawlib/paw/xbae/cell.h                Paw++       NO AD [11]    [j]
+pawlib/paw/xbae/cellp.h               Paw++       NO AD [11]    [j]
+pawlib/paw/xbae/clip.c                Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/clip.h                Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/clipp.h               Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/matrix.c              Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/matrix.h              Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/matrixp.h             Paw++       NO AD [10]    [i]
+pawlib/paw/xbae/version.c             Paw++       NO AD [10]    [i]
+pawlib/paw/xbaevms/caption.c          Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/caption.h          Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/captionp.h         Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/clip.c             Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/clip.h             Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/clipp.h            Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/matrix.c           Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/matrix.h           Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/matrixp.h          Src         NO AD [10]    [i]
+pawlib/paw/xbaevms/version.c          Src         NO AD [10]    [i]
+
+
+Exception copyright holders
+---------------------------
+
+[a] Burkhard Burow, <burow@desy.de>,
+    http://www-zeus.desy.de/~burow/cfortran/index.htm
+
+[b] Alan Richardson, <mppa3@syma.sussex.ac.uk>, and O. Couet
+
+[c] The Regents of the University of California
+
+[d] Chris Thewalt, <thewalt@ce.berkeley.edu>
+
+[e] Alphonse A. Rademakers, <rdm@cernvm.cern.ch>,
+    CN/AS Division
+    CERN, European Organization for Nuclear Research
+    1123 Geneve, Switzerland
+
+[f] Addison-Wesley Publishing Company
+
+[g] Visual Edge Software Ltd.
+
+[h] Massachusetts Institute of Technology and Prentice Hall
+
+[i] Bell Communications Research, Inc. (Bellcore)
+
+[j] Q. Frank Xia, <qx@math.columbia.edu>
+
+
+Exception license details
+-------------------------
+
+[1] On Debian systems, the complete text of the GNU Library General Public
+    License can be found in the file `/usr/share/common-licenses/LGPL-2'.
+
+[2] On Debian systems, the complete text of the BSD License
+    can be found in the file `/usr/share/common-licenses/BSD'.
+
+[3] xvertext 5.0, Copyright (c) 1993 Alan Richardson (mppa3@uk.ac.sussex.syma)
+    Alignment definition modified by O.Couet.
+    Mods IBM/VM by O.Couet.
+
+    Permission to use, copy, modify, and distribute this software and its
+    documentation for any purpose and without fee is hereby granted, provided
+    that the above copyright notice appear in all copies and that both the
+    copyright notice and this permission notice appear in supporting
+    documentation.  All work developed as a consequence of the use of
+    this program should duly acknowledge such use. No representations are
+    made about the suitability of this software for any purpose.  It is
+    provided "as is" without express or implied warranty.
+
+[4] Copyright (c) 1991-1993 The Regents of the University of California.
+    All rights reserved.
+
+    Permission is hereby granted, without written agreement and without
+    license or royalty fees, to use, copy, modify, and distribute this
+    software and its documentation for any purpose, provided that the
+    above copyright notice and the following two paragraphs appear in
+    all copies of this software.
+
+    IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+    DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+    OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+    CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+    INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+    ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
+    PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+[5] Copyright (C) 1991, 1992 by Chris Thewalt (thewalt@ce.berkeley.edu)
+
+    Permission to use, copy, modify, and distribute this software
+    for any purpose and without fee is hereby granted, provided
+    that the above copyright notices appear in all copies and that both the
+    copyright notice and this permission notice appear in supporting
+    documentation.  This software is provided "as is" without express or
+    implied warranty.
+
+[6] Copyright 1992 Alphonse A. Rademakers
+
+    Permission to use, copy, modify, distribute, and sell this software
+    and its documentation for any purpose is hereby granted without
+    fee, provided that the above copyright notice appears in all copies
+    and that both that copyright notice and this permission notice
+    appear in supporting documentation, and that the name of
+    Alphonse A. Rademakers or CERN not be used in advertising or
+    publicity pertaining to distribution of the software without
+    specific, written prior permission.  Alphonse A. Rademakers and
+    CERN make no representations about the suitability of this software
+    for any purpose.  It is provided "as is" without express or implied
+    warranty.
+
+    Alphonse A. Rademakers and CERN disclaim all warranties with
+    regard to this software, including all implied warranties of
+    merchantability and fitness, in no event shall
+    Alphonse A. Rademakers or CERN be liable for any special, indirect
+    or consequential damages or any damages whatsoever resulting from
+    loss of use, data or profits, whether in an action of contract,
+    negligence or other tortious action, arising out of or in
+    connection with the use or performance of this software.
+
+    [Debian maintainer's note: Although the files with this copyright are
+    described as "based on ideas by Thomas Berlage" (see next entry), a
+    comparison with the original IconBox code of Thomas Berlage, available by
+    FTP at (e.g.) ftp://ftp.x.org/R5contrib/berlage.motif.tar.Z , shows that
+    they were written from scratch.]
+
+[7] Copyright 1991 Addison-Wesley Publishing Company
+
+    Permission to use, copy, modify, distribute, and sell this software and its
+    documentation for any purpose is hereby granted without fee, provided that
+    the above copyright notice appear in all copies and that both that
+    copyright notice and this permission notice appear in supporting
+    documentation, and that the name of Addison-Wesley not be used in
+    advertising or publicity pertaining to distribution of the software without
+    specific, written prior permission.  Addison-Wesley makes no representations
+    about the suitability of this software for any purpose.  It is provided 
+    as is" without express or implied warranty.
+
+    ADDISON-WESLEY DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+    INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT
+    SHALL ADDISON-WESLEY BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL
+    DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+    PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+    ACTION, ARISING OUT OF OR IN  CONNECTION WITH THE USE OR PERFORMANCE OF
+    THIS SOFTWARE.
+
+    Berlage: OSF/MOTIF: CONCEPTS AND PROGRAMMING
+
+    ISBN 0 201 55792 4
+
+    To order please contact your local Addison-Wesley office.
+
+    [Debian maintainer's note: The COPYRIGHT file referred to by the files
+    iconwidget.c, icwid.h, and icwidp.h, and quoted above, is not included in
+    the Cernlib source code.  It, along with the original versions of those
+    files (named IconWidget.c, IconWidget.h, and IconWidgetP.h, respectively),
+    may be found in the materials distributed with the book _OSF/Motif:
+    Concepts and Programming_, by Thomas Berlage, (C) 1991 Addison-Wesley
+    Publishing Company, or downloadable by FTP from (e.g.)
+    ftp://ftp.x.org/R5contrib/berlage.motif.tar.Z .]
+
+[8] Copyright (c) 1991, Visual Edge Software Ltd.
+
+    ALL  RIGHTS  RESERVED.   Permission to use, copy, modify, and
+    distribute  this  software  and its documentation for any purpose
+    and  without  fee  is  hereby  granted,  provided  that the above
+    copyright  notice  appear  in  all  copies  and  that  both  that
+    copyright  notice and this permission notice appear in supporting
+    documentation,  and that  the name of Visual Edge Software not be
+    used  in advertising  or publicity  pertaining to distribution of
+    the software without specific, written prior permission. The year
+    included in the notice is the year of the creation of the work.
+
+[9] Copyright 1990 Massachusetts Institute of Technology
+    Copyright 1989 Prentice Hall
+
+    Permission to use, copy, modify, and distribute this software for any
+    purpose and without fee is hereby granted, provided that the above
+    copyright notice appear in all copies and that both the copyright notice
+    and this permission notice appear in supporting documentation.
+
+    M.I.T., Prentice Hall and the authors disclaim all warranties with regard
+    to this software, including all implied warranties of merchantability and
+    fitness.  In no event shall M.I.T., Prentice Hall or the authors be liable
+    for any special, indirect or cosequential damages or any damages whatsoever
+    resulting from loss of use, data or profits, whether in an action of
+    contract, negligence or other tortious action, arising out of or in
+    connection with the use or performance of this software.
+
+[10] Copyright(c) 1992 Bell Communications Research, Inc. (Bellcore)
+                            All rights reserved
+
+     Permission to use, copy, modify and distribute this material for
+     any purpose and without fee is hereby granted, provided that the
+     above copyright notice and this permission notice appear in all
+     copies, and that the name of Bellcore not be used in advertising
+     or publicity pertaining to this material without the specific,
+     prior written permission of an authorized representative of
+     Bellcore.
+
+     BELLCORE MAKES NO REPRESENTATIONS AND EXTENDS NO WARRANTIES, EX-
+     PRESS OR IMPLIED, WITH RESPECT TO THE SOFTWARE, INCLUDING, BUT
+     NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+     FITNESS FOR ANY PARTICULAR PURPOSE, AND THE WARRANTY AGAINST IN-
+     FRINGEMENT OF PATENTS OR OTHER INTELLECTUAL PROPERTY RIGHTS.  THE
+     SOFTWARE IS PROVIDED "AS IS", AND IN NO EVENT SHALL BELLCORE OR
+     ANY OF ITS AFFILIATES BE LIABLE FOR ANY DAMAGES, INCLUDING ANY
+     LOST PROFITS OR OTHER INCIDENTAL OR CONSEQUENTIAL DAMAGES RELAT-
+     ING TO THE SOFTWARE.
+
+[11] Copyright(C) Q. Frank Xia (qx@math.columbia.edu), 1994.
+
+                           All Rights Reserved
+  
+     Permission to use, copy, modify, and distribute this software and its
+     documentation for any purpose and without fee is hereby granted,
+     provided that the above copyright notice appear in all copies and that
+     both that copyright notice and this permission notice appear in
+     supporting documentation, and that the name of Q. Frank Xia not be
+     used in advertising or publicity pertaining to distribution of the
+     software without specific, written prior permission.
+
+     This software is provided as-is and without any warranty of any kind.
+
+
+
+2022 amendments
+---------------
+The packages 
+
+mclibs/ariadne  
+mclibs/ariadne_407 
+mclibs/pythia
+mclibs/jetset
+mclibs/lepto63 
+
+Were licensed by their authors and copyright holders to be redistributed under 
+the GPL v2 or higher, see GPL2.txt. The MC-Net guidelines should be respected, see MCNETGUIDELINES.txt.
+
+The package mclibs/fritiof 
+
+is distributed under GPLv2+ according to the recommendation of the Department 
+of Physics and Astronomy of Lund University, where the fritiof was developed, see GPL2.txt.
+The MC-Net guidelines should be respected, see MCNETGUIDELINES.txt. 
+
+
+Note on mclib/pdf
+-----------------
+
+The apparently non-free license stated in the file mclib/pdf/doc/pdfdoc.txt 
+is superseded by CERN's placement of CERNLIB under the GNU
+General Public License.  
+
+(From the notes by Kevin B. McCarty <kmccarty@debian.org>)
+
+
+DELETIA
+-------
+
+The following files and directories have been removed from the Debian source
+package of Cernlib due to license ambiguities or incompatibilities with the GPL
+(e.g. positive BSD advertising clause).  If needed, they may be found in the
+upstream source tarballs.  Please see the README.Debian files for libmathlib2,
+ and libgeant321-2 packages for more information on obtaining Fluka library.
+

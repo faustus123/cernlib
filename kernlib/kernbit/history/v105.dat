@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:44  mclareni
+* Initial revision
+*
+*
+*  Version 1.05  870529 16.00
+C- Deletions:
+C  > M441 BITPAK, M508 BITPOS removed into normal KERN-pams
+C

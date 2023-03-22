@@ -1,0 +1,37 @@
+   Product name : STDHEP
+       Versions : V3_02
+ Product Number : PM0091
+           Date : 8-Feb-1996
+  Origin/Author : Lynn Garren, Paul Lebrun
+     Maintainer : Lynn Garren
+  Support Level : 5*
+
+Description:
+   STDHEP contains a set of translation routines which convert
+   Herwig, Jetset, Isajet, or QQ events to and from the standard
+   HEP event format.  STDHEP also contains utility routines
+   to work with the HEPEVT common block and a set of I/O routines.
+   The HEPEVT common block allows 4000 particles per event.
+
+   The translation of Xi_c and Xi_b particles has changed with version
+   2.01.  Also, the read/write routines changed with version 2.01.  
+   A bug was found in the 2.x read/write routines.  That bug was
+   fixed in version 3.00.  Please use stdrepair on old I/O files.
+   This version is not backwards compatible.
+
+   Mcfio, an xdr I/O interface package, is included with stdhep.
+   As of version 3.01, c bindings of the mcfio interface routines
+   are available from libstdhepC.a.
+
+Usage:
+   % setup cern
+   % setup lund
+   % setup stdhep
+   % f77 -o myprog myprog.f \
+        $LULIB/ludata.o $LULIB/pydata.o \
+        $STDHEP_DIR/lib/libstdhep.a $LULIB/liblund.a $CRNLIB/libpacklib.a
+
+
+Documentation:
+   PM0091 available from the Fermilab Computing Department Program Librarian.
+   Online documentation is available in $STDHEP_DIR/doc.

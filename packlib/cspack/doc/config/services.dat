@@ -1,0 +1,20 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 15:44:17  mclareni
+* Initial revision
+*
+*
+#
+#   This file should go into CERN:[PRO.EXE]ETC.SERVICES for
+#   VAX/VMS systems running UCX
+#
+#
+# CERN services
+#
+zserv           346/tcp
+#
+# UNIX specific services
+#
+exec     512/tcp

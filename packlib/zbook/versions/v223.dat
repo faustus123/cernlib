@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:14  mclareni
+* Initial revision
+*
+*
+*  Version 2.23  910210 16.30
+C-  New patches/flags:
+C   > Add HPUX, MIPS, IBMVM, IBMMVS, VAXVMS, VAXULX.
+C-  Modifications
+C   > P=ZBOOK,D=ZPRINT. Fix FORMAT statements for CONVEX
+C   > P=ZBOOK,D=ZUSER . Enable for UNIX (disabled in 2.22)
+C

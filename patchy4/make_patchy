@@ -1,0 +1,92 @@
+#!/bin/csh -fx
+# **********************************************************************
+# * PATCHY SHELL v1.06                                                 *
+# *                                                                    *
+# * Patchy Install driver                                              *
+# *                                                                    *
+# * Author: M.Marquina 90/08/24                                        *
+# *                                                                    *
+# * Mods       Date   Commments                                        *
+# * MARQUINA 91/04/29 Define automatically the path needed by p4boot.sh*
+# *                   Improve report messages                          *
+# *          92/03/25 Prompt to fill environment variables             *
+# *                   Take PATCHY suite from current directory,not HOME*
+# *          92/04/05 place executables in /cern/patchy/ver/bin        *
+# *          93/07/22 link to ASIS repository if sources are not local *
+# *          93/11/18 hardcode /cern in ASIS directory                 *
+# *                                                                    *
+# **********************************************************************
+  if ( $?PATCHY_VERSION == 0 ) set PATCHY_VERSION=4.15
+
+  if ( $?CERN == 0 )       set CERN="/cern"
+
+  set PAT0="$CERN/patchy"
+  set P4TOP="$PAT0/$PATCHY_VERSION"
+  set P4SRC="$P4TOP/src"
+
+  if ( ! -d $PAT0  ) mkdir $PAT0
+  if ( ! -d $P4TOP ) mkdir $P4TOP
+  if ( ! -d $P4SRC ) mkdir $P4SRC
+#
+ if ( $cwd != $P4SRC ) then
+  echo "------------------------------------------------"
+  echo "Patchy step 0: copy Patchy files into $P4SRC  "
+  echo "------------------------------------------------"
+     cp ./make_patchy $P4SRC
+     cp ./rceta.sh    $P4SRC
+     cp ./p4boot.sh0  $P4SRC
+     cp ./p4inceta    $P4SRC
+     cd $P4SRC
+     chmod +x rceta.sh
+ endif
+# The current and parent directories must be available to
+# the Patchy installation shells
+  set path=(. .. $path)
+  echo "---------------------------------------------------"
+  echo "Patchy step 1: running rceta.sh...                 "
+  echo "---------------------------------------------------"
+  ./rceta.sh
+  if ( ! -f p4comp.fca ) then
+    tee <<+
+# rceta.sh did not succeed to read the p4inceta file
+# Please check that:
+#   - name+options of the compiler are right
+#   - the compiler is available in the path
+#   - the program rceta.f compiles
+#
++
+    exit
+  endif
+  echo "the following files are now present:"
+  ls -l
+# === Now cleaning up
+  rm rceta.f rceta.o rceta
+  echo "---------------------------------------------------"
+  echo "Patchy step 2: verifying extraction...             "
+  echo "---------------------------------------------------"
+  sed 's/ *$//' p4boot.sh >p4boot.sh
+  echo "---------------------------------------------------"
+  echo "Patchy step 3: running p4boot.sh                   "
+  echo "---------------------------------------------------"
+  chmod a+x p4boot.sh
+  ./p4boot.sh 0
+  if ( ! -f ypatchy ) then
+    tee <<+
+# p4boot.sh did not succeed to install Patchy utilities.
+# Please check that:
+#   - name+options of the compiler are right
+#   - the compiler is available in the path
+#   - ". .." are in the path
+#   - the program fcasplit.f compiles
+#
++
+    exit
+  endif
+  rm y*.o y.lis
+  echo "---------------------------------------------------"
+  echo "Patchy step 4: placing executables in $P4TOP/bin"
+  echo "---------------------------------------------------"
+  if ( ! -d ../bin ) mkdir ../bin
+  mv y*       ../bin
+  mv fcasplit ../bin
+

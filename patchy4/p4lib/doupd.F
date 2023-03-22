@@ -1,0 +1,43 @@
+CDECK  ID>, DOUPD.
+      SUBROUTINE DOUPD (LPAT)
+
+C-    MERGE NEW USE-STATUS OF PATCH INTO ALL DEPENDENT DECKS
+
+      COMMON /CONST/ MPAK2(2),MPAK5(2),MPAK9(2),MPAK15(2),DAYTIM(3)
+     +,              NWNAME,NWSENM,NWSEN1,LARGE
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(9), LEXD,LEXH,LEXP,LPAM,LDECO, LADRV(14)
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEB(14),MEXDEC(6)
+     +, NVINC(6),NVUTY(16),NVIMAT(6),NVACT(6),NVGARB(6),NVWARN(6)
+     +, NVARRQ(6),NVARR(10),IDARRV(10),NVARRI(12),NVCCP(10)
+     +, NVDEP(19),MDEPAR,NVDEPL(6),  MWK(80),MWKX(80)
+      EQUIVALENCE(LPAST,LADRV(1)),  (LPCRA,LADRV(2)), (LDCRAB,LADRV(3))
+     +,         (KACTEX,NVACT(4)), (LACTEX,NVACT(5)), (LACDEL,NVACT(6))
+C--------------    END CDE                             -----------------  ------
+
+
+      LP = LPAT
+      IF (LP.EQ.0)           GO TO 32
+      L  = IQ(LP-2)
+      IF (L.EQ.0)            RETURN
+      L  = IQ(L-2)
+      IF (L.EQ.0)            RETURN
+      MXP = IQ(LP)
+
+   21 CALL MXJOIN (MXP,IQ(L))
+      L  = IQ(L-1)
+      IF (L.NE.0)            GO TO 21
+      IF (LP.NE.LPCRA)       RETURN
+
+   32 IF (LACTEX.NE.-7)      RETURN
+      NVUSEB(3) = IQ(LEXP)
+      NVUSEB(4) = IQ(LEXD)
+      CALL UPKBYT (NVUSEB(4),1,NVUSEB(5),3,MPAK5(1))
+      RETURN
+      END

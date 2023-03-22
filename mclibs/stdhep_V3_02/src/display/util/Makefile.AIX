@@ -1,0 +1,13 @@
+# SCCS ID: Makefile.ibm 1.8 3/1/94
+#
+# Makefile for nirvana utilities (IBM version)
+#
+CC=cc
+AR=ar
+#CFLAGS=-g -DUSE_DIRENT
+CFLAGS=-O -DUSE_DIRENT
+LIBS= -lm -lXm -lXt -lX11
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system
+SCCS=xxxx Use sccs on ultrix system
+
+include Makefile.common

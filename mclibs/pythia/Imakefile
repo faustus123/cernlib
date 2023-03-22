@@ -1,0 +1,23 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+AllTarget(pythia6205)
+
+export LIB_SONAME := 3
+
+SUBDIRS= code test pythia
+
+TopOfPackage(pythia6205)
+
+MakeSubdirs($(SUBDIRS))
+
+SubdirLibraryTarget(pythia6205,code)
+
+InstallLibrary(pythia6205,$(CERN_LIBDIR))
+InstallLibraryAlias(pythia6205,pythia,$(CERN_LIBDIR))
+InstallSharedLibrary(pythia6205,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+TestSubdirs(test)
+
+InstallIncludeSubdirs(pythia)

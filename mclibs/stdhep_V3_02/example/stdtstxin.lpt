@@ -1,0 +1,59 @@
+stdtstxin
+ StdHepXdrReadOpen: successfully opened input stream 1
+          title: test the c interface 
+          date: Fri Dec  1 16:26:44 1995
+
+                    50 events
+                    4 blocks per event
+ at event 1 with 20 particles
+ at event 2 with 40 particles
+ at event 3 with 60 particles
+ at event 4 with 80 particles
+ at event 5 with 100 particles
+ at event 6 with 120 particles
+ at event 7 with 140 particles
+ at event 8 with 160 particles
+ at event 9 with 180 particles
+ at event 10 with 200 particles
+ at event 11 with 220 particles
+ at event 12 with 240 particles
+ at event 13 with 260 particles
+ at event 14 with 280 particles
+ at event 15 with 300 particles
+ at event 16 with 320 particles
+ at event 17 with 340 particles
+ at event 18 with 360 particles
+ at event 19 with 380 particles
+ at event 20 with 400 particles
+ at event 21 with 420 particles
+ at event 22 with 440 particles
+ at event 23 with 460 particles
+ at event 24 with 480 particles
+ at event 25 with 500 particles
+ at event 26 with 520 particles
+ at event 27 with 540 particles
+ at event 28 with 560 particles
+ at event 29 with 580 particles
+ at event 30 with 600 particles
+ at event 31 with 620 particles
+ at event 32 with 640 particles
+ at event 33 with 660 particles
+ at event 34 with 680 particles
+ at event 35 with 700 particles
+ at event 36 with 720 particles
+ at event 37 with 740 particles
+ at event 38 with 760 particles
+ at event 39 with 780 particles
+ at event 40 with 800 particles
+ at event 41 with 820 particles
+ at event 42 with 840 particles
+ at event 43 with 860 particles
+ at event 44 with 880 particles
+ at event 45 with 900 particles
+ at event 46 with 920 particles
+ at event 47 with 940 particles
+ at event 48 with 960 particles
+ at event 49 with 980 particles
+ at event 50 with 1000 particles
+ 50 events read
+          StdHepXdrEnd: 614150 words i/o with 9990 efficiency

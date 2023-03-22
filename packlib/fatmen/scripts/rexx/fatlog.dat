@@ -1,0 +1,17 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 15:17:49  mclareni
+* Initial revision
+*
+*
+/*DECK ID>, FATLOG.EXEC */
+/*                      F A T _ L O G                         */
+Parse arg server message
+Userid  = "XNAME"("USERID")
+Account = "XACCOUNT"()
+server  = strip(server)
+"EXECIO 0 CP (STRING Q USER "server
+If rc ^= 0 then exit
+"EXEC TELL "server "*FATLOG* from "Userid Account ": "message

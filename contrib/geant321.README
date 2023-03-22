@@ -1,0 +1,84 @@
+Notes on geant321:
+------------------
+
+1) If you use the "gxint" script to run GEANT, it will create an executable
+in your home directory (or in $TMPDIR, if $TMPDIR is set; to prevent symlink
+attacks, ensure that your $TMPDIR is writable only by you) named GEANT<pid>
+where <pid> is the process ID of gxint.  Please make sure you do not have any
+files with this name format that shouldn't be overwritten, or else always call
+gxint with its -o <outputfile> option.
+
+
+2) The FLUKA routines have been removed from the Debian packages of GEANT 3.21
+at the request of the upstream authors of FLUKA, who never gave CERN permission
+to release it under the GPL.  In addition, the version of the FLUKA code in
+CERNLIB was obsolete by several years.  Please see the Q&A "What relation
+exists between FLUKA and GEANT?" at the following URL for more information
+(it is the second question on the web page as of this writing):
+
+http://www.fluka.org/frequentlyAQ/Relations_with_other_particle_transport_codes.html
+
+If you would like to use a current version of the FLUKA code, it may be
+obtained at the URL http://www.fluka.org/  However, it may not define all
+symbols required by some GEANT functions that were used to interface with the
+old FLUKA code.  Additionally, please be aware that it is _far_ from being
+DFSG-Free software.
+
+The FLUKA functions and subroutines that were removed are as follows.
+Attempting to call any of them in your code will result in a linking failure
+or abnormal program exit:
+
+ABBRCH AINEL AKEKA ALTRA ALTRAF AMGA ANKEKA BAMJEV BEEXI BEKEKA BERTTP BETA
+BETARN BETRST BIMSEL BKEKA BKLASS BNKEKA CALUMO CALUMV CHANWT COREVT CORRIN
+COSLEG DATAR3 DECAUX DECAY DIFEVV DOST DRELAB DRES EEXI EEXLVL EKEKA ENERGI
+ENERGY ENRG ERUP EVDEEX EVENTV EVEVAP EVVINI FDEVAP FDNOPT FDPREE FEKFNC FEREVV
+FERHAV FISFRA FKDECA FKDRES FKENER FKERUP FKFLAV FKIMPU FKSIGI FKVERT FKZERO
+FLAVOR FLDIST FLINIT FLKDT1 FLKDT2 FLKDT3 FLKDT4 FLKDT5 FLKDT6 FLKDT7 FLUFIN
+FPFRNC FPOWER FPROB FRADNC FRHINC FRHONC GAMRN GETA GFMDIS GFMFIN HADDEN HADEVV
+HADRIN HADRIV HEVHIN HINHEV HKLASS HYPERO IEFUN IMPULS INCINI INDEX2 KINPAR
+KPOIS LORTRA NCLVIN NCLVST NIZL NIZLNW NUCEVV NUCNUC NUCREL NUCRIV NUDISV
+NUPREL NWISEL PARJET PEANUT PFNCLV PHDSET PHDWLL PIOABS PMPRAB POLI PREPRE QNRG
+RACO RAKEKV RBKEKV RCHANV ROTAT RSTSEL SAMCST SBCOMP SFECFE SHPTOT SIGEL SIGFER
+SIGINT SIHAEL SITSAO STALIN TCHOIC THREPD TRAFO TRAHAD TRANS TTRANS TWOPAD
+TWOPAR UMOFIN VEREIN VERTEX XINNEU XINPRO XLAMB XSENEU XSEPRO ZEROIN 
+
+Additionally, the GFTMAT subroutine may attempt to call FLDIST and/or FLINIT,
+resulting in an abnormal program exit, depending on how it is set up.
+
+
+3) The Jetset library, required by a few GEANT functions, is not available
+within Debian because the upstream author never gave permission for it to be
+GPLed and included in CERNLIB.
+
+This will affect you if you want to use any of these GEANT functions or
+subroutines.  Attempting to call them in your code without Jetset installed
+will cause an abnormal program exit:
+
+GLUDKY GLUND GLUNDI
+
+Jetset can be obtained either from this web page:
+http://www.thep.lu.se/~torbjorn/Pythia.html ; or by installing the ancis and
+montecarlo-installer-data packages, then running the command
+"ancis installdebs jetset".  The montecarlo-installer-data and ancis packages
+are not official parts of Debian; they may be obtained by adding the following
+to your /etc/apt/sources.list :
+
+deb http://people.debian.org/~kmccarty/ancis/ unstable main contrib
+deb-src http://people.debian.org/~kmccarty/ancis/ unstable main contrib
+
+(Substitute "unstable" with "stable" or "testing" if appropriate.)
+Please note that I cannot guarantee the above URLs will continue to be valid
+forever.
+
+
+4) Note that this package is not fully functional on 64-bit machines unless
+one statically links user code against GEANT 3.21 and CERNLIB libraries,
+for instance with the provided "cernlib" or "gxint" commands:
+
+    gfortran -o my_geant_program my_geant_code.F `cernlib geant321`
+or
+    gxint -o my_geant_program my_geant_code.F
+
+
+-- Kevin B. McCarty <kmccarty@debian.org>, Fri, 01 Feb 2008
+

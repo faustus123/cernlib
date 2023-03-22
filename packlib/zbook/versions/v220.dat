@@ -1,0 +1,14 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:14  mclareni
+* Initial revision
+*
+*
+*  Version 2.20
+C            APOLLO CORRECTIONS IN EXAMPLES
+C            GENERAL BUG FIXES IN ROUTINE ZFRIBM
+C            PATCH ZCRAY ZPR1ME DELETED
+C            MINOR MODIFICATIONS TO ZJUMP AND ZTRAP
+C

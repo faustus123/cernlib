@@ -1,0 +1,34 @@
+Notes on zftp:
+--------------
+
+This is the client program for the ZEBRA FTP (zftp) protocol of CERNLIB.
+Like other FTP-type programs, the ZFTP protocol transmits passwords in
+cleartext.  It would therefore be wise to use zftp only within a closed LAN
+with trusted users.  To connect to a remote host, the host must be running
+the zserv daemon (for Debian, part of the pawserv package) from inetd.  See
+also the README.Debian file for that package.
+
+ZFTP by default converts all filenames to lowercase (it does not respect
+the KUIP command "FILECASE KEEP"), which is potentially a problem on case-
+sensitive Linux and UNIX machines.  Some of its interactive commands, but not
+all, accept a 'C' argument to preserve filename cases; see the ZFTP online
+help for individual commands for details.
+
+-- Kevin McCarty <kmccarty@debian.org>, Mon, 22 Jul 2002
+Notes on zftp:
+--------------
+
+This is the client program for the ZEBRA FTP (zftp) protocol of CERNLIB.
+Like other FTP-type programs, the ZFTP protocol transmits passwords in
+cleartext.  It would therefore be wise to use zftp only within a closed LAN
+with trusted users.  To connect to a remote host, the host must be running
+the zserv daemon (for Debian, part of the pawserv package) from inetd.  See
+also the README.Debian file for that package.
+
+ZFTP by default converts all filenames to lowercase (it does not respect
+the KUIP command "FILECASE KEEP"), which is potentially a problem on case-
+sensitive Linux and UNIX machines.  Some of its interactive commands, but not
+all, accept a 'C' argument to preserve filename cases; see the ZFTP online
+help for individual commands for details.
+
+-- Kevin McCarty <kmccarty@debian.org>, Mon, 22 Jul 2002

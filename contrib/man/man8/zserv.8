@@ -1,0 +1,62 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH ZSERV 8 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+zserv \- CERNLIB server program for transferring ZEBRA formatted files
+.SH DESCRIPTION
+.PP
+\fBzserv\fP is the server for the ZFTP file transfer program.  It listens
+for connections on port 346.  \fBzserv\fP is not in general run from the
+command line, but only via \fBinetd\fP(8).
+.PP
+Please note that, like many other FTP servers, \fBzserv\fP receives unencrypted
+passwords over the network.  It should therefore be used only within a trusted
+LAN.
+.SH FILES
+.RI "\[bu] " /etc/inetd.conf
+\- specifies how inetd should call zserv
+.SH SEE ALSO
+.RB "\[bu] " zftp (1)
+.br
+.RB "\[bu] " inetd (8)
+.br
+.RB "\[bu] " inetd.conf (5)
+.PP
+\fBzserv\fP is part of the CERNLIB CSPACK package, documented fully at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH ZSERV 8 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+zserv \- CERNLIB server program for transferring ZEBRA formatted files
+.SH DESCRIPTION
+.PP
+\fBzserv\fP is the server for the ZFTP file transfer program.  It listens
+for connections on port 346.  \fBzserv\fP is not in general run from the
+command line, but only via \fBinetd\fP(8).
+.PP
+Please note that, like many other FTP servers, \fBzserv\fP receives unencrypted
+passwords over the network.  It should therefore be used only within a trusted
+LAN.
+.SH FILES
+.RI "\[bu] " /etc/inetd.conf
+\- specifies how inetd should call zserv
+.SH SEE ALSO
+.RB "\[bu] " zftp (1)
+.br
+.RB "\[bu] " inetd (8)
+.br
+.RB "\[bu] " inetd.conf (5)
+.PP
+\fBzserv\fP is part of the CERNLIB CSPACK package, documented fully at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

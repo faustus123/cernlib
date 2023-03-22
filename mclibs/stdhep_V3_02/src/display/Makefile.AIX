@@ -1,0 +1,13 @@
+# SCCS ID: Makefile.ibm 1.4 4/13/92
+#
+# Makefile for phase space event display (IBM version)
+#
+CC=cc
+AR=ar
+CFLAGS=$(DEBUG) -D_BSD -I../../stdhep
+FFLAGS=$(DEBUG) -qextname
+FFLAGS2=$(DEBUG) -qextname -WF,-I../../stdhep
+F77=xlf
+OPTS=-bI:/usr/lpp/xlf/lib/lowsys.exp
+LIBS= -lXm -lXt -lX11 -lPW -lm -lxlf90
+#LIBS= -lXm -lXt -lX11 -lm -lbsd -lxlf

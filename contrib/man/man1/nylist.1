@@ -1,0 +1,132 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYLIST 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nylist \- tool to list contents of specialized\-format patches
+.SH SYNOPSIS
+.B nylist
+.IR "pam options" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnylist\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, it can print a listing (including
+line numbers) of the contents of these files.
+.SH USAGE
+The parameter \fIpam\fP is the name of the PAM file (a default extension
+of ".car" is assumed), \fIprint\fP is the output file to write to
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can be
+used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+E
+Page ejects forced in the PAM file with +SEQ,QEJECT are honored (only if the
+S option is also given).
+.TP
+H
+Print help information only.
+.TP
+S
+Start each new deck on a new page.
+.TP
+.I n
+For \fIn\fP a number from 0 to 4 inclusive, assume 58, 62, 74, 84, or 98 lines
+per page in the output.  (The default is 110 lines per page.)  For \fIn\fP
+a number greater than or equal to 20, use that specific number of lines per
+page.
+.TP
++
+Inhibit the initial page\-eject.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nymerge "(1), " nypatchy "(1), " nyshell "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nylist help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYLIST 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nylist \- tool to list contents of specialized\-format patches
+.SH SYNOPSIS
+.B nylist
+.IR "pam options" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnylist\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, it can print a listing (including
+line numbers) of the contents of these files.
+.SH USAGE
+The parameter \fIpam\fP is the name of the PAM file (a default extension
+of ".car" is assumed), \fIprint\fP is the output file to write to
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can be
+used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+E
+Page ejects forced in the PAM file with +SEQ,QEJECT are honored (only if the
+S option is also given).
+.TP
+H
+Print help information only.
+.TP
+S
+Start each new deck on a new page.
+.TP
+.I n
+For \fIn\fP a number from 0 to 4 inclusive, assume 58, 62, 74, 84, or 98 lines
+per page in the output.  (The default is 110 lines per page.)  For \fIn\fP
+a number greater than or equal to 20, use that specific number of lines per
+page.
+.TP
++
+Inhibit the initial page\-eject.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nymerge "(1), " nypatchy "(1), " nyshell "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nylist help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.

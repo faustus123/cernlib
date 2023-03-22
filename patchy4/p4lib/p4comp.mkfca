@@ -1,0 +1,49 @@
+ROUTINES = ypatch.o ytobcd.o ytobin.o ytocet.o yfrcet.o \
+ycompa.o yedit.o yindex.o ylist.o ysearc.o yshift.o flpara.o \
+flkrak.o flink.o floper.o helppr.o pinit.o pready.o pend.o \
+dospec.o dospgo.o dorun.o dodeck.o domatf.o douref.o doasm.o \
+doopt.o douse.o doupd.o acsort.o acexq.o acpeel.o acxref.o \
+acseq.o mxactd.o mxactn.o arrive.o arbcd.o arbin.o depart.o \
+depid.o depmsg.o dpexe.o dpexgo.o dpmix.o dplist.o dppage.o \
+ccproc.o creapd.o crdeco.o liftrh.o locseq.o locsq2.o mxjoin.o \
+mxnew.o mxset.o ybcdex.o ybinex.o ytocex.o toceta.o tosetu.o \
+yfrcex.o frceta.o frsetu.o cetup.o hollcv.o ycomex.o yedtex.o \
+yedriv.o yedarr.o yedxch.o jedchk.o jedtyp.o yedkrk.o yedmat.o \
+yixex.o ylisex.o ylispg.o yserex.o ysfind.o yserbf.o yshfex.o \
+yshmac.o yshanl.o yshtag.o yshval.o auxini.o pload.o cckrak.o \
+pilect.o pileup.o popin.o poprew.o popoff.o prtitl.o notitl.o \
+auxfil.o crebuf.o inchch.o jartpx.o loglv.o setid.o cctoup.o \
+iofile.o iofilx.o iotype.o jartyp.o kdngo.o kdnrew.o kdnextvx.o \
+kdstep.o kdcopy.o kdfill.o liftbk.o namefl.o nomem.o qend.o \
+qabend.o rqtell.o pabend.o paberr.o setnum.o setopt.o qfatam.o \
+qfatal.o qpostm.o mqinit.o mqend.o mqgarb.o mqmove.o mqrelc.o \
+mqtabl.o qsorth.o qsorvh.o iqbcd.o iqlocf.o kqlast.o lqfind.o \
+lqlong.o lqlocf.o qpage.o qshunt.o qsort.o qsorti.o qsorv.o \
+qsorvi.o qtopsy.o qtouch.o qtchid.o qverif.o qblow.o qlump.o \
+qname.o qlumpr.o qblowx.o qnamex.o iucomh.o ublow.o ubunch.o \
+vxinvb.o vxinvc.o xinb.o xinbs.o abend.o datime.o getenvf.o \
+geteni.o getwdf.o getwdi.o intrac.o locb.o locf.o renamef.o \
+renami.o tminit.o tmpro.o tmproi.o tmread.o fchput.o fchtak.o \
+xinbf.o xincf.o xoutb.o xoutbf.o xoutbs.o xoutcf.o cbyt.o \
+cfill.o cleft.o cright.o cltou.o cutol.o csetdi.o csethi.o \
+csqmbl.o ctrans.o icdeci.o icfind.o icfmul.o icfila.o icfnbl.o \
+ichexi.o icloc.o icnext.o ictype.o iucola.o iucomp.o iufila.o \
+iufind.o iufnbl.o iuforw.o iulast.o iunext.o iusame.o jbit.o \
+jbyt.o jbytet.o jbytor.o jrsbyt.o lnblnk.o mbytet.o mbytor.o \
+mcbyt.o msbit.o msbit0.o msbit1.o msbyt.o pkbyt.o pkchar.o \
+sbit.o sbit0.o sbit1.o sbyt.o sbytor.o traceq.o ublank.o \
+ucopiv.o ucopy.o ucopy2.o uctoh1.o uctoh.o uh1toc.o uhtoc.o \
+uleft.o uopt.o upkbyt.o upkch.o uset.o utrans.o vblank.o \
+vfill.o vzero.o vizpri.o ishft.o
+
+.f.o:
+	gfortran -std=legacy -c -fno-automatic -O2 $*.f
+
+.c.o:
+	gcc  -c -O2 $*.c
+
+.s.o:
+	as    $*.s
+
+p4comp_all: $(ROUTINES)
+

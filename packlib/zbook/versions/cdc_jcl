@@ -1,0 +1,29 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:15  mclareni
+* Initial revision
+*
+*
+#include "sys/CERNLIB_machine.h"
+#include "_zbook/pilot.h"
+JOB.
+ACCOUNT,....
+FIND,PAM,PROZBOOKPAM,ID=PROGLIB.
+FIND,ULIB,ID=PHLIB.
+LIBRARY,ULIB.
+YPATCHY.
+LIBRARY.
+RETURN,PAM,ULIB.
+FTN,I=ASM.
+RETURN,ASM.
+FIND,LIB,7600LIBRARY.
+FIND,GENLIB.
+LIBRARY,GENLIB,LIB.
+LGO.
+%EOR
+&USE,CDC,ZEXAM.
+&EXE.
+&PAM.
+&QUIT.

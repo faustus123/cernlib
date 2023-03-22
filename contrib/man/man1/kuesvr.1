@@ -1,0 +1,126 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KUESVR 1 "March 4, 2005"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kuesvr \- the CERN KUIP edit server
+.SH SYNOPSIS
+kuesvr \-p \fIpid\fP \-c \fIcmd\fP \-t \fItmpfile\fP [ \-e \fIeditor\fP ] \fIfile\fP
+.SH DESCRIPTION
+.PP
+\fBkuesvr\fP is a small program called from KUIP.  (KUIP stands
+for Kit for a User Interface Package; it is part of the Packlib library
+from CERN.)
+\fBkuesvr\fP allows the user to call up an editor from within a KUIP program
+(PAW, for instance) on the file given by \fIfile\fP, and continue to use the
+program asynchronously.
+.PP
+In general \fBkuesvr\fP is not called directly from the
+command line (in Debian it is not even located in the $PATH); instead it
+will be run automatically from a KUIP program when an editor
+is needed, as long as the command line set with KUIP's
+HOST_EDITOR command ends with an ampersand ('&'), and $DISPLAY is set.
+If $DISPLAY is unset (or, on non\-Debian systems, if \fBkuesvr\fP cannot be
+found in $PATH), the ampersand will be ignored.  For instance,
+.PP
+\fBPAW >\fP HOST_EDITOR 'emacs \-geometry 80x48 &'
+.PP
+The editor is expected to create its own graphical window.  However,
+since 'vi' is a frequent choice, setting HOST_EDITOR to 'vi &' will
+automatically be interpreted as 'x\-terminal\-emulator \-e vi &' instead.
+.PP
+.SH OPTIONS
+.TP
+.BI "\-c " cmd
+Specifies the KUIP command invoking the edit server.
+.TP
+.BI "\-e " editor
+Specifies the editor to be used.  By default it is vi.  Even though this
+flag is optional, it will be set anyway when \fBkuesvr\fP is called from
+the KUIP library.
+.TP
+.BI "\-p " pid
+Specifies the process ID of the calling program.
+.TP
+.BI "\-t " tmpfile
+Specifies the name of the temporary file used for communication between
+the calling program and the edit server.  This is a Debian extension
+added for security reasons.
+It is a required argument, so this version of \fBkuesvr\fP will
+not work with a KUIP application using CERN's unmodified Packlib; nor will
+CERN's unmodified \fBkuesvr\fP work with the Debian version of Packlib.
+.SH SEE ALSO
+.RB "\[bu] " paw (1)
+\- a program that can use the edit server
+.br
+\[bu] the KUIP online help available with command "help host_editor"
+.br
+\[bu] the KUIP manual, available at
+.br
+  http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/kuip.ps.gz
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH KUESVR 1 "March 4, 2005"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+kuesvr \- the CERN KUIP edit server
+.SH SYNOPSIS
+kuesvr \-p \fIpid\fP \-c \fIcmd\fP \-t \fItmpfile\fP [ \-e \fIeditor\fP ] \fIfile\fP
+.SH DESCRIPTION
+.PP
+\fBkuesvr\fP is a small program called from KUIP.  (KUIP stands
+for Kit for a User Interface Package; it is part of the Packlib library
+from CERN.)
+\fBkuesvr\fP allows the user to call up an editor from within a KUIP program
+(PAW, for instance) on the file given by \fIfile\fP, and continue to use the
+program asynchronously.
+.PP
+In general \fBkuesvr\fP is not called directly from the
+command line (in Debian it is not even located in the $PATH); instead it
+will be run automatically from a KUIP program when an editor
+is needed, as long as the command line set with KUIP's
+HOST_EDITOR command ends with an ampersand ('&'), and $DISPLAY is set.
+If $DISPLAY is unset (or, on non\-Debian systems, if \fBkuesvr\fP cannot be
+found in $PATH), the ampersand will be ignored.  For instance,
+.PP
+\fBPAW >\fP HOST_EDITOR 'emacs \-geometry 80x48 &'
+.PP
+The editor is expected to create its own graphical window.  However,
+since 'vi' is a frequent choice, setting HOST_EDITOR to 'vi &' will
+automatically be interpreted as 'x\-terminal\-emulator \-e vi &' instead.
+.PP
+.SH OPTIONS
+.TP
+.BI "\-c " cmd
+Specifies the KUIP command invoking the edit server.
+.TP
+.BI "\-e " editor
+Specifies the editor to be used.  By default it is vi.  Even though this
+flag is optional, it will be set anyway when \fBkuesvr\fP is called from
+the KUIP library.
+.TP
+.BI "\-p " pid
+Specifies the process ID of the calling program.
+.TP
+.BI "\-t " tmpfile
+Specifies the name of the temporary file used for communication between
+the calling program and the edit server.  This is a Debian extension
+added for security reasons.
+It is a required argument, so this version of \fBkuesvr\fP will
+not work with a KUIP application using CERN's unmodified Packlib; nor will
+CERN's unmodified \fBkuesvr\fP work with the Debian version of Packlib.
+.SH SEE ALSO
+.RB "\[bu] " paw (1)
+\- a program that can use the edit server
+.br
+\[bu] the KUIP online help available with command "help host_editor"
+.br
+\[bu] the KUIP manual, available at
+.br
+  http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/kuip.ps.gz
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

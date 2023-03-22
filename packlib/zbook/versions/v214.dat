@@ -1,0 +1,14 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:14  mclareni
+* Initial revision
+*
+*
+*  Version 2.14  850328
+C            In addition to nH... (hollerith), CHARACTER strings ('...')
+C            and CHARACTER variables are now allowed in calls
+C            to ZBOOK routines
+C            Bank format stored even if no conversion (ZEPIN)
+C

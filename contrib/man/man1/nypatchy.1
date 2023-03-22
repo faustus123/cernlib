@@ -1,0 +1,182 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYPATCHY 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nypatchy \- tool to work with specialized\-format patches
+.SH SYNOPSIS
+.B nypatchy
+.IR "pam fort cradle print cc as data " [ " fort2 cc2 as2 data2 " ]
+.SH DESCRIPTION
+.PP
+\fBnypatchy\fP is a tool for working with Patchy Master Files (PAM files).
+A PAM file is an ordinary text file (generally with a three\-letter extension
+of ".car") that holds source code interleaved with
+special pre\-processing instructions for \fBnypatchy\fP.  The source code
+may be in C, FORTRAN, assembly language, or a combination of these.
+The pre\-processing instructions
+allow one to maintain separate optional patches independently, for instance
+in the case of architecture\-specific code.  Details of the pre\-processing
+commands used by \fBnypatchy\fP are beyond the scope of this man page;
+the reader should refer to the full manual available from CERN.
+.PP
+Telling \fBnypatchy\fP which set of patches to use may be done on
+standard input or via a so\-called \fIcradle file\fP.  Typically the
+cradle file will contain one or more +USE statements as well as +EXE
+and +QUIT, for instance in the case of the isajet Monte Carlo generator:
+.PP
++USE,*ISAJET
+.br
++EXE
+.br
++PAM
+.br
++QUIT
+.SH USAGE
+.PP
+In the command line shown above, \fIpam\fP is the PAM file, if any.
+\fIfort\fP is the name of the primary output source code file, if any.
+\fIcradle\fP is the name of the cradle file, if any
+(default is standard input, for instance a here\-doc).
+\fIprint\fP is the name of the file to receive printed output (the default
+is standard output).  \fIcc\fP, \fIas\fP, \fIdata\fP are the names of the
+source code output files for data types CC, AS, DATA.  The remaining parameters
+are the source code output files to receive diverted material for respective
+data types FORT, CC, AS, DATA.
+.PP
+Parameters may be omitted by substituting a dash \- for them.  Trailing
+parameters may be cut short by giving "." or ".go"; the latter commences
+execution immediately rather than starting the \fBnypatchy\fP interactive
+prompt.
+.PP
+\fBnypatchy\fP will return to the shell a code of 0 if successful, 1 if
+there is a warning, and 2 if an error occurs.  Since the program stops
+creating output, but continues to run (in order to check for further errors)
+if an error occurs, the user should be sure to test the error code $? after
+any \fBnypatchy\fP run.
+.SH EXAMPLES
+.TP
+nypatchy \-\- xyz .go
+reads the cradle (instructions) from file \fIxyz.cra\fP, which must
+list all other files to be used.
+.TP
+nypatchy .go << EOF
+<cradle>
+.TP
+EOF
+.br
+has the cradle given as a here\-document.
+.TP
+nypatchy zebra.car zebra.fca zebra.cra zebra.lis .go
+reads the PAM file zebra.car, outputting the resulting source code to
+zebra.fca, taking the cradle from zebra.cra, with printing done to
+zebra.lis.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nyshell "(1), " nysynopt "(1), "
+.BR nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nypatchy help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYPATCHY 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nypatchy \- tool to work with specialized\-format patches
+.SH SYNOPSIS
+.B nypatchy
+.IR "pam fort cradle print cc as data " [ " fort2 cc2 as2 data2 " ]
+.SH DESCRIPTION
+.PP
+\fBnypatchy\fP is a tool for working with Patchy Master Files (PAM files).
+A PAM file is an ordinary text file (generally with a three\-letter extension
+of ".car") that holds source code interleaved with
+special pre\-processing instructions for \fBnypatchy\fP.  The source code
+may be in C, FORTRAN, assembly language, or a combination of these.
+The pre\-processing instructions
+allow one to maintain separate optional patches independently, for instance
+in the case of architecture\-specific code.  Details of the pre\-processing
+commands used by \fBnypatchy\fP are beyond the scope of this man page;
+the reader should refer to the full manual available from CERN.
+.PP
+Telling \fBnypatchy\fP which set of patches to use may be done on
+standard input or via a so\-called \fIcradle file\fP.  Typically the
+cradle file will contain one or more +USE statements as well as +EXE
+and +QUIT, for instance in the case of the isajet Monte Carlo generator:
+.PP
++USE,*ISAJET
+.br
++EXE
+.br
++PAM
+.br
++QUIT
+.SH USAGE
+.PP
+In the command line shown above, \fIpam\fP is the PAM file, if any.
+\fIfort\fP is the name of the primary output source code file, if any.
+\fIcradle\fP is the name of the cradle file, if any
+(default is standard input, for instance a here\-doc).
+\fIprint\fP is the name of the file to receive printed output (the default
+is standard output).  \fIcc\fP, \fIas\fP, \fIdata\fP are the names of the
+source code output files for data types CC, AS, DATA.  The remaining parameters
+are the source code output files to receive diverted material for respective
+data types FORT, CC, AS, DATA.
+.PP
+Parameters may be omitted by substituting a dash \- for them.  Trailing
+parameters may be cut short by giving "." or ".go"; the latter commences
+execution immediately rather than starting the \fBnypatchy\fP interactive
+prompt.
+.PP
+\fBnypatchy\fP will return to the shell a code of 0 if successful, 1 if
+there is a warning, and 2 if an error occurs.  Since the program stops
+creating output, but continues to run (in order to check for further errors)
+if an error occurs, the user should be sure to test the error code $? after
+any \fBnypatchy\fP run.
+.SH EXAMPLES
+.TP
+nypatchy \-\- xyz .go
+reads the cradle (instructions) from file \fIxyz.cra\fP, which must
+list all other files to be used.
+.TP
+nypatchy .go << EOF
+<cradle>
+.TP
+EOF
+.br
+has the cradle given as a here\-document.
+.TP
+nypatchy zebra.car zebra.fca zebra.cra zebra.lis .go
+reads the PAM file zebra.car, outputting the resulting source code to
+zebra.fca, taking the cradle from zebra.cra, with printing done to
+zebra.lis.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nyshell "(1), " nysynopt "(1), "
+.BR nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nypatchy help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.

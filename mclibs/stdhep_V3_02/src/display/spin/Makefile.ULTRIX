@@ -1,0 +1,8 @@
+# SCCS ID: Makefile.ultrix 1.3 7/31/92
+#
+# Makefile for spin widget (Ultrix version)
+#
+CC = cc
+AR = ar
+CFLAGS = $(DEBUG)
+LIBS = -lXm -lXt -lX11 -lm

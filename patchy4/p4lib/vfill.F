@@ -1,0 +1,14 @@
+CDECK  ID>, VFILL.
+      SUBROUTINE VFILL (A,N,STUFF)
+C
+C CERN PROGLIB# F121    VFILL           .VERSION KERNFOR  1.0   710701
+C ORIG. 01/07/71
+C
+      DIMENSION A(*)
+C
+      IF (N.LE.0)  RETURN
+      DO 9 I= 1,N
+    9 A(I)= STUFF
+C
+      RETURN
+      END

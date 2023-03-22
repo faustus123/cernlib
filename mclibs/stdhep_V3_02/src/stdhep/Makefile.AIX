@@ -1,0 +1,8 @@
+#
+# AIX portion of stdhep makefile
+#
+CC=cc
+AR=ar
+F77=xlf
+CFLG=
+FFLAGS=-qextname -WF,-DAIX,-DUNIX,-I../../stdhep,-I$(LUND_DIR)/jetset74,-I$(HERWIG_DIR)/herwig58,-I$(ISAJET_DIR)/isajet,-I../qq,-I../mcfio

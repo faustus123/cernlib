@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:34  mclareni
+* Initial revision
+*
+*
+#if defined(CERNLIB_IBMVM)
+/*DECK ID>, monitor.definitions */
++---------+---------+--------------+--------+----------+---------------+
+|Monitor  |Admini-  | Disk-        | Pass-  |          | Disk-occupancy|
+|    name |  strator|  name  vaddr |   word |  Status  |  Mon Wed Fri  |
++---------+---------+--------------+--------+----------+---------------+
+#endif

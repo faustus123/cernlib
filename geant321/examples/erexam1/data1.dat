@@ -1,0 +1,19 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/06 15:36:25  mclareni
+* Initial revision
+*
+*
+LIST
+C    GET  'INIT'
+TRIG  10
+KINE  5 (type)  20. (momentum)   90. (teta)   0. (phi)
+DEBUG 1  1
+SWIT  0  1  3
+CUTS  5*0.00010   5*10000.
+LOSS  4
+MULS  0
+TIME  2=3.
+END

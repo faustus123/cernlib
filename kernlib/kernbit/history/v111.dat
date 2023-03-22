@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:43  mclareni
+* Initial revision
+*
+*
+*  Version 1.11  930609  1.11
+C- Corrections:
+C  > Z264 IARGC   Bug in IARGC/VMS which limited arg length to 100
+C

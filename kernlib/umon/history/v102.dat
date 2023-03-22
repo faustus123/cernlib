@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:32  mclareni
+* Initial revision
+*
+*
+*  Version 1.02  910711  6.00
+C- Additions/changes
+C  > P=UMUIPIBM,D=UMLOG   suppress double logging of userid
+C

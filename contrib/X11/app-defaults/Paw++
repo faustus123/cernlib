@@ -1,0 +1,49 @@
+! Set some geometric constraints on UI widgets.
+! DO NOT remove or change the following six lines, or the Paw++ GUI
+! will become buggy!
+Paw++*kuipBrowser*fileScWindow.width:		100
+Paw++*kuipBrowser*fileScWindow.bottomOffset:	52
+Paw++*kuipBrowser*fileScWindow.topOffset:	59
+Paw++*kuipBrowser*dirScWindow.bottomOffset:	52
+Paw++*kuipBrowser*dirScWindow.topOffset:	59
+Paw++*kuipBrowser*separatorGadget1.topPosition:	50
+
+! Use light gray widgets with a white-background file browser
+Paw++*background:		gray
+Paw++*dirlist*background:	white
+Paw++*foreground:		black
+
+! use decent fonts
+Paw++*XmText*fontList:		*-courier-medium-r-normal-*-120-*
+Paw++*XmTextField*fontList:	*-courier-medium-r-normal-*-120-*
+Paw++*kxtermFont:		*-helvetica-medium-r-normal-*-120-*
+Paw++*kxtermTextFont:		*-courier-medium-r-normal-*-120-*
+Paw++*dirlist*fontList:		*-helvetica-medium-r-normal-*-120-*
+Paw++*matrix.fontList:		*-helvetica-medium-r-normal-*-120-*
+Paw++*helpFont:			*-courier-medium-r-normal-*-120-*
+Paw++*fontList:			*-helvetica-medium-r-normal-*-120-*
+
+! some color for the browser icons:
+
+! directory-like things
+Paw++*dirlist*dir*iconForeground:	blue
+Paw++*dirlist*DirFile*iconForeground:	blue
+Paw++*dirlist*DirUpFile*iconForeground:	blue
+Paw++*dirlist*Menu*iconForeground:	blue
+
+! executable-like things
+Paw++*dirlist*Cmd*iconForeground:	turquoise
+Paw++*dirlist*MacFile*iconForeground:	turquoise
+Paw++*dirlist*ExFile*iconForeground:	turquoise
+
+! disabled things
+Paw++*dirlist*InvCmd*iconForeground:	gray
+Paw++*dirlist*NoFile*iconForeground:	gray
+
+! various colors for histograms and ntuples
+Paw++*dirlist*1d*iconForeground:	DarkGoldenrod3
+Paw++*dirlist*2d*iconForeground:	DeepPink3
+Paw++*dirlist*ntuple*iconForeground:	SteelBlue3
+Paw++*dirlist*pict*iconForeground:	green4
+Paw++*dirlist*chain*iconForeground:	blue
+Paw++*dirlist*entry*iconForeground:	OrangeRed

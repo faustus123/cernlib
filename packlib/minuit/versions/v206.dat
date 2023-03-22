@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 14:31:32  mclareni
+* Initial revision
+*
+*
+* Version 2.06   910723 13.00
+C
+C- Patch/flag changes:
+C   > FMINUIT  : Add AMIGAUX, CDCUX, IBMPC, IBMUX, MACAUX, NECSX
+C

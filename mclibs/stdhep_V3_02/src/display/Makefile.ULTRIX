@@ -1,0 +1,9 @@
+# SCCS ID: Makefile.ultrix 1.4 7/31/92
+#
+# Makefile for phase space event display (Ultrix version)
+#
+CC= cc
+AR= ar
+CFLAGS= $(DEBUG) -I../../stdhep
+FFLAGS2=$(DEBUG) -I../../stdhep
+LIBS= -lXm -lXt -lX11 -lm -lF77 -lI77 -lU77 -lots -lfor -lutil -li

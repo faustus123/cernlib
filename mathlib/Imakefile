@@ -1,0 +1,28 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags 
+
+export LIB_SONAME := 2
+
+/* hdiff stuff moved from packlib */
+LIBDIRS= gen bvsl hbook
+
+/* Lapack is independent of Cernlib and should be installed as one of
+   the build dependencies.
+#ifndef WIN32
+ LIBDIRS := $(LIBDIRS) lapack
+#endif
+*/
+
+SUBDIRS= $(LIBDIRS)
+
+MakeSubdirs($(SUBDIRS))
+
+SubdirLibraryTarget(mathlib,$(LIBDIRS))
+
+InstallLibrary(mathlib,$(CERN_LIBDIR))
+InstallSharedLibrary(mathlib,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+InstallIncludeSubdirs($(LIBDIRS))
+
+TestSubdirs(gen bvsl)

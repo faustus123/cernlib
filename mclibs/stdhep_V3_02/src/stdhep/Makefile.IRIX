@@ -1,0 +1,8 @@
+#
+# IRIX portion of stdhep makefile
+#
+CC=cc
+AR=ar
+F77=f77
+CFLG=
+FFLAGS=-DIRIX -DUNIX $(INCS)

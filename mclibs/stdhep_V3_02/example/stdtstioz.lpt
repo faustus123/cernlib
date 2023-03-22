@@ -1,0 +1,3085 @@
+
+
+          ********************************************************
+          *       STDHEP version 3.01  -  October 9, 1995        *
+          ********************************************************
+
+
+
+ ZEBRA SYSTEM  3.7600 executing, Date/Time 951204/1416
+
+ ZEMQ     3.76  950424 16.00         
+
+          ZEBRA store base  LQ(0) in /ZEBQ/ at adr   134342205    0801E63D HEX
+
+ KERNGT.  KERNLIB from:  KERNIRT  1.08  940526 11.05     
+                         KERNFOR  4.42  1995/07/18 13.43 
+
+ MZSTOR.  ZEBRA table base TAB(0) in /MZCC/ at adr   134342711    0801E837 HEX
+
+ MZSTOR.  Initialize Store  0  in /HEPZEB/
+          with Store/Table at absolute adrs   134343950   134342711
+                                        HEX    0801ED0E    0801E837
+                                        HEX    000006D1    00000000
+                              relative adrs        1745           0
+          with     8 Str. in    17 Links in  40000 Low words in  200008 words.
+          This store has a fence of    8 words.
+
+ MZDIV.   Initialize Division  DECAY     in Store  0
+          NW/NWMAX=   5000  50000,  MODE/KIND=  0  1
+          Division  3 initialized.
+
+ MZDIV.   Initialize Division  EVENT     in Store  0
+          NW/NWMAX=   5000  80000,  MODE/KIND=  0  1
+          Division  4 initialized.
+
+ MZLINK.  Initialize Link Area  /HEPLNK/  for Store  0 NL/NS=     6     6
+
+ FZFILE.  LUN= 23 initialize for OPT= XLI
+ FZFILE.  Use LREC=  900, options= LXI
+
+ MZSTOR.  Initialize Store  1  in /PAWC/  
+          with Store/Table at absolute adrs   134549581   134649172
+                                        HEX    0805104D    08069554
+                                        HEX    00032A10    0004AD1D
+                              relative adrs      207376      306461
+          with     1 Str. in     1 Links in   5001 Low words in   99990 words.
+          This store has a fence of    5 words.
+
+ MZLINK.  Initialize Link Area  /HCBOOK/  for Store  1 NL/NS=    49     4
+ MZIOCH-    0 extra I/O words for Format 4H -I
+ MZIOCH-    1 extra I/O words for Format 1B 2I 6F -H
+ MZIOCH-    2 extra I/O words for Format 1B 2I 3F 1I 4F -H
+ MZIOCH-    0 extra I/O words for Format 11I -H
+ MZIOCH-    0 extra I/O words for Format 13I -H
+ MZIOCH-    0 extra I/O words for Format 7I -H
+ MZIOCH-    1 extra I/O words for Format 2I 2F 4D -F
+ MZIOCH-    1 extra I/O words for Format 2I 2F 4D -B
+ MZIOCH-    0 extra I/O words for Format 2I -F
+ MZIOCH-    0 extra I/O words for Format 4I -F
+ MZIOCH-    0 extra I/O words for Format 2I -B
+ MZIOCH-    1 extra I/O words for Format 5I 5F -D
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free  -3975
+          Wins   3999 words, Shift by  -3999
+
+ FZIN.    LUN=  23 End of Run        0
+
+     HEPZRD: no data for event       0 header:         0
+
+ FZENDI.  For input file at LUN= 23, Last activity= 3, OPT= TU
+          Number of objects read : 
+                  0 System EOF
+                  0 Zebra  EOF
+                  1 End-of-Run
+                  0 Start-of-Run
+                 20 Pilot records
+                 20 Non-empty d/s selected
+                  0 Empty d/s selected
+                  0 Read or Data errors
+                  0 Mega-words +
+             103500 words
+                 21 Good logical records
+                115 Good physical records
+                 22 Steering blocks
+                  0 Words with conversion problems
+
+ FZFILE.  LUN= 23 initialize for OPT= XLI
+ FZFILE.  Use LREC=  900, options= LXI
+
+ FZIN.    LUN=  23 End of Run        0
+
+     HEPZRD: no data for event       0 header:         0
+
+ FZENDI.  For input file at LUN= 23, Last activity= 3, OPT= TU
+          Number of objects read : 
+                  0 System EOF
+                  0 Zebra  EOF
+                  1 End-of-Run
+                  0 Start-of-Run
+                100 Pilot records
+                100 Non-empty d/s selected
+                  0 Empty d/s selected
+                  0 Read or Data errors
+                  0 Mega-words +
+              57600 words
+                101 Good logical records
+                 64 Good physical records
+                 64 Steering blocks
+                  0 Words with conversion problems
+
+ FZFILE.  LUN= 23 initialize for OPT= XLI
+ FZFILE.  Use LREC=  900, options= LXI
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free   -499
+          Wins    523 words, Shift by   -523
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free  -4986
+          Wins   5010 words, Shift by  -5010
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free  -6726
+          Wins   6750 words, Shift by  -6750
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free   -201
+          Wins    225 words, Shift by   -225
+ MZGAR1-  Auto Garbage Collection called from FZIMTB   for Store/Div  0  4 Free   -906
+          Wins    930 words, Shift by   -930
+
+ FZIN.    LUN=  23 End of Run        0
+
+     HEPZRD: no data for event       0 header:         0
+
+ FZENDI.  For input file at LUN= 23, Last activity= 3, OPT= TU
+          Number of objects read : 
+                  0 System EOF
+                  0 Zebra  EOF
+                  1 End-of-Run
+                  0 Start-of-Run
+                 60 Pilot records
+                 60 Non-empty d/s selected
+                  0 Empty d/s selected
+                  0 Read or Data errors
+                  0 Mega-words +
+             373500 words
+                 61 Good logical records
+                415 Good physical records
+                 62 Steering blocks
+                  0 Words with conversion problems
+1
+ .............................................................................................................................
+ .                                                                                                                           .
+ .   HBOOK   HBOOK  CERN            VERSION   4.21       HISTOGRAM AND PLOT INDEX                             04/12/95       .
+ .                                                                                                                           .
+ .............................................................................................................................
+ .                                                                                                                           .
+ .  NO                     TITLE                      ID  B/C  ENTRIES DIM   NCHA     LOWER       UPPER       ADDRESS LENGTH .
+ .                                                                                                                           .
+ .............................................................................................................................
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   1  HERWIG: NEVHEP                                11  32       20  1  X   100    .000E+00    .100E+03       98083    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   2  HERWIG: NHEP                                  12  32       20  1  X   100    .000E+00    .100E+04       97936    145 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   3  HERWIG: IDHEP                                 13  32     6672  1  X   100    .000E+00    .100E+03       97788    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   4  HERWIG: ISTHEP                                14  32     6672  1  X   100    .000E+00    .200E+03       97640    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   5  HERWIG: JMOHEP(1,)                            15  32     6672  1  X   100    .000E+00    .100E+04       97491    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   6  HERWIG: JMOHEP(2,)                            16  32     6672  1  X   100    .000E+00    .100E+04       97342    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   7  HERWIG: JDAHEP(1,)                            17  32     6672  1  X   100    .000E+00    .100E+04       97193    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   8  HERWIG: JDAHEP(2,)                            18  32     6672  1  X   100    .000E+00    .100E+04       97044    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .   9  HERWIG: PHEP(1,)                              21  32     6672  1  X   100   -.100E+03    .100E+03       96896    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  10  HERWIG: PHEP(2,)                              22  32     6672  1  X   100   -.100E+03    .100E+03       96748    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  11  HERWIG: PHEP(3,)                              23  32     6672  1  X   100   -.100E+04    .100E+04       96600    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  12  HERWIG: PHEP(4,)                              24  32     6672  1  X   100   -.100E+04    .100E+04       96452    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  13  HERWIG: PHEP(5,)                              25  32     6672  1  X    50   -.250E+03    .250E+03       96304     96 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  14  HERWIG: VHEP(1,)                              26  32     6672  1  X    10   -.100E+01    .100E+01       96206     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  15  HERWIG: VHEP(2,)                              27  32     6672  1  X    10   -.100E+01    .100E+01       96148     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  16  HERWIG: VHEP(3,)                              28  32     6672  1  X    10   -.100E+01    .100E+01       96090     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  17  HERWIG: VHEP(4,)                              29  32     6672  1  X    10    .000E+00    .100E+01       96032     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  18  JETSET: NEVHEP                                31  32      100  1  X   100    .000E+00    .100E+03       95974    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  19  JETSET: NHEP                                  32  32      100  1  X   100    .000E+00    .200E+03       95827    145 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  20  JETSET: IDHEP                                 33  32     3114  1  X   100    .000E+00    .100E+03       95679    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  21  JETSET: ISTHEP                                34  32     3114  1  X    20    .000E+00    .200E+02       95531     66 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  22  JETSET: JMOHEP(1,)                            35  32     3114  1  X   100    .000E+00    .100E+03       95462    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  23  JETSET: JMOHEP(2,)                            36  32     3114  1  X   100    .000E+00    .100E+03       95313    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  24  JETSET: JDAHEP(1,)                            37  32     3114  1  X   100    .000E+00    .100E+03       95164    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  25  JETSET: JDAHEP(2,)                            38  32     3114  1  X   100    .000E+00    .100E+03       95015    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  26  JETSET: PHEP(1,)                              41  32     3114  1  X   100   -.100E+03    .100E+03       94867    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  27  JETSET: PHEP(2,)                              42  32     3114  1  X   100   -.100E+03    .100E+03       94719    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  28  JETSET: PHEP(3,)                              43  32     3114  1  X   100   -.100E+03    .100E+03       94571    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  29  JETSET: PHEP(4,)                              44  32     3114  1  X   100   -.100E+03    .100E+03       94423    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  30  JETSET: PHEP(5,)                              45  32     3114  1  X   100   -.100E+03    .100E+03       94275    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  31  JETSET: VHEP(1,)                              46  32     3114  1  X   100   -.500E+02    .500E+02       94127    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  32  JETSET: VHEP(2,)                              47  32     3114  1  X   100   -.500E+02    .500E+02       93979    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  33  JETSET: VHEP(3,)                              48  32     3114  1  X   100   -.500E+02    .500E+02       93831    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  34  JETSET: VHEP(4,)                              49  32     3114  1  X   100    .000E+00    .100E+03       93683    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  35  ISAJET: NEVHEP                                51  32       60  1  X   100    .000E+00    .100E+03       93535    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  36  ISAJET: NHEP                                  52  32       60  1  X   100    .000E+00    .100E+04       93388    145 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  37  ISAJET: IDHEP                                 53  32    24375  1  X   100    .000E+00    .100E+03       93240    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  38  ISAJET: ISTHEP                                54  32    24375  1  X    50    .000E+00    .500E+02       93092     96 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  39  ISAJET: JMOHEP(1,)                            55  32    24375  1  X   100    .000E+00    .100E+04       92993    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  40  ISAJET: JMOHEP(2,)                            56  32    24375  1  X   100    .000E+00    .100E+04       92844    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  41  ISAJET: JDAHEP(1,)                            57  32    24375  1  X   100    .000E+00    .100E+04       92695    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  42  ISAJET: JDAHEP(2,)                            58  32    24375  1  X   100    .000E+00    .100E+04       92546    147 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  43  ISAJET: PHEP(1,)                              61  32    24375  1  X   100   -.500E+03    .500E+03       92398    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  44  ISAJET: PHEP(2,)                              62  32    24375  1  X   100   -.500E+03    .500E+03       92250    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  45  ISAJET: PHEP(3,)                              63  32    24375  1  X   100   -.500E+03    .500E+03       92102    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  46  ISAJET: PHEP(4,)                              64  32    24375  1  X   100   -.500E+03    .500E+03       91954    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  47  ISAJET: PHEP(5,)                              65  32    24375  1  X   100   -.500E+03    .500E+03       91806    146 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  48  ISAJET: VHEP(1,)                              66  32    24375  1  X    10   -.100E+01    .100E+01       91658     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  49  ISAJET: VHEP(2,)                              67  32    24375  1  X    10   -.100E+01    .100E+01       91600     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  50  ISAJET: VHEP(3,)                              68  32    24375  1  X    10   -.100E+01    .100E+01       91542     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .  51  ISAJET: VHEP(4,)                              69  32    24375  1  X    10    .000E+00    .100E+01       91484     56 .
+ .                                                                                                                           .
+ .                                                                                                                           .
+ .............................................................................................................................
+
+
+
+ MEMORY UTILISATION
+
+      MAXIMUM TOTAL SIZE OF COMMON /PAWC/           100000
+1HERWIG: NEVHEP                                                                  
+ 
+ HBOOK     ID =        11                                        DATE  04/12/95              NO =     1
+ 
+        1.025
+        1        --------------------
+         .975    I                  I
+         .95     I                  I
+         .925    I                  I
+         .9      I                  I
+         .875    I                  I
+         .85     I                  I
+         .825    I                  I
+         .8      I                  I
+         .775    I                  I
+         .75     I                  I
+         .725    I                  I
+         .7      I                  I
+         .675    I                  I
+         .65     I                  I
+         .625    I                  I
+         .6      I                  I
+         .575    I                  I
+         .55     I                  I
+         .525    I                  I
+         .5      I                  I
+         .475    I                  I
+         .45     I                  I
+         .425    I                  I
+         .4      I                  I
+         .375    I                  I
+         .35     I                  I
+         .325    I                  I
+         .3      I                  I
+         .275    I                  I
+         .25     I                  I
+         .225    I                  I
+         .2      I                  I
+         .175    I                  I
+         .15     I                  I
+         .125    I                  I
+         .1      I                  I
+         .075    I                  I
+         .05     I                  I
+         .025    I                  I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS   1.   11111111111111111111                                                                               
+            0   0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =         20      * ALL CHANNELS =  .2000E+02      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .1100E+02      * R . M . S =  .5766E+01
+1HERWIG: NHEP                                                                    
+ 
+ HBOOK     ID =        12                                        DATE  04/12/95              NO =     2
+ 
+        3.1
+        3                                      ---
+        2.9                                    I I
+        2.8                                    I I
+        2.7                                    I I
+        2.6                                    I I
+        2.5                                    I I
+        2.4                                    I I
+        2.3                                    I I
+        2.2                                    I I
+        2.1                                    I I
+        2                                     -I I
+        1.9                                   I  I
+        1.8                                   I  I
+        1.7                                   I  I
+        1.6                                   I  I
+        1.5                                   I  I
+        1.4                                   I  I
+        1.3                                   I  I
+        1.2                                   I  I
+        1.1                                   I  I
+        1                          --     -   I  I- - --    -       -
+         .9                        II     I   I   I I II    I       I
+         .8                        II     I   I   I I II    I       I
+         .7                        II     I   I   I I II    I       I
+         .6                        II     I   I   I I II    I       I
+         .5                        II     I   I   I I II    I       I
+         .4                        II     I   I   I I II    I       I
+         .3                        II     I   I   I I II    I       I
+         .2                        II     I   I   I I II    I       I
+         .1                        II     I   I   I I II    I       I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS   1.                     11     1   23331 1 11    1       1                                               
+            0   0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =         20      * ALL CHANNELS =  .2000E+02      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .3330E+03      * R . M . S =  .7068E+02
+1HERWIG: IDHEP                                                                   
+ 
+ HBOOK     ID =        13                                        DATE  04/12/95              NO =     3
+ 
+      840                                                                                                  -
+      820                                                                                                  I
+      800                                                                                                  I
+      780                                                                                                  I
+      760                                                                                                  I
+      740                                                                                                  I
+      720                                                                                                  I
+      700                                                                                                  I
+      680                                                                                                  I
+      660                                                                                                  I
+      640                                                                                                  I
+      620                                                                                                  I
+      600                                                                                                  I
+      580                                                                                                  I
+      560                                                                                                  I
+      540                                                                                                  I
+      520                                                                                                  I
+      500                                                                                                  I
+      480                                                                                                  I
+      460                                                                                                  I
+      440                                                                                                  I
+      420                                                                                                  I
+      400                                                                                                  I
+      380                                                                                                  I
+      360                                                                                                  I
+      340                                                                                                  I
+      320                                                                                                  I
+      300                                                                                                  I
+      280                                                                                                  I
+      260                                                                                                  I
+      240                                                                                                  I
+      220         -                  -                                                                     I
+      200        -I                  I                                                                     I
+      180        II                  I                                                                     I
+      160        II                  I                                                                     I
+      140        II                  I                                                                     I
+      120        II                  I                                                                     I
+      100        II                  I-                                                                    I  -
+       80        II                  II                                                             -      I  I
+       60        II-                 II                                                             I      I  I
+       40        I I                 II                                                             I      I  I
+       20        I I--        -      II                                                          ---I      I  I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS 100    12                  2                                                                     8        
+           10    905                 19                                                          2226      3  8     
+            1.   86974        1      62                                                          0008      5  6     
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .1832E+04      * UNDERFLOW =  .1937E+04      * OVERFLOW =  .2903E+04
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .5624E+02      * R . M . S =  .4052E+02
+1HERWIG: ISTHEP                                                                  
+ 
+ HBOOK     ID =        14                                        DATE  04/12/95              NO =     4
+ 
+     3000       -
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I                                                                                                 -
+      900       I                                                                              -                  I
+      800       I                                                                              I                  I
+      700       I                                                                              I                  I
+      600       I                                                                              I                  I
+      500       I                                                                              I           -      I
+      400       I                                                                              I           I -    I-
+      300       I-                                                                             I           I I    II
+      200       II                                                                             I           I I    II
+      100       II                                                --        ---       ---    - I-- ---     I-I    II
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   2                                                                                                   
+          100   92                                                                             8           4 3    93
+           10   85                                                84        442       242      622 222     144    77
+            1.  28                                                80        026       024    2 620 000     401    14
+ 
+ LOW-EDGE 100                                                     11111111111111111111111111111111111111111111111111
+           10        11111222223333344444555556666677777888889999900000111112222233333444445555566666777778888899999
+            1.   246802468024680246802468024680246802468024680246802468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .9141E+02      * R . M . S =  .8944E+02
+1HERWIG: JMOHEP(1,)                                                              
+ 
+ HBOOK     ID =        15                                        DATE  04/12/95              NO =     5
+ 
+      620       -
+      600       I
+      580       I
+      560       I
+      540       I
+      520       I
+      500       I
+      480       I
+      460       I
+      440       I--
+      420       I I
+      400       I I
+      380       I I
+      360       I I
+      340       I I
+      320       I I     --
+      300       I I     II
+      280       I I     II-
+      260       I I     I I
+      240       I I    -I I
+      220       I I    I  I---
+      200       I I    I     I -
+      180       I I   -I     I I        - -
+      160       I I   I      I I    -  -I-I --
+      140       I I   I      I-I - -I--I  I-II-
+      120       I I  -I        I-I I          I-
+      100       I I--I           I-I           I-
+       80       I                               I-
+       60       I                                I--
+       40       I                                  I----
+       20       I                                      I-------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS 100   6441 1123322221111 1111111111111                                                                    
+           10   032090620060012903836334656355218744332211211 1    1                                                
+            1.  83608252171530945941037399182185321324667406383689714                                               
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .1491E+03      * R . M . S =  .1145E+03
+1HERWIG: JMOHEP(2,)                                                              
+ 
+ HBOOK     ID =        16                                        DATE  04/12/95              NO =     6
+ 
+     3300       -
+     3200       I
+     3100       I
+     3000       I
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I-
+     1000       II
+      900       II-
+      800       I I
+      700       I I
+      600       I I
+      500       I I
+      400       I I--
+      300       I   I--
+      200       I     I-
+      100       I      I---     ----
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   31                                                                                                  
+          100   20833221                                                                                            
+           10   859309254        221                                                                                
+            1.  52556885753     4342                                                                                
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .2086E+02      * R . M . S =  .2524E+02
+1HERWIG: JDAHEP(1,)                                                              
+ 
+ HBOOK     ID =        17                                        DATE  04/12/95              NO =     7
+ 
+     3200       -
+     3100       I
+     3000       I
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I
+      900       I
+      800       I
+      700       I
+      600       I
+      500       I
+      400       I
+      300       I       --
+      200       I  -   -II------  --
+      100       I--I---I       I--II---------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   3                                                                                                   
+          100   1  1   122111111  11                                                                                
+           10   5692729857920000990098888787766543221111                                                            
+            1.  05993597828213315516464698020886751186529799844445443                                               
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .8939E+02      * R . M . S =  .1080E+03
+1HERWIG: JDAHEP(2,)                                                              
+ 
+ HBOOK     ID =        18                                        DATE  04/12/95              NO =     8
+ 
+     3300       -
+     3200       I
+     3100       I
+     3000       I
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I
+      900       I
+      800       I
+      700       I
+      600       I
+      500       I
+      400       I  -
+      300       I  I--
+      200       I -I I--     -    -
+      100       I-I    I-----I----I----------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   3                                                                                                   
+          100   2 132211     1   111                                                                                
+           10   5311725054699099900088877777676644222111                                                            
+            1.  01100384626291573010212788666391801208629899854445435                                               
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .8397E+02      * R . M . S =  .1096E+03
+1HERWIG: PHEP(1,)                                                                
+ 
+ HBOOK     ID =        21                                        DATE  04/12/95              NO =     9
+ 
+     3200                                                        --
+     3100                                                        II
+     3000                                                        II
+     2900                                                        II
+     2800                                                        II
+     2700                                                        II
+     2600                                                        II
+     2500                                                        II
+     2400                                                        II
+     2300                                                        II
+     2200                                                        II
+     2100                                                        II
+     2000                                                        II
+     1900                                                        II
+     1800                                                        II
+     1700                                                        II
+     1600                                                        II
+     1500                                                        II
+     1400                                                        II
+     1300                                                        II
+     1200                                                        II
+     1100                                                        II
+     1000                                                        II
+      900                                                        II
+      800                                                        II
+      700                                                        II
+      600                                                        II
+      500                                                        II
+      400                                                        II
+      300                                                        II
+      200                                                       -II-
+      100                                                 ------I  I-----
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    33                                                 
+          100                                                   1111                                                
+           10                                               111301623111                                            
+            1.                                            133482728443517                                           
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .1589E-01      * R . M . S =  .1674E+01
+1HERWIG: PHEP(2,)                                                                
+ 
+ HBOOK     ID =        22                                        DATE  04/12/95              NO =    10
+ 
+     3200                                                        --
+     3100                                                        II
+     3000                                                        II
+     2900                                                        II
+     2800                                                        II
+     2700                                                        II
+     2600                                                        II
+     2500                                                        II
+     2400                                                        II
+     2300                                                        II
+     2200                                                        II
+     2100                                                        II
+     2000                                                        II
+     1900                                                        II
+     1800                                                        II
+     1700                                                        II
+     1600                                                        II
+     1500                                                        II
+     1400                                                        II
+     1300                                                        II
+     1200                                                        II
+     1100                                                        II
+     1000                                                        II
+      900                                                        II
+      800                                                        II
+      700                                                        II
+      600                                                        II
+      500                                                        II
+      400                                                        II
+      300                                                        II
+      200                                                        II-
+      100                                                 -------I I-------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    33                                                 
+          100                                                    111                                                
+           10                                                1139570221                                             
+            1.                                            12541156525337741                                         
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .3507E-01      * R . M . S =  .1630E+01
+1HERWIG: PHEP(3,)                                                                
+ 
+ HBOOK     ID =        23                                        DATE  04/12/95              NO =    11
+ 
+     2700                                                         -
+     2600                                                         I
+     2500                                                        -I
+     2400                                                        II
+     2300                                                        II
+     2200                                                        II
+     2100                                                        II
+     2000                                                        II
+     1900                                                        II
+     1800                                                        II
+     1700                                                        II
+     1600                                                        II
+     1500                                                        II
+     1400                                                        II
+     1300                                                        II
+     1200                                                        II
+     1100                                                        II
+     1000                                                        II
+      900                                                        II
+      800                                                        II
+      700                                                        II
+      600                                                        II
+      500                                                        II
+      400                                                        II
+      300                                                       -II-
+      200                                                      -I  I-
+      100            -  -------------- ------------------------I    I----------------- ----------------------  -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    22                                                 
+          100                                                  124621                                               
+           10        2                               1 21223447164872643311 1 11                               2    
+            1.       0  31111441624225 34633111158443051920221006387899046990860534225 1232355365332141322232  0    
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+         1000   1                                                                                                   
+          100   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+           10   08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+02      * MEAN VALUE   =  .9323E+00      * R . M . S =  .1211E+03
+1HERWIG: PHEP(4,)                                                                
+ 
+ HBOOK     ID =        24                                        DATE  04/12/95              NO =    12
+ 
+     5200                                                         -
+     5000                                                         I
+     4800                                                         I
+     4600                                                         I
+     4400                                                         I
+     4200                                                         I
+     4000                                                         I
+     3800                                                         I
+     3600                                                         I
+     3400                                                         I
+     3200                                                         I
+     3000                                                         I
+     2800                                                         I
+     2600                                                         I
+     2400                                                         I
+     2200                                                         I
+     2000                                                         I
+     1800                                                         I
+     1600                                                         I
+     1400                                                         I
+     1200                                                         I
+     1000                                                         I
+      800                                                         I
+      600                                                         I-
+      400                                                         II-
+      200                                                        -I I----------------------------------------  - -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     5                                                 
+          100                                                     0521                                              
+           10                                                     95348763422121  1                            4    
+            1.                                                   15162845416935397284622548886877648295354462  0 1  
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+         1000   1                                                                                                   
+          100   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+           10   08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6643E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .2900E+02
+ * BIN WID =  .2000E+02      * MEAN VALUE   =  .4199E+02      * R . M . S =  .1160E+03
+1HERWIG: PHEP(5,)                                                                
+ 
+ HBOOK     ID =        25                                        DATE  04/12/95              NO =    13
+ 
+     6600                                -
+     6400                                I
+     6200                                I
+     6000                                I
+     5800                                I
+     5600                                I
+     5400                                I
+     5200                                I
+     5000                                I
+     4800                                I
+     4600                                I
+     4400                                I
+     4200                                I
+     4000                                I
+     3800                                I
+     3600                                I
+     3400                                I
+     3200                                I
+     3000                                I
+     2800                                I
+     2600                                I
+     2400                                I
+     2200                                I
+     2000                                I
+     1800                                I
+     1600                                I
+     1400                                I
+     1200                                I
+     1000                                I
+      800                                I
+      600                                I
+      400                                I
+      200                             ---I------
+ 
+ CHANNELS  10   0        1         2         3         4         5   
+            1   12345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                            6                        
+          100                            5                        
+           10                           36 1                      
+            1.                        1452733412                  
+ 
+ LOW-EDGE       -------------------------                         
+          100   2222221111111111                   111111111122222
+           10   5432109876543210987654321 123456789012345678901234
+            1.  0000000000000000000000000 000000000000000000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6632E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .4000E+02
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .5044E+01      * R . M . S =  .2151E+01
+1HERWIG: VHEP(1,)                                                                
+ 
+ HBOOK     ID =        26                                        DATE  04/12/95              NO =    14
+ 
+     6800            -
+     6600            I
+     6400            I
+     6200            I
+     6000            I
+     5800            I
+     5600            I
+     5400            I
+     5200            I
+     5000            I
+     4800            I
+     4600            I
+     4400            I
+     4200            I
+     4000            I
+     3800            I
+     3600            I
+     3400            I
+     3200            I
+     3000            I
+     2800            I
+     2600            I
+     2400            I
+     2200            I
+     2000            I
+     1800            I
+     1600            I
+     1400            I
+     1200            I
+     1000            I
+      800            I
+      600            I
+      400            I
+      200            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        6    
+          100        6    
+           10        7    
+            1.       2    
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1HERWIG: VHEP(2,)                                                                
+ 
+ HBOOK     ID =        27                                        DATE  04/12/95              NO =    15
+ 
+     6800            -
+     6600            I
+     6400            I
+     6200            I
+     6000            I
+     5800            I
+     5600            I
+     5400            I
+     5200            I
+     5000            I
+     4800            I
+     4600            I
+     4400            I
+     4200            I
+     4000            I
+     3800            I
+     3600            I
+     3400            I
+     3200            I
+     3000            I
+     2800            I
+     2600            I
+     2400            I
+     2200            I
+     2000            I
+     1800            I
+     1600            I
+     1400            I
+     1200            I
+     1000            I
+      800            I
+      600            I
+      400            I
+      200            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        6    
+          100        6    
+           10        7    
+            1.       2    
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1HERWIG: VHEP(3,)                                                                
+ 
+ HBOOK     ID =        28                                        DATE  04/12/95              NO =    16
+ 
+     6800            -
+     6600            I
+     6400            I
+     6200            I
+     6000            I
+     5800            I
+     5600            I
+     5400            I
+     5200            I
+     5000            I
+     4800            I
+     4600            I
+     4400            I
+     4200            I
+     4000            I
+     3800            I
+     3600            I
+     3400            I
+     3200            I
+     3000            I
+     2800            I
+     2600            I
+     2400            I
+     2200            I
+     2000            I
+     1800            I
+     1600            I
+     1400            I
+     1200            I
+     1000            I
+      800            I
+      600            I
+      400            I
+      200            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        6    
+          100        6    
+           10        7    
+            1.       2    
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1HERWIG: VHEP(4,)                                                                
+ 
+ HBOOK     ID =        29                                        DATE  04/12/95              NO =    17
+ 
+     6800       -
+     6600       I
+     6400       I
+     6200       I
+     6000       I
+     5800       I
+     5600       I
+     5400       I
+     5200       I
+     5000       I
+     4800       I
+     4600       I
+     4400       I
+     4200       I
+     4000       I
+     3800       I
+     3600       I
+     3400       I
+     3200       I
+     3000       I
+     2800       I
+     2600       I
+     2400       I
+     2200       I
+     2000       I
+     1800       I
+     1600       I
+     1400       I
+     1200       I
+     1000       I
+      800       I
+      600       I
+      400       I
+      200       I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000   6         
+          100   6         
+           10   7         
+            1.  2         
+ 
+ LOW-EDGE   1.   123456789
+ *10**  1   0   0000000000
+ 
+ * ENTRIES =       6672      * ALL CHANNELS =  .6672E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+00      * MEAN VALUE   =  .5000E-01      * R . M . S =  .6585E-09
+1JETSET: NEVHEP                                                                  
+ 
+ HBOOK     ID =        31                                        DATE  04/12/95              NO =    18
+ 
+        1.025
+        1        ---------------------------------------------------------------------------------------------------
+         .975    I                                                                                                 I
+         .95     I                                                                                                 I
+         .925    I                                                                                                 I
+         .9      I                                                                                                 I
+         .875    I                                                                                                 I
+         .85     I                                                                                                 I
+         .825    I                                                                                                 I
+         .8      I                                                                                                 I
+         .775    I                                                                                                 I
+         .75     I                                                                                                 I
+         .725    I                                                                                                 I
+         .7      I                                                                                                 I
+         .675    I                                                                                                 I
+         .65     I                                                                                                 I
+         .625    I                                                                                                 I
+         .6      I                                                                                                 I
+         .575    I                                                                                                 I
+         .55     I                                                                                                 I
+         .525    I                                                                                                 I
+         .5      I                                                                                                 I
+         .475    I                                                                                                 I
+         .45     I                                                                                                 I
+         .425    I                                                                                                 I
+         .4      I                                                                                                 I
+         .375    I                                                                                                 I
+         .35     I                                                                                                 I
+         .325    I                                                                                                 I
+         .3      I                                                                                                 I
+         .275    I                                                                                                 I
+         .25     I                                                                                                 I
+         .225    I                                                                                                 I
+         .2      I                                                                                                 I
+         .175    I                                                                                                 I
+         .15     I                                                                                                 I
+         .125    I                                                                                                 I
+         .1      I                                                                                                 I
+         .075    I                                                                                                 I
+         .05     I                                                                                                 I
+         .025    I                                                                                                 I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS   1.   111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+            0   0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =        100      * ALL CHANNELS =  .9900E+02      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .1000E+01
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .5050E+02      * R . M . S =  .2858E+02
+1JETSET: NHEP                                                                    
+ 
+ HBOOK     ID =        32                                        DATE  04/12/95              NO =    19
+ 
+       12.4
+       12                   -
+       11.6                 I
+       11.2                 I
+       10.8                 I
+       10.4                 I
+       10                   I  -
+        9.6                 I  I
+        9.2                 I  I
+        8.8                 I  I
+        8.4                 I  I
+        8                   I -I-
+        7.6                 I I I
+        7.2              -  I-I I
+        6.8              I  I   I
+        6.4              I  I   I
+        6                I -I   I - -
+        5.6              I I    I I I
+        5.2              I I    I I I--
+        4.8              I I    I I I I
+        4.4              I I    I I I I
+        4                I-I    I I-I I
+        3.6              I      I I   I
+        3.2             -I      I-I   I
+        2.8             I             I
+        2.4             I             I
+        2               I             I--  -
+        1.6             I               I  I
+        1.2             I               I  I
+         .8             I               I  I
+         .4             I               I  I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS  10               1  1                                                                                    
+            1.          37462780836465522  2                                                                        
+ 
+ LOW-EDGE 100                                                     11111111111111111111111111111111111111111111111111
+           10        11111222223333344444555556666677777888889999900000111112222233333444445555566666777778888899999
+            1.   246802468024680246802468024680246802468024680246802468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =        100      * ALL CHANNELS =  .1000E+03      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .3172E+02      * R . M . S =  .8982E+01
+1JETSET: IDHEP                                                                   
+ 
+ HBOOK     ID =        33                                        DATE  04/12/95              NO =    20
+ 
+      900                             -
+      880                             I
+      860                             I
+      840                             I
+      820                             I
+      800                             I
+      780                             I
+      760                             I
+      740                             I
+      720                             I
+      700                             I
+      680                             I
+      660                             I
+      640                             I
+      620                             I
+      600                             I
+      580                             I
+      560                             I
+      540                             I
+      520                             I
+      500                             I
+      480                             I
+      460                             I
+      440                             I
+      420                             I
+      400                             I
+      380                             I
+      360                             I
+      340                             I
+      320                             I
+      300                             I
+      280                             I
+      260                             I
+      240                             I
+      220                             I
+      200                             I
+      180                             I
+      160                             I
+      140                             I
+      120                             I
+      100         -                   I                                                                     -
+       80         I                   I                                                                     I
+       60         I                   I                                                                     I
+       40         I                   I                                                                     I
+       20         I        -          I                                                                     I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS 100     1                   8                                                                     1       
+           10     0                   9                                                                     0       
+            1.    0        3          5                                                                     0       
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .1098E+04      * UNDERFLOW =  .7120E+03      * OVERFLOW =  .1304E+04
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .2702E+02      * R . M . S =  .2151E+02
+1JETSET: ISTHEP                                                                  
+ 
+ HBOOK     ID =        34                                        DATE  04/12/95              NO =    21
+ 
+     1840        -
+     1800        I
+     1760        I
+     1720        I
+     1680        I
+     1640        I
+     1600        I
+     1560        I
+     1520        I
+     1480        I
+     1440        I
+     1400        I
+     1360        I
+     1320        I-
+     1280        II
+     1240        II
+     1200        II
+     1160        II
+     1120        II
+     1080        II
+     1040        II
+     1000        II
+      960        II
+      920        II
+      880        II
+      840        II
+      800        II
+      760        II
+      720        II
+      680        II
+      640        II
+      600        II
+      560        II
+      520        II
+      480        II
+      440        II
+      400        II
+      360        II
+      320        II
+      280        II
+      240        II
+      200        II
+      160        II
+      120        II
+       80        II
+       40        II
+ 
+ CHANNELS  10   0        1         2   
+            1   12345678901234567890   
+ 
+ CONTENTS1000    11                 
+          100    82                 
+           10    29                 
+            1.   22                 
+ 
+ LOW-EDGE  10             1111111111
+            1.   1234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .1915E+01      * R . M . S =  .4927E+00
+1JETSET: JMOHEP(1,)                                                              
+ 
+ HBOOK     ID =        35                                        DATE  04/12/95              NO =    22
+ 
+      800          -
+      780          I
+      760          I
+      740          I
+      720          I
+      700          I
+      680          I
+      660          I
+      640          I
+      620          I
+      600          I
+      580          I
+      560          I
+      540          I
+      520          I
+      500          I
+      480          I
+      460          I
+      440          I
+      420          I
+      400          I
+      380          I
+      360          I
+      340          I
+      320          I
+      300          I
+      280          I
+      260          I
+      240          I
+      220          I
+      200       -  I
+      180       I  I
+      160       I  I- ---
+      140       I  II-I I- -
+      120       I  I     I-I
+      100       I- I       I-
+       80       II I        I- -  -
+       60       II I         I-I--I - - -
+       40       II I              I-I-I-I-- -
+       20       II I                      I-I--------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS 100   21 711111111                                                                                        
+           10   00 953544412876754745343433221          11                                                          
+            1.  00 6865510164001542071663400348888462224004                                                         
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .9726E+01      * R . M . S =  .8215E+01
+1JETSET: JMOHEP(2,)                                                              
+ 
+ HBOOK     ID =        36                                        DATE  04/12/95              NO =    23
+ 
+     3100       -
+     3000       I
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I
+      900       I
+      800       I
+      700       I
+      600       I
+      500       I
+      400       I
+      300       I
+      200       I
+      100       I -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   3                                                                                                   
+          100   0 1                                                                                                 
+           10   1 0                                                                                                 
+            1.  4 0                                                                                                 
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .5642E+00      * R . M . S =  .3526E+00
+1JETSET: JDAHEP(1,)                                                              
+ 
+ HBOOK     ID =        37                                        DATE  04/12/95              NO =    24
+ 
+     1840       -
+     1800       I
+     1760       I
+     1720       I
+     1680       I
+     1640       I
+     1600       I
+     1560       I
+     1520       I
+     1480       I
+     1440       I
+     1400       I
+     1360       I
+     1320       I
+     1280       I
+     1240       I
+     1200       I
+     1160       I
+     1120       I
+     1080       I
+     1040       I
+     1000       I
+      960       I
+      920       I
+      880       I
+      840       I
+      800       I
+      760       I
+      720       I
+      680       I
+      640       I
+      600       I
+      560       I
+      520       I
+      480       I
+      440       I
+      400       I
+      360       I
+      320       I
+      280       I
+      240       I
+      200       I  -
+      160       I  I
+      120       I  I-
+       80       I  II       - ------ - - -
+       40       I  II    ---I-I    I-I-I-I-------------------- - - - -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   1                                                                                                   
+          100   8  21                                                                                               
+           10   2  00     1143544444352424232322121211111                                                           
+            1.  2  00    5384955772796988358331873304442078746 4 2 2 2                                              
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .8208E+01      * R . M . S =  .1173E+02
+1JETSET: JDAHEP(2,)                                                              
+ 
+ HBOOK     ID =        38                                        DATE  04/12/95              NO =    25
+ 
+     1840       -
+     1800       I
+     1760       I
+     1720       I
+     1680       I
+     1640       I
+     1600       I
+     1560       I
+     1520       I
+     1480       I
+     1440       I
+     1400       I
+     1360       I
+     1320       I
+     1280       I
+     1240       I
+     1200       I
+     1160       I
+     1120       I
+     1080       I
+     1040       I
+     1000       I
+      960       I
+      920       I
+      880       I
+      840       I
+      800       I
+      760       I
+      720       I
+      680       I
+      640       I
+      600       I
+      560       I
+      520       I
+      480       I
+      440       I
+      400       I
+      360       I
+      320       I
+      280       I
+      240       I
+      200       I  -
+      160       I  I
+      120       I  I
+       80       I  I       - -------- - - -
+       40       I  I    ---I-I      I-I-I-I-------------------- - - - -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   1                                                                                                   
+          100   8  2                                                                                                
+           10   2  0     11435444444535352423232212111111                                                           
+            1.  2  0    538495579385812028356641771686423897746 4 2 2 2                                             
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .8761E+01      * R . M . S =  .1214E+02
+1JETSET: PHEP(1,)                                                                
+ 
+ HBOOK     ID =        41                                        DATE  04/12/95              NO =    26
+ 
+     1760                                                         -
+     1720                                                         I
+     1680                                                         I
+     1640                                                         I
+     1600                                                         I
+     1560                                                         I
+     1520                                                         I
+     1480                                                         I
+     1440                                                         I
+     1400                                                        -I
+     1360                                                        II
+     1320                                                        II
+     1280                                                        II
+     1240                                                        II
+     1200                                                        II
+     1160                                                        II
+     1120                                                        II
+     1080                                                        II
+     1040                                                        II
+     1000                                                        II
+      960                                                        II
+      920                                                        II
+      880                                                        II
+      840                                                        II
+      800                                                        II
+      760                                                        II
+      720                                                        II
+      680                                                        II
+      640                                                        II
+      600                                                        II
+      560                                                        II
+      520                                                        II
+      480                                                        II
+      440                                                        II
+      400                                                        II
+      360                                                        II
+      320                                                        II
+      280                                                        II
+      240                                                        II
+      200                                                        II
+      160                                                        II
+      120                                                        II
+       80                                                        II
+       40                                                        II
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    11                                                 
+          100                                                    37                                                 
+           10                                                    92                                                 
+            1.                                                   31                                                 
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .1053E+00      * R . M . S =  .9944E+00
+1JETSET: PHEP(2,)                                                                
+ 
+ HBOOK     ID =        42                                        DATE  04/12/95              NO =    27
+ 
+     1680                                                         -
+     1640                                                         I
+     1600                                                         I
+     1560                                                         I
+     1520                                                         I
+     1480                                                         I
+     1440                                                        -I
+     1400                                                        II
+     1360                                                        II
+     1320                                                        II
+     1280                                                        II
+     1240                                                        II
+     1200                                                        II
+     1160                                                        II
+     1120                                                        II
+     1080                                                        II
+     1040                                                        II
+     1000                                                        II
+      960                                                        II
+      920                                                        II
+      880                                                        II
+      840                                                        II
+      800                                                        II
+      760                                                        II
+      720                                                        II
+      680                                                        II
+      640                                                        II
+      600                                                        II
+      560                                                        II
+      520                                                        II
+      480                                                        II
+      440                                                        II
+      400                                                        II
+      360                                                        II
+      320                                                        II
+      280                                                        II
+      240                                                        II
+      200                                                        II
+      160                                                        II
+      120                                                        II
+       80                                                        II
+       40                                                        II
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    11                                                 
+          100                                                    46                                                 
+           10                                                    37                                                 
+            1.                                                   68                                                 
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .7771E-01      * R . M . S =  .9970E+00
+1JETSET: PHEP(3,)                                                                
+ 
+ HBOOK     ID =        43                                        DATE  04/12/95              NO =    28
+ 
+     1280                                                         -
+     1240                                                         I
+     1200                                                         I
+     1160                                                         I
+     1120                                                         I
+     1080                                                        -I
+     1040                                                        II
+     1000                                                        II
+      960                                                        II
+      920                                                        II
+      880                                                        II
+      840                                                        II
+      800                                                        II
+      760                                                        II
+      720                                                        II
+      680                                                        II
+      640                                                        II
+      600                                                        II
+      560                                                        II
+      520                                                        II
+      480                                                        II
+      440                                                        II
+      400                                                        II
+      360                                                        II
+      320                                                        II
+      280                                                        II
+      240                                                        II
+      200                                                       -II-
+      160                                                       I  I
+      120                                                    -  I  I  -
+       80                                                    I--I  I- I
+       40                                                    I      I-I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    11                                                 
+          100                                                1  1021  1                                             
+           10                                                0469478720                                             
+            1.                                               7306354376                                             
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .4496E-01      * R . M . S =  .3090E+01
+1JETSET: PHEP(4,)                                                                
+ 
+ HBOOK     ID =        44                                        DATE  04/12/95              NO =    29
+ 
+     2200                                                         -
+     2150                                                         I
+     2100                                                         I
+     2050                                                         I
+     2000                                                         I
+     1950                                                         I
+     1900                                                         I
+     1850                                                         I
+     1800                                                         I
+     1750                                                         I
+     1700                                                         I
+     1650                                                         I
+     1600                                                         I
+     1550                                                         I
+     1500                                                         I
+     1450                                                         I
+     1400                                                         I
+     1350                                                         I
+     1300                                                         I
+     1250                                                         I
+     1200                                                         I
+     1150                                                         I
+     1100                                                         I
+     1050                                                         I
+     1000                                                         I
+      950                                                         I
+      900                                                         I
+      850                                                         I
+      800                                                         I
+      750                                                         I
+      700                                                         I
+      650                                                         I
+      600                                                         I
+      550                                                         I
+      500                                                         I
+      450                                                         I-
+      400                                                         II
+      350                                                         II
+      300                                                         II
+      250                                                         II
+      200                                                         II   -
+      150                                                         II-  I
+      100                                                         I I- I    -
+       50                                                         I  I-I    I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     2                                                 
+          100                                                     141  2    1                                       
+           10                                                     624610    0                                       
+            1.                                                    910950    0                                       
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .2906E+01      * R . M . S =  .4243E+01
+1JETSET: PHEP(5,)                                                                
+ 
+ HBOOK     ID =        45                                        DATE  04/12/95              NO =    30
+ 
+     3100                                                         -
+     3000                                                         I
+     2900                                                         I
+     2800                                                         I
+     2700                                                         I
+     2600                                                         I
+     2500                                                         I
+     2400                                                         I
+     2300                                                         I
+     2200                                                         I
+     2100                                                         I
+     2000                                                         I
+     1900                                                         I
+     1800                                                         I
+     1700                                                         I
+     1600                                                         I
+     1500                                                         I
+     1400                                                         I
+     1300                                                         I
+     1200                                                         I
+     1100                                                         I
+     1000                                                         I
+      900                                                         I
+      800                                                         I
+      700                                                         I
+      600                                                         I
+      500                                                         I
+      400                                                         I
+      300                                                         I
+      200                                                         I
+      100                                                         I         -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     3                                                 
+          100                                                     0         1                                       
+           10                                                     1         0                                       
+            1.                                                    4         0                                       
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   1                                                                                                   
+           10   0999998888877777666665555544444333332222211111         111112222233333444445555566666777778888899999
+            1.  08642086420864208642086420864208642086420864208642 2468024680246802468024680246802468024680246802468
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3114E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+01      * MEAN VALUE   =  .1642E+01      * R . M . S =  .3526E+01
+1JETSET: VHEP(1,)                                                                
+ 
+ HBOOK     ID =        46                                        DATE  04/12/95              NO =    31
+ 
+     3000                                                         -
+     2900                                                         I
+     2800                                                         I
+     2700                                                         I
+     2600                                                         I
+     2500                                                         I
+     2400                                                         I
+     2300                                                         I
+     2200                                                         I
+     2100                                                         I
+     2000                                                         I
+     1900                                                         I
+     1800                                                         I
+     1700                                                         I
+     1600                                                         I
+     1500                                                         I
+     1400                                                         I
+     1300                                                         I
+     1200                                                         I
+     1100                                                         I
+     1000                                                         I
+      900                                                         I
+      800                                                         I
+      700                                                         I
+      600                                                         I
+      500                                                         I
+      400                                                         I
+      300                                                         I
+      200                                                         I
+      100                 -        - -- -  -   --- - ---    -- ---I------- - -  -   - ---      -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     2                                                 
+          100                                                     9                                                 
+           10                                                    16 11 1   1                                        
+            1.            2        2 22 2  4   222 2 626    84 22242424022 0 2  2   2 222      2                    
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+           10   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+            1.  09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3098E+04      * UNDERFLOW =  .1000E+02      * OVERFLOW =  .6000E+01
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .4103E+00      * R . M . S =  .2768E+01
+1JETSET: VHEP(2,)                                                                
+ 
+ HBOOK     ID =        47                                        DATE  04/12/95              NO =    32
+ 
+     3000                                                         -
+     2900                                                         I
+     2800                                                         I
+     2700                                                         I
+     2600                                                         I
+     2500                                                         I
+     2400                                                         I
+     2300                                                         I
+     2200                                                         I
+     2100                                                         I
+     2000                                                         I
+     1900                                                         I
+     1800                                                         I
+     1700                                                         I
+     1600                                                         I
+     1500                                                         I
+     1400                                                         I
+     1300                                                         I
+     1200                                                         I
+     1100                                                         I
+     1000                                                         I
+      900                                                         I
+      800                                                         I
+      700                                                         I
+      600                                                         I
+      500                                                         I
+      400                                                         I
+      300                                                         I
+      200                                                         I
+      100       -        -     --  -        -     -  -- ----- ----I---- -  - - --  --        -     -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     2                                                 
+          100                                                     9                                                 
+           10                      1                            116                1                                
+            1.  2        2     22  0        2     2  22 26222 840086822 2  2 2 62  08        2     6                
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+           10   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+            1.  09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3098E+04      * UNDERFLOW =  .8000E+01      * OVERFLOW =  .8000E+01
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .4400E+00      * R . M . S =  .3659E+01
+1JETSET: VHEP(3,)                                                                
+ 
+ HBOOK     ID =        48                                        DATE  04/12/95              NO =    33
+ 
+     3000                                                         -
+     2900                                                         I
+     2800                                                         I
+     2700                                                         I
+     2600                                                         I
+     2500                                                         I
+     2400                                                         I
+     2300                                                         I
+     2200                                                         I
+     2100                                                         I
+     2000                                                         I
+     1900                                                         I
+     1800                                                         I
+     1700                                                         I
+     1600                                                         I
+     1500                                                         I
+     1400                                                         I
+     1300                                                         I
+     1200                                                         I
+     1100                                                         I
+     1000                                                         I
+      900                                                         I
+      800                                                         I
+      700                                                         I
+      600                                                         I
+      500                                                         I
+      400                                                         I
+      300                                                         I
+      200                                                         I
+      100               - -  -                -  -   ---      -  -I--  --       - -- -   -           -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     2                                                 
+          100                                                     9                                                 
+           10                                                 1   5                                                 
+            1.          2 2  6                2  2   226      2  4422  28       2 86 4   2           2              
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+           10   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+            1.  09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3032E+04      * UNDERFLOW =  .4000E+02      * OVERFLOW =  .4200E+02
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .4624E+00      * R . M . S =  .3003E+01
+1JETSET: VHEP(4,)                                                                
+ 
+ HBOOK     ID =        49                                        DATE  04/12/95              NO =    34
+ 
+     3000       -
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I
+      900       I
+      800       I
+      700       I
+      600       I
+      500       I
+      400       I
+      300       I
+      200       I
+      100       I---  --    -  - - - ---          ---      -        -    -  -  -     -  -   - - --       -  ---
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   2                                                                                                   
+          100   9                                                                                                   
+           10   5                                                                                                   
+            1.  0226  62    8  2 4 6 222          222      2        2    2  4  6     2  6   2 2 42       8  222     
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =       3114      * ALL CHANNELS =  .3048E+04      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .6600E+02
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .1903E+01      * R . M . S =  .9614E+01
+1ISAJET: NEVHEP                                                                  
+ 
+ HBOOK     ID =        51                                        DATE  04/12/95              NO =    35
+ 
+        6.2
+        6        ----------
+        5.8      I        I
+        5.6      I        I
+        5.4      I        I
+        5.2      I        I
+        5        I        I
+        4.8      I        I
+        4.6      I        I
+        4.4      I        I
+        4.2      I        I
+        4        I        I
+        3.8      I        I
+        3.6      I        I
+        3.4      I        I
+        3.2      I        I
+        3        I        I
+        2.8      I        I
+        2.6      I        I
+        2.4      I        I
+        2.2      I        I
+        2        I        I
+        1.8      I        I
+        1.6      I        I
+        1.4      I        I
+        1.2      I        I
+        1        I        I
+         .8      I        I
+         .6      I        I
+         .4      I        I
+         .2      I        I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS   1.   6666666666                                                                                         
+            0   0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =         60      * ALL CHANNELS =  .6000E+02      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .6000E+01      * R . M . S =  .2872E+01
+1ISAJET: NHEP                                                                    
+ 
+ HBOOK     ID =        52                                        DATE  04/12/95              NO =    36
+ 
+        4.1
+        4                              -               -
+        3.9                            I               I
+        3.8                            I               I
+        3.7                            I               I
+        3.6                            I               I
+        3.5                            I               I
+        3.4                            I               I
+        3.3                            I               I
+        3.2                            I               I
+        3.1                            I               I
+        3                              I               I    -
+        2.9                            I               I    I
+        2.8                            I               I    I
+        2.7                            I               I    I
+        2.6                            I               I    I
+        2.5                            I               I    I
+        2.4                            I               I    I
+        2.3                            I               I    I
+        2.2                            I               I    I
+        2.1                            I               I    I
+        2              -  --    -  -   I   -    --  -- I -  I                              -
+        1.9            I  II    I  I   I   I    II  II I I  I                              I
+        1.8            I  II    I  I   I   I    II  II I I  I                              I
+        1.7            I  II    I  I   I   I    II  II I I  I                              I
+        1.6            I  II    I  I   I   I    II  II I I  I                              I
+        1.5            I  II    I  I   I   I    II  II I I  I                              I
+        1.4            I  II    I  I   I   I    II  II I I  I                              I
+        1.3            I  II    I  I   I   I    II  II I I  I                              I
+        1.2            I  II    I  I   I   I    II  II I I  I                              I
+        1.1            I  II    I  I   I   I    II  II I I  I                              I
+        1            --I--II    I- I---I-  I- - II- II I-I- I         -   -        --    - I
+         .9          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .8          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .7          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .6          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .5          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .4          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .3          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .2          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+         .1          I     I    II I    I  II I I I II I  I I         I   I        II    I I
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS   1.       1121122    21 211141  21 1 221 22 4121 3         1   1        11    1 2                        
+            0   0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =         60      * ALL CHANNELS =  .5400E+02      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .6000E+01
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .3187E+03      * R . M . S =  .1805E+03
+1ISAJET: IDHEP                                                                   
+ 
+ HBOOK     ID =        53                                        DATE  04/12/95              NO =    37
+ 
+     7000                             -
+     6800                             I
+     6600                             I
+     6400                             I
+     6200                             I
+     6000                             I
+     5800                             I
+     5600                             I
+     5400                             I
+     5200                             I
+     5000                             I
+     4800                             I
+     4600                             I
+     4400                             I
+     4200                             I
+     4000                             I
+     3800                             I
+     3600                             I
+     3400                             I
+     3200                             I
+     3000                             I
+     2800                             I
+     2600                             I
+     2400                             I
+     2200                             I
+     2000                             I
+     1800                             I
+     1600                             I
+     1400                             I
+     1200                             I
+     1000                             I
+      800                             I
+      600                            -I
+      400                            II
+      200        ------    ------    II---               --    -              -    -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                         6                                                                             
+          100     1        1         58                                                                             
+           10    67221     013       23453                     4                   3                                
+            1.   551304    944458    85850               33    9              9    4                                
+ 
+ LOW-EDGE  10             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+            1.   123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .8066E+04      * UNDERFLOW =  .5343E+04      * OVERFLOW =  .1097E+05
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .2191E+02      * R . M . S =  .5570E+01
+1ISAJET: ISTHEP                                                                  
+ 
+ HBOOK     ID =        54                                        DATE  04/12/95              NO =    38
+ 
+     1520        -
+     1480        I
+     1440        I
+     1400        I
+     1360        I
+     1320        I
+     1280        I
+     1240        I
+     1200        I
+     1160        I
+     1120        I
+     1080        I
+     1040        I
+     1000        I
+      960        I
+      920        I
+      880        I
+      840        I-
+      800        II
+      760        II
+      720        II
+      680        II
+      640        II
+      600        II
+      560        II
+      520        II
+      480        II
+      440        II
+      400        II
+      360        II
+      320        II
+      280        II
+      240        II
+      200        II
+      160        II
+      120        II
+       80        II                  --
+       40        II        ---       II
+ 
+ CHANNELS  10   0        1         2         3         4         5   
+            1   12345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000    1                                                
+ *10**- 1 100    58                                               
+           10    00        1 1       44                           
+            1.   36        062       99                           
+            0   09000000000000000000088000000000000000000000000000
+ 
+ LOW-EDGE  10             1111111111222222222233333333334444444444
+            1.   1234567890123456789012345678901234567890123456789
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+01      * MEAN VALUE   =  .2796E+01      * R . M . S =  .4154E+01
+1ISAJET: JMOHEP(1,)                                                              
+ 
+ HBOOK     ID =        55                                        DATE  04/12/95              NO =    39
+ 
+     4300       -
+     4200       I
+     4100       I
+     4000       I
+     3900       I
+     3800       I
+     3700       I
+     3600       I
+     3500       I
+     3400       I
+     3300       I
+     3200       I
+     3100       I
+     3000       I
+     2900       I
+     2800       I
+     2700       I
+     2600       I
+     2500       I
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I-
+     1700       II
+     1600       II-
+     1500       I I
+     1400       I I
+     1300       I I
+     1200       I I-
+     1100       I  I
+     1000       I  I
+      900       I  I-
+      800       I   I-
+      700       I    I
+      600       I    I--
+      500       I      I----- -
+      400       I           I-I---------- -
+      300       I                       I-I----
+      200       I                             I---- - ---      -
+      100       I                                 I-I-I I------I----------------------------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   4111                                                                                                
+          100   27518755444443433333333332322221111 1 111      1  1                                                 
+           10   8972695133725927888222851828620853092900298665907808467643667564234213333322224347656556455423343322
+            1.  4657817971155181035071307678844684743041688561758405528708843971537044662292193971490840620199202998
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2395E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .4220E+03
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .1765E+03      * R . M . S =  .2198E+03
+1ISAJET: JMOHEP(2,)                                                              
+ 
+ HBOOK     ID =        56                                        DATE  04/12/95              NO =    40
+ 
+     1560       -
+     1520       I
+     1480       I
+     1440       I
+     1400       I
+     1360       I
+     1320       I
+     1280       I
+     1240       I
+     1200       I
+     1160       I
+     1120       I
+     1080       I
+     1040       I
+     1000       I
+      960       I
+      920       I-
+      880       II
+      840       II
+      800       II
+      760       II
+      720       II
+      680       II
+      640       II
+      600       II
+      560       II
+      520       II
+      480       II
+      440       II
+      400       II
+      360       II
+      320       II
+      280       II
+      240       II
+      200       II
+      160       II
+      120       II
+       80       II
+       40       II
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   1                                                                                                   
+ *10**- 1 100   59                                                                                                  
+           10   21                                                                                                  
+            1.  24                                                                                                  
+            0   6900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .8753E+01      * R . M . S =  .4842E+01
+1ISAJET: JDAHEP(1,)                                                              
+ 
+ HBOOK     ID =        57                                        DATE  04/12/95              NO =    41
+ 
+     1560       -
+     1520       I
+     1480       I
+     1440       I
+     1400       I
+     1360       I
+     1320       I
+     1280       I
+     1240       I
+     1200       I
+     1160       I
+     1120       I
+     1080       I
+     1040       I
+     1000       I
+      960       I
+      920       I
+      880       I
+      840       I
+      800       I
+      760       I
+      720       I
+      680       I
+      640       I
+      600       I
+      560       I
+      520       I
+      480       I
+      440       I
+      400       I
+      360       I
+      320       I
+      280       I
+      240       I
+      200       I
+      160       I
+      120       I
+       80       I
+       40       I---------------------------------------------------------------------------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   1                                                                                                   
+ *10**- 1 100   5                                                                                                   
+           10   2311121112111111111111111111111111111111                                                            
+            1.  779790999087766865455323123234434333310087676555545556556654455555554434443222111 1 1111111222222222
+            0   8244680632503823619664823327042865836732138059252650801510397305343260831248605619090372537354444688
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2382E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .5590E+03
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .1118E+03      * R . M . S =  .2012E+03
+1ISAJET: JDAHEP(2,)                                                              
+ 
+ HBOOK     ID =        58                                        DATE  04/12/95              NO =    42
+ 
+     1560       -
+     1520       I
+     1480       I
+     1440       I
+     1400       I
+     1360       I
+     1320       I
+     1280       I
+     1240       I
+     1200       I
+     1160       I
+     1120       I
+     1080       I
+     1040       I
+     1000       I
+      960       I
+      920       I
+      880       I
+      840       I
+      800       I
+      760       I
+      720       I
+      680       I
+      640       I
+      600       I
+      560       I
+      520       I
+      480       I
+      440       I
+      400       I
+      360       I
+      320       I
+      280       I
+      240       I
+      200       I
+      160       I
+      120       I
+       80       I
+       40       I---------------------------------------------------------------------------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000   1                                                                                                   
+ *10**- 1 100   5                                                                                                   
+           10   2311122122111111111111111111111111111111                                                            
+            1.  7677810900867667744554231131344353333200877666555555565556545555555544344432221111 11111111222222232
+            0   7040910201993839788860266898442716714322052960123021903490372103603580821079525510910263455264345408
+ 
+ LOW-EDGE 100             111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+           10    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+            1.   000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2381E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .5610E+03
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .1122E+03      * R . M . S =  .2014E+03
+1ISAJET: PHEP(1,)                                                                
+ 
+ HBOOK     ID =        61                                        DATE  04/12/95              NO =    43
+ 
+     1200                                                        --
+     1160                                                        II
+     1120                                                        II
+     1080                                                        II
+     1040                                                        II
+     1000                                                        II
+      960                                                        II
+      920                                                        II
+      880                                                        II
+      840                                                        II
+      800                                                        II
+      760                                                        II
+      720                                                        II
+      680                                                        II
+      640                                                        II
+      600                                                        II
+      560                                                        II
+      520                                                        II
+      480                                                        II
+      440                                                        II
+      400                                                        II
+      360                                                        II
+      320                                                        II
+      280                                                        II
+      240                                                        II
+      200                                                        II
+      160                                                        II
+      120                                                        II
+       80                                                        II
+       40                   - - --   --       -   ---------------II----------------    ---  ----    --   -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    11                                                 
+ *10**- 1 100                                                    11                                                 
+           10                                                   1681                                                
+            1.                                          1 1232661966734121                                          
+            0   0000000000001010220005200000002000344353083017381580725860595732651000013100111200001100010000000000
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+           10   09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .3303E-01      * R . M . S =  .1434E+02
+1ISAJET: PHEP(2,)                                                                
+ 
+ HBOOK     ID =        62                                        DATE  04/12/95              NO =    44
+ 
+     1240                                                        -
+     1200                                                        I
+     1160                                                        I-
+     1120                                                        II
+     1080                                                        II
+     1040                                                        II
+     1000                                                        II
+      960                                                        II
+      920                                                        II
+      880                                                        II
+      840                                                        II
+      800                                                        II
+      760                                                        II
+      720                                                        II
+      680                                                        II
+      640                                                        II
+      600                                                        II
+      560                                                        II
+      520                                                        II
+      480                                                        II
+      440                                                        II
+      400                                                        II
+      360                                                        II
+      320                                                        II
+      280                                                        II
+      240                                                        II
+      200                                                        II
+      160                                                        II
+      120                                                        II
+       80                                                        II
+       40         -  --  ---  --- -- --- -  ---- ----------------II-------------- ------- --- ---  -    --  --   ---
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    11                                                 
+ *10**- 1 100                                                    21                                                 
+           10                                                   1051                                                
+            1.                                            1123464190544311                                          
+            0   0010011001120012203103110200232202523663241250909138014302374454203714241041104210010000110011000111
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+           10   09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+02      * MEAN VALUE   = -.6092E-01      * R . M . S =  .1880E+02
+1ISAJET: PHEP(3,)                                                                
+ 
+ HBOOK     ID =        63                                        DATE  04/12/95              NO =    45
+ 
+     9750                                                        -
+     9500                                                        I
+     9250                                                        I
+     9000                                                        I-
+     8750                                                        II
+     8500                                                        II
+     8250                                                        II
+     8000                                                        II
+     7750                                                        II
+     7500                                                        II
+     7250                                                        II
+     7000                                                        II
+     6750                                                        II
+     6500                                                        II
+     6250                                                        II
+     6000                                                        II
+     5750                                                        II
+     5500                                                        II
+     5250                                                        II
+     5000                                                        II
+     4750                                                        II
+     4500                                                        II
+     4250                                                        II
+     4000                                                        II
+     3750                                                        II
+     3500                                                        II
+     3250                                                        II
+     3000                                                        II
+     2750                                                        II
+     2500                                                        II
+     2250                                                        II
+     2000                                                        II
+     1750                                                        II
+     1500                                                        II
+     1250                                                        II
+     1000                                                       -II-
+      750                                                       I  I
+      500                                                     --I  I-
+      250       ----------------------------------------------I     I-----------------------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                    98                                                 
+          100                                               112487973211                                            
+           10                     1   111111211222333337568817603166404095644353333222211211 11     1               
+            1.  3529336233476673567898125916178516393791956819026724755089556812548214965071633867770965341935665335
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+           10   09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2378E+05      * UNDERFLOW =  .3490E+03      * OVERFLOW =  .2450E+03
+ * BIN WID =  .1000E+02      * MEAN VALUE   = -.3639E+00      * R . M . S =  .5469E+02
+1ISAJET: PHEP(4,)                                                                
+ 
+ HBOOK     ID =        64                                        DATE  04/12/95              NO =    46
+ 
+     1850                                                         -
+     1800                                                         I
+     1750                                                         I
+     1700                                                         I
+     1650                                                         I
+     1600                                                         I
+     1550                                                         I
+     1500                                                         I
+     1450                                                         I
+     1400                                                         I
+     1350                                                         I
+     1300                                                         I
+     1250                                                         I
+     1200                                                         I
+     1150                                                         I
+     1100                                                         I
+     1050                                                         I
+     1000                                                         I
+      950                                                         I
+      900                                                         I
+      850                                                         I
+      800                                                         I
+      750                                                         I
+      700                                                         I
+      650                                                         I
+      600                                                         I
+      550                                                         I
+      500                                                         I
+      450                                                         I
+      400                                                         I
+      350                                                         I
+      300                                                         I
+      250                                                         I
+      200                                                         I-
+      150                                                         II
+      100                                                         II-
+       50                                                         I I-----------------------------------------------
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     1                                                 
+ *10**- 1 100                                                     81                                                
+           10                                                     46743211111 1                                     
+            1.                                                    426841773219176764544433322221121111111  1 1111 11
+            0   0000000000000000000000000000000000000000000000000065466691500695980513125445053375436940184472014620
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+           10   09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2377E+05      * UNDERFLOW =  .3000E+01      * OVERFLOW =  .5990E+03
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .2099E+02      * R . M . S =  .5317E+02
+1ISAJET: PHEP(5,)                                                                
+ 
+ HBOOK     ID =        65                                        DATE  04/12/95              NO =    47
+ 
+     2400                                                         -
+     2300                                                         I
+     2200                                                         I
+     2100                                                         I
+     2000                                                         I
+     1900                                                         I
+     1800                                                         I
+     1700                                                         I
+     1600                                                         I
+     1500                                                         I
+     1400                                                         I
+     1300                                                         I
+     1200                                                         I
+     1100                                                         I
+     1000                                                         I
+      900                                                         I
+      800                                                         I
+      700                                                         I
+      600                                                         I
+      500                                                         I
+      400                                                         I
+      300                                                         I
+      200                                                         I
+      100                          -  -   -- -- --  --------------I---------    -                                -
+ 
+ CHANNELS 100   0                                                                                                  1   
+           10   0        1         2         3         4         5         6         7         8         9         0   
+            1   1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890   
+ 
+ CONTENTS1000                                                     2                                                 
+ *10**- 1 100                                                     3                                                 
+           10                                                     8                                                 
+            1.                                              11147902    5 84    1                                   
+            0   0000000000000000000100100011062012002123163811923479864301080000200000000000000000000000000000000100
+ 
+ LOW-EDGE       --------------------------------------------------                                                  
+          100   54444444444333333333322222222221111111111                   1111111111222222222233333333334444444444
+           10   09876543210987654321098765432109876543210987654321 1234567890123456789012345678901234567890123456789
+            1.  00000000000000000000000000000000000000000000000000 0000000000000000000000000000000000000000000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2434E+05      * UNDERFLOW =  .6000E+01      * OVERFLOW =  .2900E+02
+ * BIN WID =  .1000E+02      * MEAN VALUE   =  .5230E+01      * R . M . S =  .1053E+02
+1ISAJET: VHEP(1,)                                                                
+ 
+ HBOOK     ID =        66                                        DATE  04/12/95              NO =    48
+ 
+     2500            -
+     2400            I
+     2300            I
+     2200            I
+     2100            I
+     2000            I
+     1900            I
+     1800            I
+     1700            I
+     1600            I
+     1500            I
+     1400            I
+     1300            I
+     1200            I
+     1100            I
+     1000            I
+      900            I
+      800            I
+      700            I
+      600            I
+      500            I
+      400            I
+      300            I
+      200            I
+      100            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        2    
+ *10**- 1 100        4    
+           10        3    
+            1.       7    
+            0   0000050000
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1ISAJET: VHEP(2,)                                                                
+ 
+ HBOOK     ID =        67                                        DATE  04/12/95              NO =    49
+ 
+     2500            -
+     2400            I
+     2300            I
+     2200            I
+     2100            I
+     2000            I
+     1900            I
+     1800            I
+     1700            I
+     1600            I
+     1500            I
+     1400            I
+     1300            I
+     1200            I
+     1100            I
+     1000            I
+      900            I
+      800            I
+      700            I
+      600            I
+      500            I
+      400            I
+      300            I
+      200            I
+      100            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        2    
+ *10**- 1 100        4    
+           10        3    
+            1.       7    
+            0   0000050000
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1ISAJET: VHEP(3,)                                                                
+ 
+ HBOOK     ID =        68                                        DATE  04/12/95              NO =    50
+ 
+     2500            -
+     2400            I
+     2300            I
+     2200            I
+     2100            I
+     2000            I
+     1900            I
+     1800            I
+     1700            I
+     1600            I
+     1500            I
+     1400            I
+     1300            I
+     1200            I
+     1100            I
+     1000            I
+      900            I
+      800            I
+      700            I
+      600            I
+      500            I
+      400            I
+      300            I
+      200            I
+      100            I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000        2    
+ *10**- 1 100        4    
+           10        3    
+            1.       7    
+            0   0000050000
+ 
+ LOW-EDGE       ------    
+            1.  1         
+            0   0864202468
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .2000E+00      * MEAN VALUE   =  .1000E+00      * R . M . S =  .0000E+00
+1ISAJET: VHEP(4,)                                                                
+ 
+ HBOOK     ID =        69                                        DATE  04/12/95              NO =    51
+ 
+     2500       -
+     2400       I
+     2300       I
+     2200       I
+     2100       I
+     2000       I
+     1900       I
+     1800       I
+     1700       I
+     1600       I
+     1500       I
+     1400       I
+     1300       I
+     1200       I
+     1100       I
+     1000       I
+      900       I
+      800       I
+      700       I
+      600       I
+      500       I
+      400       I
+      300       I
+      200       I
+      100       I
+ 
+ CHANNELS  10   0        1   
+            1   1234567890   
+ 
+ CONTENTS1000   2         
+ *10**- 1 100   4         
+           10   3         
+            1.  7         
+            0   5000000000
+ 
+ LOW-EDGE   1.   123456789
+ *10**  1   0   0000000000
+ 
+ * ENTRIES =      24375      * ALL CHANNELS =  .2438E+05      * UNDERFLOW =  .0000E+00      * OVERFLOW =  .0000E+00
+ * BIN WID =  .1000E+00      * MEAN VALUE   =  .5000E-01      * R . M . S =  .0000E+00

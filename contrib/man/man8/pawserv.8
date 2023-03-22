@@ -1,0 +1,72 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH PAWSERV 8 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+pawserv \- CERNLIB program for serving PAW histograms remotely
+.SH DESCRIPTION
+.PP
+\fBpawserv\fP is the server for distributed PAW.  It listens
+for connections on port 345.  \fBpawserv\fP is not in general run from the
+command line, but only via \fBinetd\fP(8).  
+From the PAW client side, a remote PAW session is invoked with the RLOGIN
+.I hostname
+command.  Distributed PAW is documented fully in chapter 8 of
+the PAW user's guide, available in PostScript format at this URL:
+.PP
+http://wwwinfo.cern.ch/asdoc/psdir/paw.ps.gz
+.PP
+Please note that \fBpawserv\fP receives unencrypted passwords over the network.
+It should therefore be used only within a trusted LAN.
+.SH FILES
+.RI "\[bu] " /etc/inetd.conf
+\- specifies how inetd should call pawserv
+.SH SEE ALSO
+.RB "\[bu] " paw (1)
+.br
+.RB "\[bu] " inetd (8)
+.br
+.RB "\[bu] " inetd.conf (5)
+.PP
+\fBpawserv\fP is part of the CERNLIB CSPACK package, which is documented at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH PAWSERV 8 "February 3, 2003"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+pawserv \- CERNLIB program for serving PAW histograms remotely
+.SH DESCRIPTION
+.PP
+\fBpawserv\fP is the server for distributed PAW.  It listens
+for connections on port 345.  \fBpawserv\fP is not in general run from the
+command line, but only via \fBinetd\fP(8).  
+From the PAW client side, a remote PAW session is invoked with the RLOGIN
+.I hostname
+command.  Distributed PAW is documented fully in chapter 8 of
+the PAW user's guide, available in PostScript format at this URL:
+.PP
+http://wwwinfo.cern.ch/asdoc/psdir/paw.ps.gz
+.PP
+Please note that \fBpawserv\fP receives unencrypted passwords over the network.
+It should therefore be used only within a trusted LAN.
+.SH FILES
+.RI "\[bu] " /etc/inetd.conf
+\- specifies how inetd should call pawserv
+.SH SEE ALSO
+.RB "\[bu] " paw (1)
+.br
+.RB "\[bu] " inetd (8)
+.br
+.RB "\[bu] " inetd.conf (5)
+.PP
+\fBpawserv\fP is part of the CERNLIB CSPACK package, which is documented at
+http://wwwinfo.cern.ch/asdoc/psdir/cspack.ps.gz (PostScript) or
+http://wwwinfo.cern.ch/asdoc/WWW/cspack/cspmain/cspmain.html (HTML).
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).

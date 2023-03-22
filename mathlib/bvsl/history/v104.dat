@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/21 17:19:52  mclareni
+* Initial revision
+*
+*
+* Version 1.04   920719 23.00
+C- Introduce the following patches/flags:
+C   > IPSC, MSDOS
+C

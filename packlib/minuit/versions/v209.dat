@@ -1,0 +1,10 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 14:31:32  mclareni
+* Initial revision
+*
+*
+* Version 2.09
+C     MNEXCM   fix to protect against bad input of LLIST

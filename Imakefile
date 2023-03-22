@@ -1,0 +1,33 @@
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+LIBDIRS= kernlib packlib mathlib graflib code_motif mclibs phtools pawlib paw_motif geant321
+
+#if defined(DISTRO)
+SUBDIRS= $(LIBDIRS) cfortran patchy4 patchy5  
+#else
+SUBDIRS= scripts $(LIBDIRS) cfortran patchy4 patchy5
+#endif
+
+#ifdef CERNLIB_UNIX
+#if defined(DISTRO)
+SUBDIRS:= $(SUBDIRS) scripts
+#endif
+#if defined(CERNLIB_MACOSX) || defined(CERNLIB_LINUX)
+SUBDIRS:= $(SUBDIRS)
+#else
+SUBDIRS:= $(SUBDIRS) mgr
+#endif
+#endif
+
+InstallLibSubdirs($(LIBDIRS))
+InstallSharedLibSubdirs($(LIBDIRS))
+
+INCLUDEDIRS= $(LIBDIRS) cfortran
+
+InstallIncludeSubdirs($(INCLUDEDIRS))
+
+DelegateTarget(bin/kuipc,packlib)
+
+DelegateTarget(lib/packlib,packlib)
+DelegateTarget(lib/kernlib,kernlib)

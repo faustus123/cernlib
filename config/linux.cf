@@ -1,0 +1,654 @@
+/* $Id: $
+ *
+ * $Log: linux.cf,v $
+ * Revision 1.20  2006/09/15 09:34:48  mclareni
+ * Submitted mods for gcc4/gfortran and MacOSX, corrected to work also on slc4 with gcc3.4 and 4.1
+ *
+ * Revision 1.19  2004/10/05 15:56:45  mclareni
+ * Update the Kernel levels and remove Make warnings about HasGcc.
+ *
+ * Revision 1.18  2003/06/26 13:25:35  mclareni
+ * Clean up the ifc options for ifc 7.0 on Redhat 73, adding Motif by default.
+ * Add the shift option as a comment so the default is still noshift.
+ *
+ * Revision 1.17  2002/07/08 10:27:28  mclareni
+ * Add #endif to complete new else condition.
+ *
+ * Revision 1.16  2002/07/05 14:20:37  mclareni
+ * Add compiler options for Intel IA32 ifc/icc 60 under HasIntelifc
+ *
+ * Revision 1.15  2002/04/24 16:37:41  mclareni
+ * Make OpenMotif includes in /usr/X11R6/include the default
+ *
+ * Revision 1.14  2001/09/14 10:05:01  mclareni
+ * Remove most of the old gcc compiler options. The problems on 2.4 kernels seem
+ * to be caused by -D_GNU_SOURCE.
+ *
+ * Revision 1.12  2000/08/11 14:43:40  mclareni
+ * New set of options for PGI pgf77, mostly de-optimised
+ *
+ * Revision 1.11  2000/01/14 15:44:36  mclareni
+ * Add Lesstif includes from /usr/local/include
+ *
+ * Revision 1.10  1999/05/25 08:58:14  cernsoft
+ * Remove code to build with/without Motif depending on environment variable
+ *
+ * Revision 1.9  1998/08/25 12:15:10  mclareni
+ * Add QMGLIBC flag
+ *
+ * Revision 1.8  1998/02/10 10:48:59  mclareni
+ * To compile herwig59 and mathlib tests need -fugly-complex option to allow REAL(DOUBLE COMPLEX arg)
+ *
+ * Revision 1.7  1998/01/15 14:44:01  mclareni
+ * Prevent adding 2 underscores, mainly for Comis
+ *
+ * Revision 1.6  1997/12/15 16:20:44  mclareni
+ * Changes for the Portland Group f77 compiler, inside ifdef HasPgf77
+ *
+ * Revision 1.5  1997/07/04 17:00:28  mclareni
+ * The gcc default for backslash is required for Cernlib
+ *
+ * Revision 1.4  1997/07/04 16:31:44  mclareni
+ * There is an official shift version for Linux
+ *
+ * Revision 1.3  1996/12/16 15:12:05  cernlib
+ * By default inhibit Motif on Linux; can be changed via environment
+ *
+ * Revision 1.2  1996/11/13 13:23:15  cernlib
+ * Add cernlib options for fortran etc..
+ *
+ * Revision 1.1.1.1  1995/12/20 15:26:45  cernlib
+ * X11R6 config files unmodified
+ *
+ *
+ */
+XCOMM platform:  $XConsortium: linux.cf,v 1.11 95/01/23 18:32:03 kaleb Exp $
+
+#define OSName			Linux
+#define OSVendor		/**/
+#define OSMajorVersion		2
+#define OSMinorVersion		4
+#define OSTeenyVersion		21
+
+#undef unix			/* GF. this is not needed anywhere */
+
+#ifndef UseElfFormat
+#define UseElfFormat		YES
+#endif
+#define HasGcc2ForCplusplus	YES
+#define GccUsesGas		YES
+#define UseGas			YES
+#define GnuCpp			YES
+#define HasShadowPasswd		YES
+#ifndef HasLibCrypt
+# define HasLibCrypt		YES
+#endif
+#define HasPutenv		YES
+#define HasShm			YES
+#define HasSockets		YES
+
+#define AvoidNullMakeCommand	YES
+#define StripInstalledPrograms	YES
+#define CompressAllFonts	YES
+#define Malloc0ReturnsNull	YES
+#define NeedConstPrototypes	YES
+#define NeedFunctionPrototypes	YES
+#define NeedNestedPrototypes	YES
+#define NeedVarargsPrototypes	YES
+#define NeedWidePrototypes	NO
+
+/* The following modified to match (more or less) linux.cf in XFree86 4.3.0.
+   -- Kevin McCarty
+*/
+
+#if UseElfFormat
+#ifdef MipsArchitecture
+#ifndef AsCmd
+#define AsCmd			gcc -c -x assembler-with-cpp
+#endif
+#endif /* MipsArchitecture */
+#ifndef CcCmd
+#define CcCmd			gcc -g
+#endif
+#ifndef AsCmd
+#define AsCmd			as
+#endif
+#ifndef LdCmd
+#define LdCmd			ld
+#endif
+#define AsmDefines		-D__ELF__
+#define CplusplusCmd		c++ -g
+#else /* no UseElfFormat */
+#define CcCmd			gcc -g
+#define AsCmd			as
+#define LdCmd			ld
+#define AsmDefines		-DUSE_GAS -U__ELF__
+#define CplusplusCmd		g++ -g
+#endif /* UseElfFormat */
+
+#ifndef CppCmd
+#define CppCmd			/lib/cpp
+#endif
+#define YaccCmd			bison -y
+#define LexCmd			flex -l
+#define LexLib			-lfl
+#define PreProcessCmd		CcCmd -E
+#define PostIncDir		`CcCmd --print-libgcc-file-name | sed 's/libgcc.a/include/'`
+#define LdCombineFlags		-r
+#define LinuxSourceDefines	-D_POSIX_SOURCE -D_BSD_SOURCE -D_GNU_SOURCE \
+				-DX_LOCALE
+#define XawI18nDefines		-DUSE_XWCHAR_STRING -DUSE_XMBTOWC
+#define HasWChar32		YES
+#define StandardCppDefines	-traditional StandardDefines
+#define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME -DPART_NET
+#define ExtensionOSDefines	-DXTESTEXT1
+/* #define ServerExtraDefines	-DGCCUSESGAS XFree86ServerDefines */
+#define ConnectionFlags		-DUNIXCONN -DTCPCONN
+#define InstUidFlags		-s -m 4755
+
+/* Arch-specific flags here copied from linux.cf for XFree86 4.3.0,
+   Debian patched (version 4.3.0.dfsg.1-4), plus additional
+   OptimizationLevel macro.
+
+   Additional CERNLIB-specific per-architecture flags also added.
+   --Kevin McCarty */
+
+/* Note: we are now using CERNLIB_PPC as an endianness test (which is about
+   all that the CERNLIB source uses it for); I introduced a new define
+   CERNLIB_POWERPC for the three occasions when we specifically want to
+   test for powerpc chips.
+*/
+
+#ifdef i386Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel -fno-strength-reduce
+# endif
+# define LinuxMachineDefines    -D__i386__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+#endif /* i386Architecture */
+
+#ifdef s390Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__s390__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# define CernlibMachineDefines	-DCERNLIB_PPC
+# define CERNLIB_PPC
+#endif /* s390Architecture */
+
+#ifdef s390xArchitecture
+/*#define DefaultCCOptions      -fsigned-char */
+#ifndef OptimizationLevel
+#define OptimizationLevel	-O3
+#endif
+#define OptimizedCDebugFlags    OptimizationLevel
+#define LinuxMachineDefines     -D__s390x__
+#define ServerOSDefines         XFree86ServerOSDefines -DDDXTIME -DPART_NET
+#define ServerExtraDefines      -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#define CernlibMachineDefines	-DCERNLIB_PPC -DCERNLIB_QMLXIA64
+#define CERNLIB_PPC
+#define CERNLIB_QMLXIA64
+#endif /* s390xArchitecture */
+
+#ifdef AlphaArchitecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__alpha__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64 -DJENSEN_SUPPORT
+# define CernlibMachineDefines  -DCERNLIB_QMLXIA64
+# define CERNLIB_QMLXIA64
+# ifdef UseCompaqMathLibrary
+#  define MathLibrary           -lcpml -lm
+# endif
+#endif /* AlphaArchitecture */
+
+#ifdef Arm32Architecture
+# define DefaultCCOptions       -fsigned-char
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O2
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__arm__ -D__arm32__ -U__arm -Uarm
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# if defined(__ARMEB__) || defined(Arm32ebArchitecture)
+  /* test for big-endianness */
+#  define CernlibMachineDefines	-DCERNLIB_PPC
+#  define CERNLIB_PPC
+# endif
+#endif /* Arm32Achitecture */
+
+#ifdef ia64Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O2
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__ia64__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+# define CernlibMachineDefines  -DCERNLIB_QMLXIA64
+# define CERNLIB_QMLXIA64
+#endif /* ia64Architecture */
+
+#ifdef Mc68020Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define DefaultCCOptions       -malign-int
+# define DefaultFCOptions       -malign-int -fno-automatic \
+                                -fno-second-underscore
+# define LinuxMachineDefines    -D__mc68000__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# define CernlibMachineDefines	-DCERNLIB_PPC
+# define CERNLIB_PPC
+# define CERNLIB_M68K
+/* # define PositionIndependentCplusplusFlags -fpic */
+#endif /* Mc68020Architecture */
+
+#if defined(PpcArchitecture) || defined(Ppc64Architecture)
+# define DefaultCCOptions       -fsigned-char
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__powerpc__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# ifdef Ppc64Architecture
+#  define ServerExtraDefines    -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#  define CernlibMachineDefines	-DCERNLIB_PPC -DCERNLIB_POWERPC \
+				-DCERNLIB_QMLXIA64
+#  define CERNLIB_QMLXIA64
+# else
+#  define CernlibMachineDefines	-DCERNLIB_PPC -DCERNLIB_POWERPC
+#  define ServerExtraDefines    -DGCCUSESGAS XFree86ServerDefines
+# endif
+# define CERNLIB_PPC
+# define CERNLIB_POWERPC
+#endif /* PpcArchitecture || Ppc64Architecture */
+
+#ifdef SparcArchitecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__sparc__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# define AsVISOption            -Av9a
+# ifdef Sparc64Architecture
+#  define AsOutputArchSize      64
+#  define CernlibMachineDefines -DCERNLIB_PPC -DCERNLIB_QMLXIA64
+#  define CERNLIB_QMLXIA64
+# else
+#  define AsOutputArchSize      32
+#  define CernlibMachineDefines	-DCERNLIB_PPC
+# endif
+# define CERNLIB_PPC
+#endif
+
+#ifdef MipsArchitecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O2
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__mips__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# if !defined(MipselArchitecture) /* then big-endian, i.e. mips */
+#  define CernlibMachineDefines	-DCERNLIB_PPC
+#  define CERNLIB_PPC
+# endif
+#endif
+
+#ifdef HPArchitecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# define OptimizedCDebugFlags   OptimizationLevel
+# define LinuxMachineDefines    -D__hppa__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+# define CernlibMachineDefines	-DCERNLIB_PPC
+# define CERNLIB_PPC
+#endif
+
+#ifdef SuperHArchitecture
+# ifndef SuperHArchOptFlags
+#  ifdef SuperH4Architecture
+#   define SuperHArchOptFlags   -m4
+#  elif defined(SuperH4NOFPUArchitecture)
+#   define SuperHArchOptFlags   -m4-nofpu
+#  else
+#   define SuperHArchOptFlags   -m3
+#  endif
+# endif
+# ifndef SuperHebArchitecture
+#  ifdef SuperHebArchitecture
+#   define SuperHEndianFlags    -mb
+#   define CernlibMachineDefines -DCERNLIB_PPC
+#   define CERNLIB_PPC
+#  else
+#   define SuperHEndianFlags    -ml
+#  endif
+# endif
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel SuperHArchOptFlags SuperHEndianFlags
+# endif
+# define LinuxMachineDefines    -D__sh__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines
+#endif
+
+#ifdef AMD64Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O0
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__x86_64__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+# define CernlibMachineDefines  -DCERNLIB_QMLXIA64
+# define CERNLIB_QMLXIA64
+#endif /* AMD64Architecture */
+
+#ifdef ARM64Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O3
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+# define LinuxMachineDefines    -D__aarch64__
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#endif /* ARM64Architecture */
+
+#ifndef StandardDefines
+# define StandardDefines        -Dlinux LinuxMachineDefines LinuxSourceDefines
+#endif
+
+#ifndef CernlibMachineDefines
+#define CernlibMachineDefines
+#endif
+
+#ifndef CernlibLocalDefines
+#define CernlibLocalDefines
+#endif
+
+#define CernlibDefaultDefines	-DCERNLIB_LINUX -DCERNLIB_UNIX -DCERNLIB_LNX \
+				-DCERNLIB_QMGLIBC
+
+/* Some of these man page defaults are overriden in the above OS sections */
+#ifndef ManSuffix
+# define ManSuffix	1x
+#endif
+#ifndef ManDir
+# define ManDir		$(MANSOURCEPATH)1
+#endif
+#ifndef LibManSuffix
+# define LibManSuffix	3x
+#endif
+#ifndef LibmanDir
+# define LibmanDir	$(MANSOURCEPATH)3
+#endif
+#ifndef FileManSuffix
+# define FileManSuffix	5x
+#endif
+#ifndef FileManDir
+# define FileManDir	$(MANSOURCEPATH)5
+#endif
+
+#include <lnxLib.rules>
+/* #include <xfree86.cf> */
+
+#ifdef HasPgf77
+#define f2cFortran              YES
+#define FortranCmd              pgf77
+/*
+#define FortranDoesCpp          NO
+#define FortranCppCmd           /lib/cpp -traditional -C
+*/
+#define XargsCmd                xargs
+#define FortranSaveFlags	/* */ /* Everything static !? */
+#define OptimisedFortranFlags   -g -pc 64 -tp p6
+#define DefaultFCOptions        -Msave -fpic -Kieee
+#define CernlibSystem           CernlibDefaultDefines -DCERNLIB_QFPGF77
+
+#else
+
+# ifdef HasIntelifc
+#  undef CcCmd
+#  undef DefaultCCOptions
+#  undef OptimizedCDebugFlags
+#  undef StandardDefines
+#  undef NeedFunctionPrototypes
+#  undef NeedWidePrototypes
+#  define CcCmd			icc
+#  define DefaultCCOptions
+#  define OptimizedCDebugFlags	-O
+#  define FortranDoesCpp         NO
+#  define FortranCppCmd           /usr/bin/cpp -traditional -C
+#  define FortranCmd             ifort
+#  define XargsCmd               xargs
+#  define FortranSaveFlags	-save
+#  define OptimisedFortranFlags  -O -mp1 -fp_port
+#  define NoOpFortranDebugFlags  -O0
+#  define DefaultFCOptions
+#  define CernlibSystem          CernlibDefaultDefines -DCERNLIB_INTELIFC
+#  define CERNLIB_INTELIFC
+#else
+
+# ifdef HasIntelefc
+#  undef CcCmd
+#  undef DefaultCCOptions
+#  undef OptimizedCDebugFlags
+#  undef StandardDefines
+#  undef NeedFunctionPrototypes
+#  undef NeedWidePrototypes
+#  define CcCmd			ecc
+#  define DefaultCCOptions	-KPIC
+#  define OptimizedCDebugFlags	-O
+#  define FortranDoesCpp         NO
+#  define FortranCppCmd           /lib/cpp -traditional -C
+#  define FortranCmd             efc
+#  define XargsCmd               xargs
+#  define FortranSaveFlags	-save
+#  define OptimisedFortranFlags  -O
+#  define DefaultFCOptions       -KPIC
+#  define CernlibSystem          CernlibDefaultDefines
+#  define CERNLIB_SHIFT NO
+/*
+ *  Create a Make Variable to allow building with/out Motif
+ */
+#undef MotifDependantMakeVar
+#define MotifDependantMakeVar(variable,value)                           @@\
+ifneq ($(strip $(HAVE_MOTIF)),)						@@\
+    variable=value							@@\
+endif									@@\
+
+#else
+
+# ifdef Hasgfortran
+#  undef StandardDefines
+#  undef NeedFunctionPrototypes
+#  undef NeedWidePrototypes
+
+# define FortranDoesCpp         YES
+# define f2cFortran             YES
+# define gFortran               YES
+# define FortranCmd             gfortran -g
+# define XargsCmd               xargs
+# define FortranSaveFlags       -fno-automatic
+/* Remove -fomit-frame-pointer since -O implies it and it inhibits debugging */
+
+/* define common CC and FC options */
+# define DefaultFCBaseOptions       -D_FORTIFY_SOURCE=2 -g -O0 -fno-range-check -fno-second-underscore --param=ssp-buffer-size=4 -fno-automatic -std=legacy -ffixed-line-length-72 -fno-backslash -fno-bounds-check -fcommon -fPIC
+# define DefaultCCBaseOptions       -D_FORTIFY_SOURCE=2 -g -O0 -fcommon -Wformat -Wall -trigraphs -fPIC
+
+#if  (__GNUC__ >= 10)
+# undef ArCmd
+# define ArCmd ar cq
+#endif
+
+/* define special options depending on architecture */
+#ifdef AMD64Architecture
+# define ExtraMathOpts  -mfpmath=387
+#else
+# define ExtraMathOpts
+#endif
+
+#if  (__GNUC__ >= 10)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fallow-invalid-boz -fallow-argument-mismatch -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-clash-protection -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387 -fcf-protection
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+
+#if (__GNUC__ >= 5) && (__GNUC__ < 8)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+#if (__GNUC__ >= 8) && (__GNUC__ < 10)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-clash-protection -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387 -fcf-protection
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+
+
+#if (__GNUC__ < 5)
+#ifdef AMD64Architecture
+#define ExtraFCOptions -L/usr/X11R6/lib64
+#define ExtraCCOptions -L/usr/X11R6/lib64
+#define EXTRA_LDOPTIONS -L/usr/X11R6/lib64
+#endif
+#endif
+
+/* ensure everything is defined */
+#ifndef ExtraFCOptions
+#define ExtraFCOptions
+#endif
+#ifndef ExtraCCOptions
+#define ExtraCCOptions
+#endif
+
+/* now define the default compiler options */
+# undef DefaultFCOptions
+# undef DefaultCCOptions
+# define DefaultFCOptions     DefaultFCBaseOptions ExtraMathOpts ExtraFCOptions
+# define DefaultCCOptions     DefaultCCBaseOptions ExtraMathOpts ExtraCCOptions
+
+
+# define NoOpFortranDebugFlags  -O0
+# define CernlibSystem          CernlibDefaultDefines CernlibMachineDefines \
+                                CernlibLocalDefines -DCERNLIB_GFORTRAN
+
+/* 32bit support */
+#if defined(CERNLIB_32BITCROSS)
+#undef FortranCmd
+#undef CcCmd
+#undef LdCmd
+#define CcCmd             gcc -m32 -g
+#define FortranCmd        gfortran -m32 -g
+#define LdCmd             ld -m32
+#undef CERNLIB_QMLXIA64
+#undef CernlibMachineDefines
+#define CernlibMachineDefines
+#endif
+
+# ifndef OptimizedCDebugFlags
+# define OptimizedCDebugFlags	OptimizationLevel DefaultCCOptions
+# endif
+# define OptimisedFortranFlags  OptimizedCDebugFlags /* -funroll-loops */
+
+#define CERNLIB_GFORTRAN
+
+# else    /* g77 */
+
+/* Start CERNLIB changes A.Waananen 15. Apr. 1996 */
+/*  Adapted to CERN style GF. 20-Sep-96 */
+
+/*
+#  undef DefaultCCOptions
+#  undef OptimizedCDebugFlags
+#  undef StandardDefines
+# define OptimizedCDebugFlags	-O1 -fomit-frame-pointer
+*/
+
+#ifndef DefaultCCOptions
+# define DefaultCCOptions
+#endif
+#ifndef OptimizedCDebugFlags
+# define OptimizedCDebugFlags	OptimizationLevel DefaultCCOptions
+#endif
+
+#define f2cFortran	        YES
+#define FortranCmd		g77 -g
+#define XargsCmd		xargs
+#define FortranSaveFlags	/* */ /* Everything static !? */
+#define OptimisedFortranFlags	OptimizedCDebugFlags -funroll-loops
+/* Remove -fomit-frame-pointer since -O implies it and it inhibits debugging */
+#ifndef DefaultFCOptions
+# define DefaultFCOptions	-fno-automatic -fno-second-underscore \
+				-fugly-complex
+#endif
+#define CernlibSystem	        CernlibDefaultDefines CernlibMachineDefines \
+				CernlibLocalDefines
+
+# endif
+# endif
+
+#endif
+#endif
+
+#define CERNLIB_LINUX
+#define CERNLIB_UNIX
+#define CERNLIB_LNX
+#define CERNLIB_QMGLIBC
+
+/* # define CERNLIB_SHIFT YES       uncomment this to make the shift packlib */
+
+#define X11Includes		-I/usr/X11R6/include  -I/usr/include/freetype2
+/* #define MotifIncludes           -I/usr/local/include  Cern Rh6.1 Lesstif */
+
+/*
+ *  Create a Make Variable to allow building with/out Motif
+ */
+#define MotifDependantMakeVar(variable,value) variable=value
+
+/* End  CERNLIB changes */

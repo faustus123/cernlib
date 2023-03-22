@@ -1,0 +1,266 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH CERNLIB 1 "Jan 6, 2005"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+cernlib \- print CERN library dependencies
+.SH SYNOPSIS
+.B cernlib
+.RI [ options ] " libraries"
+.SH DESCRIPTION
+.PP
+\fBcernlib\fP is a tool to list the compiler and linker options necessary
+to compile a CERNLIB program that has the given library dependencies.
+It is generally used within a command substitution, as in the following
+example:
+.PP
+gfortran \-o myprogram myprogram.F `cernlib \-G Motif pawlib`
+.PP
+This version of cernlib has been completely rewritten from the original
+script provided by CERN.  It now does recursive library dependency checking and
+removes duplicate entries.
+.PP
+Note that by default, the cernlib script assumes that the CERN libraries are
+to be linked against statically; if the environment variables $CERN or
+$CERN_ROOT are specified, it looks for the libraries only in the
+"lib" subdirectory of those locations, not any "shlib" subdirectory.
+Furthermore, the script brackets the CERN libraries with linker instructions to
+link statically.  This is done to preserve the original upstream behavior, in
+which all CERNLIB libraries exist only in static form.  For instance,
+"cernlib packlib" outputs:
+.PP
+\-Wl,\-static \-lpacklib \-lkernlib \-Wl,\-dy \-lm \-lnsl \-lcrypt \-ldl \-lg2c
+.PP
+If you want to link against ALL libraries (including CERNLIB) either
+statically or dynamically, call the cernlib script with its \-safe flag
+to omit these bracketing linker flags.
+That is: if you want to link against all libraries (not just CERNLIB)
+statically, use the \-static compiler flag and call cernlib with its \-safe
+flag:
+.PP
+gfortran \-o myprogram myprogram.F \-static `cernlib \-safe \-G Motif pawlib`
+.PP
+and if you want to link against all libraries (including the CERN libraries)
+dynamically, use the same command without the \-static compiler flag
+(the linker assumes dynamic linking by default):
+.PP
+gfortran \-o myprogram myprogram.F `cernlib \-safe \-G Motif pawlib`
+.SH OPTIONS
+.TP
+.BI "\-a " arch
+Specify a system architecture, e.g. Linux (default), AIX, HP\-UX, etc.
+.TP
+.B \-dy
+Equivalent to \-safe; for backwards compatibility.
+.TP
+.BI "\-G " driver
+Specify a graphics driver.  The available options on Linux are X11 and Motif
+(the latter option will also work when the Lesstif library is present).
+.TP
+.B \-P, \-s
+Ignored; for backwards compatibility.
+.TP
+.B \-safe
+Do not make any assumptions about whether the CERN libraries should be linked
+against dynamically or statically.  (The default behavior, if this flag is not
+used, is to link them statically.)
+.TP
+.B \-u
+Do not include architecture\-specific libraries in the output.
+.TP
+.BI "\-v " version
+Specify version of $CERN_LEVEL.  This is meaningless unless you have installed
+an upstream version of CERNLIB (i.e. not packaged by Debian); see the file
+.IR /usr/share/doc/cernlib\-base/README.Debian .
+.TP
+.B \-?, \-\-help
+Show a summary of options.
+.TP
+.B \-\-
+Tell cernlib that this marks the end of cernlib\-specific flags, and
+all following arguments are to be parsed as described in the \fBLIBRARIES\fP
+section below.  If \-\- is not given, the first word parsed as a library
+name will be the first word not starting with a hyphen "\-" that is not
+an argument to a preceding cernlib flag.
+.SH LIBRARIES
+The following library names are recognized by this version of the cernlib
+script.  These names may be used exactly as shown here, or prefixed by "\-l".
+.TP
+.B Core CERN libraries
+mathlib, packlib, kernlib
+.TP
+.B Graphics and PAW libraries
+graflib, pawlib
+.TP
+.B Monte Carlo and GEANT libraries
+cojets, eurodec, geant321, herwig59, isajet758, pdflib804, photos202, phtools
+.TP
+.B Additional Monte Carlo libraries
+(to obtain these, see /usr/share/doc/montecarlo\-base/README.Debian)
+.br
+ariadne, ariadne\-p5, fritiof, jetset, lepto, pythia5, pythia6
+.TP
+.B Aliases
+The numerals at the end may be left off most of the library names above.
+.TP
+.B Other library names
+Various other names are recognized for backwards compatibility, internal use,
+and non\-Linux architectures.  For the complete list, please see the cernlib
+script.
+.TP
+.B Other
+Any names not recognized by cernlib that start with "\-l" or with
+any character other than a hyphen ("\-") are output as \-l${name#\-l}
+(\fIi.e.\fP, are assumed to be a library).  Names starting with a hyphen for
+which the second character is not "l" are assumed to be compiler flags, and are
+output at the beginning of the line before all other output.
+.SH SEE ALSO
+.PP
+.I /usr/share/doc/cernlib\-base/README.Debian
+describes some of the changes that have been made to the CERN libraries in
+order to comply with Debian policy and the Filesystem Hierarchy Standard.
+.PP
+CERNLIB documentation for all related libraries and programs is available
+at the following URL:
+.I http://cern.ch/cernlib/
+.SH AUTHOR
+This manual page and the version of the cernlib script that it describes
+were written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  They are
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2002, 2003, 2004, 2005, 2006.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH CERNLIB 1 "Jan 6, 2005"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+cernlib \- print CERN library dependencies
+.SH SYNOPSIS
+.B cernlib
+.RI [ options ] " libraries"
+.SH DESCRIPTION
+.PP
+\fBcernlib\fP is a tool to list the compiler and linker options necessary
+to compile a CERNLIB program that has the given library dependencies.
+It is generally used within a command substitution, as in the following
+example:
+.PP
+gfortran \-o myprogram myprogram.F `cernlib \-G Motif pawlib`
+.PP
+This version of cernlib has been completely rewritten from the original
+script provided by CERN.  It now does recursive library dependency checking and
+removes duplicate entries.
+.PP
+Note that by default, the cernlib script assumes that the CERN libraries are
+to be linked against statically; if the environment variables $CERN or
+$CERN_ROOT are specified, it looks for the libraries only in the
+"lib" subdirectory of those locations, not any "shlib" subdirectory.
+Furthermore, the script brackets the CERN libraries with linker instructions to
+link statically.  This is done to preserve the original upstream behavior, in
+which all CERNLIB libraries exist only in static form.  For instance,
+"cernlib packlib" outputs:
+.PP
+\-Wl,\-static \-lpacklib \-lkernlib \-Wl,\-dy \-lm \-lnsl \-lcrypt \-ldl \-lg2c
+.PP
+If you want to link against ALL libraries (including CERNLIB) either
+statically or dynamically, call the cernlib script with its \-safe flag
+to omit these bracketing linker flags.
+That is: if you want to link against all libraries (not just CERNLIB)
+statically, use the \-static compiler flag and call cernlib with its \-safe
+flag:
+.PP
+gfortran \-o myprogram myprogram.F \-static `cernlib \-safe \-G Motif pawlib`
+.PP
+and if you want to link against all libraries (including the CERN libraries)
+dynamically, use the same command without the \-static compiler flag
+(the linker assumes dynamic linking by default):
+.PP
+gfortran \-o myprogram myprogram.F `cernlib \-safe \-G Motif pawlib`
+.SH OPTIONS
+.TP
+.BI "\-a " arch
+Specify a system architecture, e.g. Linux (default), AIX, HP\-UX, etc.
+.TP
+.B \-dy
+Equivalent to \-safe; for backwards compatibility.
+.TP
+.BI "\-G " driver
+Specify a graphics driver.  The available options on Linux are X11 and Motif
+(the latter option will also work when the Lesstif library is present).
+.TP
+.B \-P, \-s
+Ignored; for backwards compatibility.
+.TP
+.B \-safe
+Do not make any assumptions about whether the CERN libraries should be linked
+against dynamically or statically.  (The default behavior, if this flag is not
+used, is to link them statically.)
+.TP
+.B \-u
+Do not include architecture\-specific libraries in the output.
+.TP
+.BI "\-v " version
+Specify version of $CERN_LEVEL.  This is meaningless unless you have installed
+an upstream version of CERNLIB (i.e. not packaged by Debian); see the file
+.IR /usr/share/doc/cernlib\-base/README.Debian .
+.TP
+.B \-?, \-\-help
+Show a summary of options.
+.TP
+.B \-\-
+Tell cernlib that this marks the end of cernlib\-specific flags, and
+all following arguments are to be parsed as described in the \fBLIBRARIES\fP
+section below.  If \-\- is not given, the first word parsed as a library
+name will be the first word not starting with a hyphen "\-" that is not
+an argument to a preceding cernlib flag.
+.SH LIBRARIES
+The following library names are recognized by this version of the cernlib
+script.  These names may be used exactly as shown here, or prefixed by "\-l".
+.TP
+.B Core CERN libraries
+mathlib, packlib, kernlib
+.TP
+.B Graphics and PAW libraries
+graflib, pawlib
+.TP
+.B Monte Carlo and GEANT libraries
+cojets, eurodec, geant321, herwig59, isajet758, pdflib804, photos202, phtools
+.TP
+.B Additional Monte Carlo libraries
+(to obtain these, see /usr/share/doc/montecarlo\-base/README.Debian)
+.br
+ariadne, ariadne\-p5, fritiof, jetset, lepto, pythia5, pythia6
+.TP
+.B Aliases
+The numerals at the end may be left off most of the library names above.
+.TP
+.B Other library names
+Various other names are recognized for backwards compatibility, internal use,
+and non\-Linux architectures.  For the complete list, please see the cernlib
+script.
+.TP
+.B Other
+Any names not recognized by cernlib that start with "\-l" or with
+any character other than a hyphen ("\-") are output as \-l${name#\-l}
+(\fIi.e.\fP, are assumed to be a library).  Names starting with a hyphen for
+which the second character is not "l" are assumed to be compiler flags, and are
+output at the beginning of the line before all other output.
+.SH SEE ALSO
+.PP
+.I /usr/share/doc/cernlib\-base/README.Debian
+describes some of the changes that have been made to the CERN libraries in
+order to comply with Debian policy and the Filesystem Hierarchy Standard.
+.PP
+CERNLIB documentation for all related libraries and programs is available
+at the following URL:
+.I http://cern.ch/cernlib/
+.SH AUTHOR
+This manual page and the version of the cernlib script that it describes
+were written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  They are
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2002, 2003, 2004, 2005, 2006.

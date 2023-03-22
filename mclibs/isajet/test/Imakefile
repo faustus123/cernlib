@@ -1,0 +1,15 @@
+SRCS_F= isajett.F
+
+DefinePackageLibrary(NullParameter)
+
+CopyFile(isajett.input,test.input)
+
+LinkFileFromDir($(TOP)$(PACKAGETOP),isajet.dat)
+
+CernlibFortranProgramTarget(isajett,isajett.o,NullParameter,NullParameter,pdflib804 mathlib kernlib isajet)
+
+#if !defined(CERNLIB_GFORTRAN)
+TestTarget(isajett,isajet.dat,test.input)
+#else
+test::
+#endif

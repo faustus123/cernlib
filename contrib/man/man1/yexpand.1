@@ -1,0 +1,102 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH YEXPAND 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+yexpand \- tool to expand environment variables in Nypatchy cradles
+.SH SYNOPSIS
+.B yexpand
+.IR inputfile " [ " outputfile " ] "
+.SH DESCRIPTION
+.PP
+\fByexpand\fP is a very simple script to expand environment variables in
+a text file to their current values in the shell environment.
+It was written to be used with \fBnypatchy\fP cradles.  It is recommended
+you not try to use it for any other purposes (note BUGS below).
+.SH USAGE
+\fByexpand\fP takes \fIinputfile\fP as input, replaces all instances of shell
+variables (in the form $VARIABLE or ${VARIABLE}) with their current values in
+the environment, and saves the result to \fIoutputfile\fP.  Undefined variables
+are replaced with the empty string.  If \fIoutputfile\fP
+is not given, the result
+is instead saved to the current directory as a file of the same name as
+\fIinputfile\fP.  Thus an input file in the current directory will be
+overwritten.
+.SH BUGS
+This script is very simple\-minded.  Since it basically just echos its input
+file as a here\-doc, it will attempt to perform all types of shell
+substitution (command substitution, etc.) as well as variable substitution.
+Hence it is likely to fail on anything except the very simplest text files.
+.PP
+Additionally, this script creates a temporary file.  The file is created
+in the current directory, so there should not be security implications.
+However, any existing file named \fIfile\fP.yexp (where \fIfile\fP is the
+basename of \fIinputfile\fP) in the current directory will be overwritten
+and then deleted.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nypatchy "(1), "
+.BR nyshell "(1), " nysynopt "(1), " nytidy (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH YEXPAND 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+yexpand \- tool to expand environment variables in Nypatchy cradles
+.SH SYNOPSIS
+.B yexpand
+.IR inputfile " [ " outputfile " ] "
+.SH DESCRIPTION
+.PP
+\fByexpand\fP is a very simple script to expand environment variables in
+a text file to their current values in the shell environment.
+It was written to be used with \fBnypatchy\fP cradles.  It is recommended
+you not try to use it for any other purposes (note BUGS below).
+.SH USAGE
+\fByexpand\fP takes \fIinputfile\fP as input, replaces all instances of shell
+variables (in the form $VARIABLE or ${VARIABLE}) with their current values in
+the environment, and saves the result to \fIoutputfile\fP.  Undefined variables
+are replaced with the empty string.  If \fIoutputfile\fP
+is not given, the result
+is instead saved to the current directory as a file of the same name as
+\fIinputfile\fP.  Thus an input file in the current directory will be
+overwritten.
+.SH BUGS
+This script is very simple\-minded.  Since it basically just echos its input
+file as a here\-doc, it will attempt to perform all types of shell
+substitution (command substitution, etc.) as well as variable substitution.
+Hence it is likely to fail on anything except the very simplest text files.
+.PP
+Additionally, this script creates a temporary file.  The file is created
+in the current directory, so there should not be security implications.
+However, any existing file named \fIfile\fP.yexp (where \fIfile\fP is the
+basename of \fIinputfile\fP) in the current directory will be overwritten
+and then deleted.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nypatchy "(1), "
+.BR nyshell "(1), " nysynopt "(1), " nytidy (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.

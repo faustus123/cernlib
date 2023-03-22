@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/22 16:42:46  mclareni
+* Initial revision
+*
+*
+#if !defined(CERNLIB_UNIX)
+      SUBROUTINE START
+      RETURN
+      END
+#endif

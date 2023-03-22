@@ -1,0 +1,10 @@
+#
+# IRIX portion of stdhep makefile
+#
+CC=cc
+AR=ar
+F77=f77
+CFLAGS= -I../stdhep
+FFLAGS=-D IRIX -D UNIX $(INCS)
+ZFLAGS=-D IRIX -D UNIX -D HPZTST $(INCS)
+XFLAGS=-D IRIX -D UNIX -D MCFIOT $(INCS)

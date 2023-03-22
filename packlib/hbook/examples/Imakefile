@@ -1,0 +1,20 @@
+SRCS_F= hexam1.F hexam2.F hexam3.F hexam4.F hexam5.F hexam6.F \ @@\
+	hexam7.F hexam8.F 
+
+SubdirLibraryTarget(hbtlib,NullParameter)
+
+DefinePackageLibrary(hbtlib)
+
+#if defined(CERNLIB_LINUX) && defined(CERNLIB_QMLXIA64)
+#undef CernlibFortranProgramTarget
+#define CernlibFortranProgramTarget(a,b,c,d,e) \
+	CernlibFortranStaticTarget(a,b,c,d,e)
+#endif
+CernlibFortranProgramTarget(hbtest,hexam.o,$(PACKAGE_LIB),$(PACKAGE_LIB),packlib kernlib)
+
+CernlibFortranProgramTarget(hbdiff,htdiffb.o,$(PACKAGE_LIB),$(PACKAGE_LIB),mathlib packlib kernlib)
+
+CernlibFortranProgramTarget(hmerge,hmerg.o hmergin.o,$(PACKAGE_LIB),$(PACKAGE_LIB),mathlib packlib kernlib)
+
+TestTarget(hbtest,NullParameter,NullParameter)
+TestTarget(hbdiff,NullParameter,NullParameter)

@@ -1,0 +1,7 @@
+SRCS_F=	pawintm.F pawpp.F
+
+DoIncludePackage(paw)
+#include "pilot.h"
+
+SubdirLibraryTarget(NullParameter,NullParameter)
+

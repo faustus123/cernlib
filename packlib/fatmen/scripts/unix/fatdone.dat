@@ -1,0 +1,14 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/07 15:17:51  mclareni
+* Initial revision
+*
+*
+#
+#   Delete old backup files
+#
+find /fatmen/fm*/done -name '*.*' -mtime +60 -exec rm -f {} \;
+ 
+ 

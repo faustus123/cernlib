@@ -1,0 +1,13 @@
+SRCS_F= ffuser.F furead.F fustar.F main.F
+
+DefinePackageLibrary(NullParameter)
+
+#if defined(CERNLIB_LINUX) && defined(CERNLIB_QMLXIA64)
+CernlibFortranStaticTarget(ffread,$(OBJS),NullParameter,NullParameter,packlib kernlib)
+#else
+CernlibFortranProgramTarget(ffread,$(OBJS),NullParameter,NullParameter,packlib kernlib)
+#endif
+
+TestTarget(ffread,NullParameter,test.input)
+
+CopyFile(ffdata.dat,test.input)

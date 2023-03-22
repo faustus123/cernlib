@@ -1,0 +1,11 @@
+#
+# SunOS portion of stdhep makefile
+#
+CC=/opt/SUNWspro/bin/cc
+F77=f77
+AR=ar
+CFLAGS= -I../stdhep
+FFLAGS=-D SunOS -D UNIX $(INCS)
+LOCAL= -lnsl
+ZFLAGS=-D SunOS -D UNIX -D HPZTST $(INCS)
+XFLAGS=-D SunOS -D UNIX -D MCFIOT $(INCS)

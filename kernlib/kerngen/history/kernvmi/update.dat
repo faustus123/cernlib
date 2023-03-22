@@ -1,0 +1,25 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:50:47  mclareni
+* Initial revision
+*
+*
+#if !defined(CERNLIB_KERNVMI)
+
+
+              Up-date record for the Pam-file  KERNVMI
+              ----------------------------------------
+
+
+UP-DATE  1.10 :  18-July-1995
+----------------------------
+
+Replacing File   KERNVMI  1.09  940530 22.05
+
+Correct :     use the new C routines VXINVB, VXINVC from KERFOR
+
+---------------------------------------------------------------------
+
+#endif

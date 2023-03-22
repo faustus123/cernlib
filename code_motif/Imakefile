@@ -1,0 +1,34 @@
+#define IHaveCDF
+
+MotifDependantMakeVar(SRCS_CDF, kuipmcdf.cdf)
+
+MOTIF_SRCS_C=iconbox.c iconwidget.c kmbfdi.c kmbfil.c kmbmac.c		\ @@\
+	kmbmdi.c kmbrow.c kmdial.c kmfile.c kmiout.c kmpopp.c		\ @@\
+	kmumen.c kmutif.c kmutim.c kuwham.c kuxbro.c kuxcmp.c		\ @@\
+	kuxfse.c kuxgra.c kuxlis.c kuxlishlp.c kuxolt.c	kuxpab.c	\ @@\
+	kuxpal.c kuxpan.c kuxpap.c kuxsc1.c kuxscr.c kuxsel.c 		\ @@\
+	kuxxt.c mkdcmp.c mkdgra.c mkdpan.c mkmpan.c mkuip.c
+
+MotifDependantMakeVar(SRCS_C,$(MOTIF_SRCS_C))
+	
+/* Commented out since kmutil.c has been moved to packlib/kuip/code_kuip
+SRCS_C:= $(SRCS_C) kmutil.c
+*/
+
+#if defined(CERNLIB_VAXVMS)
+
+SRCS_C := $(SRCS_C) vmsqio.c
+EXTRA_DEFINES=-DCERNLIB_VMS
+
+#endif
+ 
+PACKAGE_INCLUDES := $(PACKAGE_INCLUDES) MotifIncludes X11Includes
+
+/* Top of package boilerplate to split this out as a separate library */
+
+TopOfPackage(packlib-lesstif)
+
+SubdirLibraryTarget(packlib-lesstif,NullParameter) 
+
+InstallLibrary(packlib-lesstif,$(CERN_LIBDIR))
+InstallSharedLibrary(packlib-lesstif,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))

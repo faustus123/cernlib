@@ -1,0 +1,274 @@
+XCOMM platform:  $SFO: MOSXS.cf,v 1.0 95/11/19 23:21:00 sl Exp $
+
+#define OSVendor          Apple Computer, Inc.
+#ifdef MacOSXArchitecture
+#define OSName            MacOSX
+#define OSMajorVersion    DefaultOSMajorVersion
+#define OSMinorVersion    DefaultOSMinorVersion
+#define OSTeenyVersion    0
+#endif
+
+XCOMM #define ProjectRulesFile  <MacOSX.rules>
+XCOMM #define ProjectTmplFile   <MacOSX.tmpl>
+
+#define InstKmemFlags -m 2755 -g kmem
+/* #define ConstructMFLAGS		NO */
+
+#define HasNdbm     YES
+#define SetTtyGroup YES
+#define HasBsearch  YES
+#ifdef MacOSXArchitecture
+#define HasPutenv               YES
+#define MathLibrary             /**/
+#define DBMLibrary              /**/
+#define TermcapLibrary          /**/
+#define HasBSD44Sockets         YES
+#define HAS_SNPRINTF            YES
+#endif
+
+#define NeedConstPrototypes     YES
+#define NeedVarargsPrototypes   YES
+#define NeedFunctionPrototypes  YES
+#define NeedWidePrototypes      NO
+
+#define GzipFontCompression     YES
+#define CompressAllFonts        YES
+
+#ifndef HasShm
+# define HasShm			YES
+#endif
+#ifndef BuildGlxExt
+# define BuildGlxExt 	  	YES
+# define GlxUseNSGL             YES
+#endif
+#define BuildServer             YES
+#define BuildXprint             NO
+#define BuildFonts              YES
+#define BuildDPMS               NO
+
+#define TenonServer             YES
+#define XprtServer              NO
+#define XVendorString "Tenon Intersystems Xtools"
+#define XVendorRelease 1000
+#ifndef UseRgbTxt
+#define UseRgbTxt               YES
+#endif
+
+#define BuildPexExt             NO
+
+#ifndef BuildGLXLibrary
+# define BuildGLXLibrary	YES
+#endif
+
+/* no direct graphics extension */
+#define	BuildXF86DGA	NO
+
+/* no extra tablets and weird input devices */
+#define BuildXInputExt	NO
+
+/* Build Xinerama (aka panoramiX) extension */
+#define BuildXinerama		YES
+
+/* no Display Power Management extension */
+#define	BuildDPMSExt	NO
+
+# define BuildXvExt     NO
+#ifndef OptimizationLevel
+# define OptimizationLevel -O
+#endif
+#define OptimizedCDebugFlags OptimizationLevel -g -pipe
+#define ExtraLoadFlags -L/usr/X11R6/lib -L/sw/lib -L/usr/local/Cellar/openmotif/2.3.8_1/lib -L/usr/local/lib/
+
+#define BuildExamples YES
+
+/*#define StandardDefines -DCERNLIB_LINUX -DCERNLIB_PPC -DCERNLIB_MACOSX \
+			-Dunix=unix -D__powerpc__ -D__DARWIN__ */
+#define StandardDefines -DCERNLIB_LINUX -DCERNLIB_MACOSX \
+			-Dunix=unix -D__DARWIN__ 
+/* -DX_NOT_POSIX -DX_LOCALE */
+
+#define HasVoidSignalReturn YES
+
+#ifndef DependFlags
+#define DependFlags -I/usr/include/ansi -I/usr/include/bsd -I/sw/include
+#endif
+
+#define StandardIncludes -I/sw/include
+#define InstallCmd	install	/* unlink old */
+
+/* #define ArCmd libtool -a -o */
+#define ArCmd ar -r
+
+/*
+#ifndef RanlibCmd
+#define RanlibCmd	ranlib -c -s
+#endif
+*/
+
+/* see below for ServerDefines */
+
+#define PrimaryScreenResolution 95	/* for 17 inch screen */
+
+#define ServerCDebugFlags OptimizationLevel -g -pipe
+
+/* #define HasGcc YES */
+#ifndef HasGcc
+#define HasGcc YES
+#endif
+
+#undef CcCmd
+#undef CplusplusCmd
+#ifdef MacOSXArchitecture
+#if 0
+#define CcCmd gcc-12 -arch "ppc" -no-cpp-precomp -ftree-vectorize
+#define CplusplusCmd          c++ -no-cpp-precomp -ftree-vectorize
+#else
+#define CcCmd gcc-12 -ftree-vectorize
+#define CplusplusCmd  c++ -ftree-vectorize
+#endif
+#endif
+#ifndef CcCmd
+#define CcCmd gcc-12 -g
+#endif
+
+#define CppCmd        /usr/bin/cpp
+
+#include <MacOSX.rules>
+#include <xf86.rules>
+#undef XFree86Server
+/* #define GLX_DIRECT_RENDERING */
+
+#define f2cFortran              YES
+#define FortranCmd              gfortran -g
+#define XargsCmd                xargs
+#define FortranSaveFlags        /* -fno-automatic */ /* Everything static !? */
+#define OptimisedFortranFlags	OptimizationLevel -g -funroll-loops \
+				-ftree-vectorize
+#define DefaultFCOptions        -fno-second-underscore OptimizationLevel
+
+#ifndef CernlibLocalDefines
+# define CernlibLocalDefines
+#endif
+#ifdef PpcDarwinArchitecture
+#define CernlibSystem           -DCERNLIB_LINUX -DCERNLIB_UNIX -DCERNLIB_LNX \
+				-DCERNLIB_PPC -DCERNLIB_QMGLIBC \
+				-DCERNLIB_MACOSX -DCERNLIB_GFORTRAN \
+				CernlibLocalDefines
+#else
+#define CernlibSystem           -DCERNLIB_LINUX -DCERNLIB_UNIX -DCERNLIB_LNX \
+				-DCERNLIB_QMGLIBC \
+				-DCERNLIB_MACOSX -DCERNLIB_GFORTRAN \
+				CernlibLocalDefines
+#endif
+
+
+/** Copied from Linux */
+#ifdef AMD64Architecture
+# ifndef OptimizationLevel
+#  define OptimizationLevel	-O0
+# endif
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags  OptimizationLevel
+# endif
+/*AV # define LinuxMachineDefines    -D__x86_64__*/
+# define ServerOSDefines        XFree86ServerOSDefines -DDDXTIME -DPART_NET
+# define ServerExtraDefines     -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+# define CernlibMachineDefines  -DCERNLIB_QMLXIA64
+# define CERNLIB_QMLXIA64
+#endif /* AMD64Architecture */
+/*AC copied from Linux */
+
+/* #define CERNLIB_SHIFT NO */
+#define CERNLIB_LINUX
+#define CERNLIB_UNIX
+#define CERNLIB_LNX
+#ifdef PpcDarwinArchitecture
+# define CERNLIB_PPC
+#endif
+#define CERNLIB_QMGLIBC
+#define CERNLIB_MACOSX
+#define CERNLIB_GFORTRAN
+
+#define X11Includes             -I/usr/X11R6/include -I/usr/local/include -I/usr/local/Cellar/freetype/2.12.1/include/freetype2
+
+/*
+ *  Create a Make Variable to allow building with/out Motif
+ */
+#define MotifIncludes		-I/sw/include -I/usr/local/Cellar/openmotif/2.3.8_1/include/  -I/usr/local/Cellar/openmotif/2.3.8_2/include/ 
+#undef MotifDependantMakeVar
+#define MotifDependantMakeVar(variable,value) variable=value
+/* End  CERNLIB changes */
+
+/* define common CC and FC options */
+#if  (__GNUC__ >= 10)
+# define DefaultFCBaseOptions   -fallow-invalid-boz    -D_FORTIFY_SOURCE=2 -g -O0 -fno-range-check -fno-second-underscore --param=ssp-buffer-size=4 -fno-automatic -std=legacy -ffixed-line-length-72 -fno-backslash -fno-bounds-check  -fcommon
+#endif
+#if  (__GNUC__ < 10)
+# define DefaultFCBaseOptions      -D_FORTIFY_SOURCE=2 -g -O0 -fno-range-check -fno-second-underscore --param=ssp-buffer-size=4 -fno-automatic -std=legacy -ffixed-line-length-72 -fno-backslash -fno-bounds-check  -fcommon
+#endif
+# define DefaultCCBaseOptions       -D_FORTIFY_SOURCE=2 -g -O0 -fcommon -Wformat -Wall -trigraphs
+
+/* define special options depending on architecture */
+#ifdef AMD64Architecture
+# define ExtraMathOpts  -mfpmath=387
+#else
+# define ExtraMathOpts
+#endif
+
+#if  (__GNUC__ >= 10)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fallow-invalid-boz -fallow-argument-mismatch -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-clash-protection -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387 -fcf-protection
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+
+#if (__GNUC__ >= 5) && (__GNUC__ < 8)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+#if (__GNUC__ >= 8) && (__GNUC__ < 10)
+# define ExtraFCOptions -D_FORTIFY_SOURCE=2 -no-pie -fno-align-commons -fno-aggressive-loop-optimizations -fstack-protector -finit-local-zero -fbacktrace
+# define ExtraCCOptions	-D_FORTIFY_SOURCE=2 -no-pie -Werror=format-security -fstack-protector --param=ssp-buffer-size=4 -fstack-protector-strong -fstack-clash-protection -fstack-protector -fasynchronous-unwind-tables -fexceptions -grecord-gcc-switches -mfpmath=387 -fcf-protection
+# define EXTRA_LDOPTIONS -no-pie
+#endif
+
+
+
+#if (__GNUC__ < 5)
+#ifdef AMD64Architecture
+#define ExtraFCOptions -L/usr/X11R6/lib64
+#define ExtraCCOptions -L/usr/X11R6/lib64
+#define EXTRA_LDOPTIONS -L/usr/X11R6/lib64
+#endif
+#endif
+
+/* ensure everything is defined */
+#ifndef ExtraFCOptions
+#define ExtraFCOptions
+#endif
+#ifndef ExtraCCOptions
+#define ExtraCCOptions
+#endif
+
+/* now define the default compiler options */
+# undef DefaultFCOptions
+# undef DefaultCCOptions
+# define DefaultFCOptions     DefaultFCBaseOptions ExtraMathOpts ExtraFCOptions
+# define DefaultCCOptions     DefaultCCBaseOptions ExtraMathOpts ExtraCCOptions
+
+
+# define NoOpFortranDebugFlags  -O0
+# define CernlibSystem          CernlibDefaultDefines CernlibMachineDefines \
+                                CernlibLocalDefines -DCERNLIB_GFORTRAN
+
+# ifndef OptimizedCDebugFlags
+# define OptimizedCDebugFlags	OptimizationLevel DefaultCCOptions
+# endif
+# define OptimisedFortranFlags  OptimizedCDebugFlags /* -funroll-loops */
+#define OptimisedFortranFlags DefaultFCBaseOptions
+
+#define CERNLIB_GFORTRAN
+
+

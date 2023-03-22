@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 11:40:53  mclareni
+* Initial revision
+*
+*
+* Version 2.16   930902 11.20
+C- Introduce the following patches/flags:
+C   > NEXT,LINUX
+C

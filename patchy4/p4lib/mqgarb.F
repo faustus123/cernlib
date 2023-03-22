@@ -1,0 +1,74 @@
+CDECK  ID>, MQGARB.
+      SUBROUTINE MQGARB
+
+C-    GARBAGE COLLECTOR - CONTROL ROUTINE,  MAY BE USER CALLED
+
+      COMMON /MQCMOV/NQSYSS
+      COMMON /MQCM/         NQSYSR,NQSYSL,NQLINK,LQWORG,LQWORK,LQTOL
+     +,              LQSTA,LQEND,LQFIX,NQMAX, NQRESV,NQMEM,LQADR,LQADR2
+      COMMON /MQCT/  IQTBIT,IQTVAL,LQTA,LQTB,LQTE,LQMTB,LQMTE,LQMTH
+     +,              IQPART,NQFREE
+      COMMON /QSTATE/QVERSN,NQINIT,NQSTAG(2),NQPHAS,NQERR,QDEBUG,NQDCUT
+     +,              NQNEWB,NQAFTB,NQM99,NQLOWB,NQWCUT,NQLOCK,QSTDUM
+     +,              NQAUGM(2),NQZIP(8),AQMEM(12)
+                         INTEGER QDEBUG
+      COMMON /QUNIT/ IQREAD,IQPRNT,IQPR2,IQLOG,IQPNCH,IQTTIN,IQTYPE
+     +,              IQDLUN,IQFLUN,IQHLUN,IQCLUN,  NQUSED
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+C--------------    END CDE                             -----------------  ------
+
+
+
+      IF (NQLOCK.NE.0)       GO TO 71
+   11 IQTBIT= IQDROP
+      IQTVAL= 0
+      LQTB  = LQWORG
+      LQTE  = LQEND
+      IF (NQAFTB.NE.0)  LQTE=LQFIX
+      IF (NQAFTB.GE.9)  LQTE=NQMAX
+      CALL MQTABL
+
+      IF (NQFREE.EQ.0)       GO TO 24
+      J = 3
+      IF (NQRESV.GE.0)  J=6
+      QUEST(1)   = NQFREE
+      AQMEM(J+1) = AQMEM(J+1) + 1.
+      AQMEM(J+2) = AQMEM(J+2) + QUEST(1)
+      AQMEM(J+3) =  MAX  (AQMEM(J+3),QUEST(1))
+
+      NQRESV= NQRESV + NQFREE
+      CALL MQRELC
+      CALL MQMOVE
+      IF (IQPART.NE.0)       GO TO 11
+      NQAFTB = 0
+      IF (NQRESV.LT.0)       GO TO 61
+      NQM99= 0
+      RETURN
+
+   24 IF (NQRESV.GE.0)       RETURN
+
+C---               NOT ENOUGH SPACE
+
+   61 IQUEST(1)= 0
+
+
+
+   71 IQUEST(2)= NQRESV
+      IQUEST(3) = NQLOCK
+      NQRESV= 0
+      IF (NQM99.GE.2)        GO TO 97
+      NQM99= NQM99 + 1
+      J    = 100 - NQM99
+      CALL RQTELL (J,1)
+
+C----              FATAL EXIT
+
+   97 CONTINUE
+      CALL QFATAL
+      END

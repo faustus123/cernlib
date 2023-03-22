@@ -1,0 +1,8 @@
+#
+# SunOS portion of stdhep makefile
+#
+CC=/opt/SUNWspro/bin/cc
+F77=f77
+AR=ar
+CFLG= -I/usr/openwin/include
+FFLAGS=-D SunOS -D UNIX $(INCS)

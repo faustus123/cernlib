@@ -1,0 +1,10 @@
+# SCCS ID: Makefile.solaris 1.2 7/31/95
+#
+# Makefile for nirvana utilities (Sun version)
+#
+CC=/opt/SUNWspro/bin/cc
+AR=ar
+DEBUG=-g
+CFLAGS=$(DEBUG) -Xa -I/usr/openwin/include -I/usr/dt/include -DMOTIF12
+LIBS= -L/usr/openwin/lib -L/usr/dt/lib -lm -lXm -lXt -lX11 -lgen \
+	-R /usr/openwin/lib -R /usr/dt/lib

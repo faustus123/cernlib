@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/04/01 15:01:43  mclareni
+* Initial revision
+*
+*
+  1.02    L.Roberts    92/03/16 C327 BSIR4    Relax accuracy check
+          M.Marquina   92/03/18               Set VERBOSE the default
+                                              mode for individual tests
+                                V100 RANNOR   Add tests for RN generators
+                                V101 NORRAN   Add tests for RN generators
+                                V106 RN32     using the VECDRAW routine
+                                V110 POISSN

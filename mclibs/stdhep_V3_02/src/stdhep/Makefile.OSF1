@@ -1,0 +1,8 @@
+#
+# OSF1 portion of stdhep makefile
+#
+CC=cc
+AR=ar
+F77=f77
+CFLG=
+FFLAGS=-DOSF1 -DUNIX $(INCS)

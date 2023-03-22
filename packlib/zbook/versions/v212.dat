@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/03/08 12:01:14  mclareni
+* Initial revision
+*
+*
+*  Version 2.12  840919
+C           New routine ZEPCLS
+C           Protection introduced in ZBFORM
+C

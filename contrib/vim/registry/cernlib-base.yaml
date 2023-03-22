@@ -1,0 +1,14 @@
+addon: cernlib-base
+description: "file detection and syntax highlighting for CERNLIB file types"
+files:
+  - ftdetect/kuip.vim
+  - ftdetect/kumac.vim
+  - syntax/kuip.vim
+  - syntax/kumac.vim
+addon: cernlib-base
+description: "file detection and syntax highlighting for CERNLIB file types"
+files:
+  - ftdetect/kuip.vim
+  - ftdetect/kumac.vim
+  - syntax/kuip.vim
+  - syntax/kumac.vim

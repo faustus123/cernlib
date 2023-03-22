@@ -1,0 +1,10 @@
+include_directories(../pdf)
+CLCernlibFortranProgramTarget(testpdf testpdf.F "L" pdf_static mathlib_static packlib_static kernlib_static)
+CLCernlibFortranProgramTarget(testpdg testpdg.F "L" pdf_static mathlib_static packlib_static kernlib_static)
+CLCernlibFortranProgramTarget(testgam testgam.F "L" pdf_static mathlib_static packlib_static kernlib_static)
+CLCernlibFortranProgramTarget(test_npdf test_npdf.F "L" pdf_static mathlib_static packlib_static kernlib_static)
+
+CLATestTarget(testpdf)
+CLATestTarget(testpdg)
+CLATestTarget(testgam)
+CLATestTarget(test_npdf)

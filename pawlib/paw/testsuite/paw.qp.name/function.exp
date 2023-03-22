@@ -1,0 +1,65 @@
+#
+#  function.exp  --
+#
+#  Original:  6-Sep-1995 12:28
+#
+#  Author:   Maarten Ballintijn <Maarten.Ballintijn@cern.ch>
+#
+
+proc paw_cmd { the_cmd } {
+	exp_send "$the_cmd\r"
+	expect {
+		-gl "PAW > "
+			{ }
+		timeout
+			{ error "timeout on '$the_cmd'" }
+	}
+}
+
+#
+# Switch of all debug info
+#
+paw_cmd {qp db_symtab 0}
+paw_cmd {qp db_name 0}
+paw_cmd {qp db_stack 0}
+paw_cmd {qp do_fc_dump 0}
+paw_cmd {qp exe_verbose 0}
+paw_cmd {qp dump_tree 0}
+paw_cmd {qp dump_seg 0}
+paw_cmd {qp timing 0}
+paw_cmd {qp stat_eval 1}
+
+paw_cmd {h/file 4 ~/cern/paw/tuple/tuple.hbook 0}
+
+# --------------------------------------------------------------
+#
+# Begin real tests
+#
+# --------------------------------------------------------------
+
+proc literal_test { theType o1 result} {
+	set ok 0 ;
+	set name "Literal test $theType $o1 -> $result"
+	exp_send "t/dump 10.$o1 ! 1 1\r"
+	expect {
+		-gl "$result\r"
+			{ set ok 1 ; continue -expect }
+		-gl "PAW > "
+			{
+				if { $ok } {
+					pass $name
+				} else {
+					fail $name
+				}
+			}
+		timeout	
+			{ fail "timeout on $name" }
+	}
+}
+
+literal_test	bool	.true.	.true.
+literal_test	bool	.false.	.false.
+literal_test	bool	.TRUE.	.true.
+literal_test	bool	.FALSE.	.false.
+
+paw_cmd { close 4 }

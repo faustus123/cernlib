@@ -1,0 +1,28 @@
+! Use light gray widgets instead of the hideous default blue
+KXterm*background:		gray
+KXterm*foreground:		black
+
+! and decent fonts instead of "fixed"
+KXterm*fontList:		*-helvetica-medium-r-normal*-120-*
+KXterm*XmText*fontList:		*-courier-medium-r-normal*-120-*
+
+! and make the transcript pad a reasonable size
+KXterm*outputForm.height:	200
+
+! and give the window a logical name
+KXterm*kuipIo_shell.title:	KXterm
+KXterm*kuipIo_shell.iconName:	KXterm
+! Use light gray widgets instead of the hideous default blue
+KXterm*background:		gray
+KXterm*foreground:		black
+
+! and decent fonts instead of "fixed"
+KXterm*fontList:		*-helvetica-medium-r-normal*-120-*
+KXterm*XmText*fontList:		*-courier-medium-r-normal*-120-*
+
+! and make the transcript pad a reasonable size
+KXterm*outputForm.height:	200
+
+! and give the window a logical name
+KXterm*kuipIo_shell.title:	KXterm
+KXterm*kuipIo_shell.iconName:	KXterm

@@ -1,0 +1,11 @@
+#
+# SunOS specific portion of mcfio makefile
+#
+CC=/opt/SUNWspro/bin/cc
+F77=f77
+AR=ar
+DEBUG=-g
+CFLAGS=$(DEBUG) -I/usr/openwin/include -I/opt/SUNWmotif/include -DUSE_DIRENT \
+	-DMOTIF12
+FFLAGS=-g
+

@@ -1,0 +1,25 @@
+Building the COJETS example
+---------------------------
+
+cd examples/
+gfortran -DCERNLIB_DOUBLE *.F `cernlib cojets` -o $HOME/cojets
+
+
+Running the COJETS example
+--------------------------
+
+cd $HOME
+# If you use bash or some other sh-like shell, use the following line:
+export GFORTRAN_STDIN_UNIT=1
+# If you use csh or tcsh, instead use the following line:
+setenv GFORTRAN_STDIN_UNIT 1
+./cojets < /usr/share/montecarlo-data/cojets.dat
+
+(The example presumes that you have installed the recommended montecarlo-data
+Debian package containing the cojets.dat file.)
+
+For detailed explanations, please refer to the COJETS manual shipped in the
+documentation of this Debian package.
+
+-- Kevin B. McCarty <kmccarty@debian.org>
+

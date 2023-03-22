@@ -1,0 +1,11 @@
+#
+# AIX specific portion of mcfio makefile
+#
+CC=cc
+AR=ar
+F77=xlf
+CFLAGS= -g
+FFLAGS=-g -qextname
+BIGGER_STRINGS=-Wf,-XNl6000
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system xxxx
+

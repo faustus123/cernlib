@@ -1,0 +1,13 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:50:41  mclareni
+* Initial revision
+*
+*
+* Version 1.01   930304 19.00
+C- Add NEXT        flag  (F. Dittus/University Bern)
+C- Add CONVEX32/64, MSDOS, OPENVMS flags
+C- Add SHIFT
+C

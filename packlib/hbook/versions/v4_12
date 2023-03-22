@@ -1,0 +1,15 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/01/16 17:08:10  mclareni
+* Initial revision
+*
+*
+*CMZ :  4.12/00 17/04/91  08.17.57  by  Rene Brun
+*-- Author :    Rene Brun   17/04/91
+*
+*::>          VERSION  4.12/00   910417  8.17
+*
+*       Changes in FORMAT in routine HDIFF
+*

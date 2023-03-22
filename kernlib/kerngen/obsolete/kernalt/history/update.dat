@@ -1,0 +1,23 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:50:56  mclareni
+* Initial revision
+*
+*
+ 
+ 
+              Up-date record for the Pam-file  KERNALT
+              ----------------------------------------
+ 
+ 
+Up-date  1.12 :  3-June-1993
+----------------------------
+ 
+Replacing file   KERNALT  1.11  920603 11.59
+ 
+New decks :   SIGNALF        sigvec is slightly different on Alliant
+ 
+---------------------------------------------------------------------
+ 

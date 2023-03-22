@@ -1,0 +1,16 @@
+SRCS_F = acexq.F   auxini.F  crdeco.F  depart.F  dospgo.F  flink.F    hollcv.F  ictype.F  iucomp.F  jartyp.F  kdfill.F    locseq.F  mqend.F   msbyt.F   pabend.F  popin.F   qfatal.F  qsort.F   qverif.F   setnum.F  ucopiv.F  upkbyt.F  vzero.F   ybcdex.F  yfrcex.F  yshmac.F \ @@\
+	acpeel.F  cbyt.F    creapd.F  depid.F   doupd.F   flkrak.F   icdeci.F  inchch.F  iufila.F  jbit.F    kdnextvx.F  locsq2.F  mqgarb.F  mxactd.F  paberr.F  popoff.F  qfatam.F  qsorth.F  renamef.F  setopt.F  ucopy2.F  upkch.F   xinb.F    ybinex.F  yixex.F   yshtag.F \ @@\
+	acseq.F   cckrak.F  crebuf.F  depmsg.F  douref.F  floper.F   icfila.F  iofile.F  iufind.F  jbytet.F  kdngo.F     loglv.F   mqinit.F  mxactn.F  pend.F    poprew.F  qlump.F   qsorti.F  rqtell.F   tmpro.F   ucopy.F   uset.F    xinbf.F   ycomex.F  ylisex.F  yshval.F \ @@\
+	acsort.F  ccproc.F  cright.F  doasm.F   douse.F   flpara.F   icfind.F  iofilx.F  iufnbl.F  jbyt.F    kdnrew.F    lqfind.F  mqmove.F  mxjoin.F  pilect.F  pready.F  qlumpr.F  qsorv.F   sbit0.F    toceta.F  uctoh1.F  utrans.F  xinbs.F   yedarr.F  ylispg.F  ytocex.F \ @@\
+	acxref.F  cctoup.F  csetdi.F  dodeck.F  dpexe.F   frceta.F   icfmul.F  iotype.F  iuforw.F  jbytor.F  kdstep.F    lqlocf.F  mqrelc.F  mxnew.F   pileup.F  prtitl.F  qname.F   qsorvh.F  sbit1.F    tosetu.F  uctoh.F   vblank.F  xincf.F   yedkrk.F  yserbf.F \ @@\
+	arbcd.F   cetup.F   csethi.F  domatf.F  dpexgo.F  frsetu.F   icfnbl.F  iqbcd.F   iulast.F  jedchk.F  kqlast.F    lqlong.F  mqtabl.F  mxset.F   pinit.F   qabend.F  qnamex.F  qsorvi.F  sbit.F     traceq.F  uh1toc.F  vfill.F   xoutb.F   yedmat.F  yserex.F \ @@\
+	arbin.F   cfill.F   csqmbl.F  doopt.F   dplist.F  getenvf.F  ichexi.F  iqlocf.F  iunext.F  jedtyp.F  liftbk.F    mbytet.F  msbit0.F  namefl.F  pkbyt.F   qblow.F   qpage.F   qtchid.F  sbyt.F     ublank.F  uhtoc.F   vizpri.F  xoutbf.F  yedriv.F  ysfind.F \ @@\
+	arrive.F  cleft.F   ctrans.F  dorun.F   dpmix.F   getwdf.F   icloc.F   iucola.F  iusame.F  jrsbyt.F  liftrh.F    mbytor.F  msbit1.F  nomem.F   pkchar.F  qblowx.F  qpostm.F  qtopsy.F  sbytor.F   ublow.F   uleft.F   vxinvb.F  xoutbs.F  yedtex.F  yshanl.F \ @@\
+	auxfil.F  cltou.F   cutol.F   dospec.F  dppage.F  helppr.F   icnext.F  iucomh.F  jartpx.F  kdcopy.F  lnblnk.F    mcbyt.F   msbit.F   notitl.F  pload.F   qend.F    qshunt.F  qtouch.F  setid.F    ubunch.F  uopt.F    vxinvc.F  xoutcf.F  yedxch.F  yshfex.F
+
+SRCS_C = abend.c  datime.c  fchput.c  fchtak.c  geteni.c  getwdi.c  intrac.c  ishft.c  locb.c  locf.c  renami.c  tminit.c  tmproi.c  tmread.c
+
+#if defined(CERNLIB_LINUX)
+SpecialFortranLibObjectRule(csrfun,csrfun,-O0,NullParameter)
+#endif
+SubdirLibraryTarget(NullParameter,NullParameter)

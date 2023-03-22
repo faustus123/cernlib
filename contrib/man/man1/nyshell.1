@@ -1,0 +1,164 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYSHELL 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nyshell \- tool to generate shell scripts to build nypatchy output
+.SH SYNOPSIS
+.B nyshell
+.IR "logfile options cradle" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnyshell\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, given the log file of a \fBnypatchy\fP
+run, it can create a shell script to compile all the source code files
+output by \fBnypatchy\fP.  This program is similar to \fBfcasplit\fP except
+that it takes the log file as input instead of a source file, and it
+remembers which source code files have already been compiled in previous runs.
+.SH USAGE
+\fIlogfile\fP is the name of the log file coming from \fBnypatchy\fP,
+with a default extension of ".log".  A cradle file \fIcradle\fP may be
+given to add additional setup options such as desired compilers or compiler
+flags to use.  (See the reference manual for more details.)
+\fIprint\fP is the file to which informational output should be written
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.  This program generates a shell script file named
+\fIname\fP.shfca (with \fIname\fP being the part of \fIlogfile\fP sans
+extension) that can be run to build all object files.  The file
+\fIname\fP.xqtlog "remembers" the current state.
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can be
+used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+A
+Force recompilation of all routines.
+.TP
+B
+Bypass tests based on the .xqtlog file.
+.TP
+E
+Bypass tests based on the .xqtlog file if it is empty.
+.TP
+H
+Print help information only.
+.TP
+Q
+"quick" \- Do not print the setup.
+.TP
+S
+Print the setup only (only together with H).
+.TP
+U
+"up to date" \- Check that all .o files are ready to go into a library.
+.TP
+V
+"verbose" \- Print the complete setup.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nypatchy "(1), " nymerge "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nyshell help .no" also gives some brief help on usage.
+Running the command "nyshell \- hs .no" prints the default setup (compiler
+names and options) to be used in the generated shell scripts.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYSHELL 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nyshell \- tool to generate shell scripts to build nypatchy output
+.SH SYNOPSIS
+.B nyshell
+.IR "logfile options cradle" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnyshell\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, given the log file of a \fBnypatchy\fP
+run, it can create a shell script to compile all the source code files
+output by \fBnypatchy\fP.  This program is similar to \fBfcasplit\fP except
+that it takes the log file as input instead of a source file, and it
+remembers which source code files have already been compiled in previous runs.
+.SH USAGE
+\fIlogfile\fP is the name of the log file coming from \fBnypatchy\fP,
+with a default extension of ".log".  A cradle file \fIcradle\fP may be
+given to add additional setup options such as desired compilers or compiler
+flags to use.  (See the reference manual for more details.)
+\fIprint\fP is the file to which informational output should be written
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.  This program generates a shell script file named
+\fIname\fP.shfca (with \fIname\fP being the part of \fIlogfile\fP sans
+extension) that can be run to build all object files.  The file
+\fIname\fP.xqtlog "remembers" the current state.
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can be
+used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+A
+Force recompilation of all routines.
+.TP
+B
+Bypass tests based on the .xqtlog file.
+.TP
+E
+Bypass tests based on the .xqtlog file if it is empty.
+.TP
+H
+Print help information only.
+.TP
+Q
+"quick" \- Do not print the setup.
+.TP
+S
+Print the setup only (only together with H).
+.TP
+U
+"up to date" \- Check that all .o files are ready to go into a library.
+.TP
+V
+"verbose" \- Print the complete setup.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nydiff "(1), " nyindex "(1), "
+.BR nylist "(1), " nypatchy "(1), " nymerge "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nyshell help .no" also gives some brief help on usage.
+Running the command "nyshell \- hs .no" prints the default setup (compiler
+names and options) to be used in the generated shell scripts.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.

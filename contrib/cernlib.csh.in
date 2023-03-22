@@ -1,0 +1,4 @@
+setenv CERN "==CERN=="
+setenv CERN_LEVEL "==CERN_LEVEL=="
+setenv CERN_VER "$CERN_LEVEL"
+setenv CERN_ROOT "$CERN/$CERN_LEVEL"

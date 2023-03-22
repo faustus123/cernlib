@@ -1,0 +1,86 @@
+
+/*
+ *  Special Imakefile for stdhep
+ *
+ * Only for AIX, SUN-Solaris, IRIX, OSF
+ *
+ */
+
+#if defined(CERNLIB_IBMRT) || defined(CERNLIB_SGI) || defined(CERNLIB_SOLARIS) || defined(CERNLIB_QMVAOS)
+
+LDIR=$(TOP)$(CURRENT_DIR)
+
+/* a helper rules, used here only */
+#define StdHepLib(lib,dir)						@@\
+LibraryTargetName(lib): dir/LibraryTargetName(lib)			@@\
+	$(LN) $< $@							@@\
+									@@\
+.PHONY: FORCE								@@\
+									@@\
+dir/LibraryTargetName(lib): FORCE		 			@@\
+	$(MAKE) -C dir UNAME=$(UNAME) LUND_DIR=$(LUND_DIR) \		@@\
+		ISAJET_DIR=$(ISAJET_DIR) HERWIG_DIR=$(HERWIG_DIR) \	@@\
+		$(@F)
+
+#define StdHepExe(exe,dir)						@@\
+exe:: dir/exe								@@\
+	$(LN) $< $@							@@\
+									@@\
+.PHONY: FORCE								@@\
+									@@\
+dir/exe: FORCE					 			@@\
+	$(MAKE) -C dir UNAME=$(UNAME) LIB=$(TOP)$(CURRENT_DIR) $(@F)
+
+FORCE:	Imakefile
+	[ ! -d src ] && mkdir src || true
+	-lndir $(<D)/src src
+	[ ! -d stdhep ] && mkdir stdhep || true
+	-lndir $(<D)/stdhep stdhep
+
+
+UNAME=$(shell uname)
+/* Modify these, if you have the include files elsewhere */
+LUND_DIR=$(CVSCOSRC)/mclibs/jetset
+ISAJET_DIR=$(CVSCOSRC)/mclibs/isajet
+HERWIG_DIR=$(CVSCOSRC)/mclibs/herwig58
+
+
+InstallLibrary(stdhep,$(CERN_LIBDIR))
+InstallLibrary(stdhepC,$(CERN_LIBDIR))
+InstallLibrary(PhaseStdHep,$(CERN_LIBDIR))
+InstallLibrary(Fmcfio,$(CERN_LIBDIR))
+InstallLibrary(FmcfioRbio,$(CERN_LIBDIR))
+InstallProgram(stdrepair,$(CERN_BINDIR))
+
+Phase:: libSpin.a libNUtil.a
+
+InstallProgram(Phase,$(CERN_BINDIR))
+InstallProgram(Space,$(CERN_BINDIR))
+
+StdHepLib(stdhep,src/stdhep)
+StdHepLib(stdhepC,src/stdhep)
+StdHepExe(stdrepair,src/stdhep)
+
+StdHepLib(PhaseStdHep,src/display)
+StdHepLib(Spin,src/display/spin)
+StdHepLib(NUtil,src/display/util)
+StdHepExe(Phase,src/display)
+StdHepExe(Space,src/display)
+
+StdHepLib(Fmcfio,src/mcfio)
+StdHepLib(FmcfioRbio,src/mcfio)
+
+
+#else
+
+install.lib::
+install.bin::
+	
+
+#endif
+
+#define IHaveSubdirs
+
+SUBDIRS=stdhep
+
+InstallIncludeSubdirs(stdhep)

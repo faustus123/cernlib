@@ -1,0 +1,120 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYDIFF 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nydiff \- tool to compare two versions of a specialized\-format patch
+.SH SYNOPSIS
+.B nydiff
+.IR "oldpam newpam name options" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnydiff\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, it compares two different versions
+of the same PAM file and generates a "correction patch" that can be used
+by \fBnypatchy\fP to update the older version to the newer version.
+.SH USAGE
+The parameter \fIoldpam\fP is the name of the older version of the PAM file
+(a default extension of ".car" is assumed), \fInewpam\fP is the name of
+the newer version, \fIprint\fP is the output file to write to
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.  The parameter \fIname\fP is the name to be
+used for the correction file to be generated (the specific filename will be
+\fIname\fP.ucra for a correction patch to be used by Nypatchy).
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can
+be used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+A
+"anyway" \- Bypass the first sanity check on sufficient matching.
+.TP
+F
+"force" \- Bypass the second sanity check on sufficient matching.
+.TP
+H
+Print help information only.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nypatchy "(1), " nyshell "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nydiff help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.
+.\"                                      Hey, EMACS: -*- nroff -*-
+.TH NYDIFF 1 "Mar 12, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.SH NAME
+nydiff \- tool to compare two versions of a specialized\-format patch
+.SH SYNOPSIS
+.B nydiff
+.IR "oldpam newpam name options" " [ " print " ] [ .go ]"
+.SH DESCRIPTION
+.PP
+\fBnydiff\fP is a tool in the Nypatchy suite of programs
+for working with Patchy Master Files (PAM files);
+see \fBnypatchy\fP(1).  Specifically, it compares two different versions
+of the same PAM file and generates a "correction patch" that can be used
+by \fBnypatchy\fP to update the older version to the newer version.
+.SH USAGE
+The parameter \fIoldpam\fP is the name of the older version of the PAM file
+(a default extension of ".car" is assumed), \fInewpam\fP is the name of
+the newer version, \fIprint\fP is the output file to write to
+(the default is standard output if omitted), and \fIoptions\fP is a sequence
+of single\-character flags.  The parameter \fIname\fP is the name to be
+used for the correction file to be generated (the specific filename will be
+\fIname\fP.ucra for a correction patch to be used by Nypatchy).
+.PP
+The command should be ended with ".go" unless one wants to enter the
+Nypatchy interactive shell.
+.SH OPTIONS
+.PP
+Note that options should be given as a single string of characters with
+no space separation and no use of the \- character (except that it can
+be used in place of the options field if no options are desired).
+Alphabetic options are not case\-sensitive.
+.TP
+A
+"anyway" \- Bypass the first sanity check on sufficient matching.
+.TP
+F
+"force" \- Bypass the second sanity check on sufficient matching.
+.TP
+H
+Print help information only.
+.SH SEE ALSO
+.BR fcasplit "(1), " nycheck "(1), " nyindex "(1), "
+.BR nylist "(1), " nymerge "(1), " nypatchy "(1), " nyshell "(1), "
+.BR nysynopt "(1), " nytidy "(1), " yexpand (1)
+.PP
+The reference manual for the Nypatchy suite of programs is available
+in compressed PostScript format at the following URL:
+.br
+.I http://wwwasdoc.web.cern.ch/wwwasdoc/psdir/p5refman.ps.gz
+.PP
+Running the command "nydiff help .no" also gives some brief help on usage.
+.SH AUTHOR
+This manual page was written by Kevin McCarty <kmccarty@debian.org>
+for the Debian GNU/Linux system (but may be used by others).  It is
+licensed under the GNU General Public License, version 2 or later (at your
+choice).
+.SH COPYRIGHT
+Copyright (C) Kevin B. McCarty, 2008.

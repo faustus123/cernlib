@@ -1,0 +1,22 @@
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+AllTarget(lepto651)
+
+export LIB_SONAME := 3
+
+SUBDIRS= code test
+
+TopOfPackage(lepto651)
+
+MakeSubdirs($(SUBDIRS))
+
+SubdirLibraryTarget(lepto651,code)
+
+InstallLibrary(lepto651,$(CERN_LIBDIR))
+InstallSharedLibrary(lepto651,$(LIB_SONAME).$(CERN_LEVEL),$(CERN_SHLIBDIR))
+
+TestSubdirs(test)
+
+install.include:

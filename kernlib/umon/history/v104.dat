@@ -1,0 +1,12 @@
+*
+* $Id$
+*
+* $Log$
+* Revision 1.1  1996/02/15 17:47:32  mclareni
+* Initial revision
+*
+*
+*  Version 1.04  930506 11.00
+C- Additions/changes
+C  > P=UMONFTN ,D=UMLOG   Correct activation for MVS (H.Keller/Desy)
+C

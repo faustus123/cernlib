@@ -1,0 +1,10 @@
+#
+# OSF1 portion of stdhep makefile
+#
+CC=cc
+AR=ar
+F77=f77
+CFLAGS= -I../stdhep
+FFLAGS=-D OSF1 -D UNIX $(INCS)
+ZFLAGS=-D OSF1 -D UNIX -D HPZTST $(INCS)
+XFLAGS=-D OSF1 -D UNIX -D MCFIOT $(INCS)

@@ -1,0 +1,13 @@
+# SCCS ID: Makefile.hp 1.2 3/1/94
+#
+# Makefile for nirvana utilities (HP version)
+#
+AR=ar
+CC=cc
+CFLAGS=$(DEBUG) -Aa -I/usr/include/X11R5 -I/usr/include/Motif1.2 \
+	-D_HPUX_SOURCE -DMOTIF12 -DFUNCPROTO -DXTFUNCPROTO
+LIBS= -L /usr/lib/X11R5 -L /usr/lib/Motif1.2 -lm -lXm -lXt -lX11
+MAKEDEPEND=xxxx Use nmakedepend on ultrix system
+SCCS=xxxx Use sccs on ultrix system
+
+include Makefile.common

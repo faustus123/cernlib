@@ -1,0 +1,13 @@
+/* $Id$
+ *
+ * $Log$
+ * Revision 1.1  1995/12/20 15:26:41  cernlib
+ * Initial revision
+ *
+ *
+ */
+#define CernlibLocalDefines -DCERNLIB_VERBOSE -DCERNLIB_QGETCWD
+#define InstPgmFlags -s
+#define Hasgfortran YES
+#define CERNLIB_2022 YES
+#define CERNLIB_2022 yes

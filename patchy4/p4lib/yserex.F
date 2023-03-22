@@ -1,0 +1,454 @@
+CDECK  ID>, YSEREX.
+      SUBROUTINE YSEREX
+
+C-    YSEARCH, SEARCH COMPACT PAM-FILE FOR SPECIFIED TEXT-STRINGS
+
+      COMMON /QBCD/  IQNUM2(11),IQLETT(26),IQNUM(10),IQPLUS
+     +,              IQMINS,IQSTAR,IQSLAS,IQOPEN,IQCLOS,IQDOLL,IQEQU
+     +,              IQBLAN,IQCOMA,IQDOT,IQAPO,  IQCROS
+      PARAMETER      (IQBITW=32, IQBITC=8, IQCHAW=4)
+      COMMON /QMACH/ NQBITW,NQCHAW,NQLNOR,NQLMAX,NQLPTH,NQRMAX,QLPCT
+     +,              NQOCT(3),NQHEX(3),NQOCTD(3)
+      COMMON /QUNIT/ IQREAD,IQPRNT,IQPR2,IQLOG,IQPNCH,IQTTIN,IQTYPE
+     +,              IQDLUN,IQFLUN,IQHLUN,IQCLUN,  NQUSED
+      COMMON /ARRCOM/LUNPAM,NCHKD,NWKD,NCARDP,NAREOF,NSKIPR,KDHOLD(20)
+     +,              NTRUNC,IPROMU,IPROMI
+      COMMON /CCPARA/NCHCCD,NCHCCT,KARDCC(84),   JCCTYP,JCCPRE,JCCEND
+     +,              MCCPAR(120),NCCPAR,MXCCIF,JCCIFV,JCCBAD,JCCWK(4)
+     +,              JCCPP,JCCPD,JCCPZ,JCCPT,JCCPIF,JCCPC,JCCPN
+     +,              NCCPP,NCCPD,NCCPZ,NCCPT,NCCPIF,NCCPC,NCCPN
+      COMMON /CCPARU/MCCTOU,JCCLOW,JCCTPX
+      COMMON /CCTEXT/NCCVEC,MCCVEC(28),MCCSW(29),NCCDFI,MCCDF(24)
+      COMMON /CCTYPE/MCCQUI,MCCPAM,MCCTIT,MCCPAT,MCCDEC,MCCDEF,MCCEOD
+     +,              MCCASM,MCCOPT,MCCUSE
+      COMMON /DPLINE/LTK,NWTK, KIMAPR(3), KIMA(20), KIMAPS(9)
+      COMMON /IOFCOM/IOTALL,IOTOFF,IOTON,IOSPEC,IOPARF(5),IOMODE(12)
+      COMMON /LUNSLN/NSTRM,NBUFCI,LUNVL(3),LUNVN(9),NOPTVL(4),NCHCH(6)
+      PARAMETER      (IQBDRO=25, IQBMAR=26, IQBCRI=27, IQBSYS=31)
+      COMMON /QBITS/ IQDROP,IQMARK,IQCRIT,IQZIM,IQZIP,IQSYS
+                         DIMENSION    IQUEST(30)
+                         DIMENSION                 LQ(99), IQ(99), Q(99)
+                         EQUIVALENCE (QUEST,IQUEST),    (LQUSER,LQ,IQ,Q)
+      COMMON //      QUEST(30),LQUSER(7),LQMAIN,LQSYS(24),LQPRIV(7)
+     +,              LQ1,LQ2,LQ3,LQ4,LQ5,LQ6,LQ7,LQSV,LQAN,LQDW,LQUP
+     +, KADRV(14),LADRV(11),LCCIX,LBUF,LLAST
+     +, NVOPER(6),MOPTIO(31),JANSW,JCARD,NDECKR,NVUSEX(20)
+     +, NVINC(6),NVUTY(17),IDEOF(9),NVPROX(6),LOGLVG,LOGLEV,NVWARX(6)
+     +, NVOLDQ(4),MVOLD1,MVOLDN,  NVOLD(7),NRTOLD,NROLD,MAXEOF
+     +, IDOLDV(8),JPDOLD,JOLD, NVARRI(9),LARX,LARXE,LINBIN, NVCCP(10)
+     +, NVNEW(7),NRTNEW,NRNEW,LLASTN, IDNEWV(8),JPDNEW,NDKNEW
+     +, NVNEWL(3),NCDECK,JNEW,MODEPR,  MWK(80),MWKX(80)
+     +,    LASTEX, MCONTI
+     +,    NINDX,NTOTCC,NCHOVF,NSPLIT,LUNSCR, LIMITF,MINSER
+      DIMENSION      IDD(2),             IDP(2),             IDF(2)
+      EQUIVALENCE
+     +       (IDD(1),IDOLDV(1)), (IDP(1),IDOLDV(3)), (IDF(1),IDOLDV(5))
+C--------------    END CDE                             -----------------  ------
+      DIMENSION    MPR(30)
+      EQUIVALENCE (LINDX,LQMAIN), (LUNEW,NVNEW(1)), (MPR(1),MWK(1))
+
+
+C---  INDX-BANK    INDEX TO ALL FIRST LETTERS
+
+C-                         - J  CHAIN OF TEXT-BANKS, THIS LETTER
+C-                 LINDX   + 0  (STATUS)
+C-                         + J  FIRST LETTER OF STRING
+
+
+C---  TEXT-BANK    DESCRIBES 1 STRING TO BE SEARCHED
+
+C-                         - 3  IF CONDITION-BANK : NEXT SUCH
+C-                         - 2  ATTACHED CONDITION BANK
+C-                         - 1  NEXT TEXT-BANK WITH SAME START LETTER
+C-                 LTEXT   + 0  (STATUS)
+C-                         + 1  NCHREP  +VE LENGTH REPLACEMENT STRING
+C-                                        0 REPORT, BUT NO REPLACEMENT
+C-                                       -N SPLIT-OUTPUT STREAM N
+C-                                     -255 BY-PASS
+C-                                     -511 CONDITION-BANK
+C-                         + 2  NCHSER-1, SEARCH STRING HAS NCHSER CHAR.
+C-                         + 3  NCHSKI, SKIP CHAR. AFTER SEARCH-STRING
+C-                         + 4  NFIX +VE: FIXED POSITION STRING
+C-                         + 5  JCARD OF LAST SATISFACTION, IF CONDITIO.
+C-                         + 6  SEARCH-STRING WITHOUT FIRST CHAR.
+C-                                      FORMAT  A1
+C-                 + NCHSER +5  REPLACEMENT-STRING (IF ANY)
+C-                              COMPACT FORMAT  ( A10 ON CDC )
+
+C---  SPLI-BANK    LINEAR CHAIN OF POINTERS TO ALL SPLIT-OUTPUT STRINGS
+
+C-                         - 2  POINTER TO TEXT-BANK
+C-                         - 1  NEXT SPLI-BANK
+C-                 LSPLI   + 0  (STATUS)
+C-                         + 1  FIRST LETTER OF STRING
+
+
+C-    LQMAIN       HOLD  INDX-BANK
+C-    LQUSER(7)    STRING CONDITION TEXT-BANKS VIA LINK 3
+C-    LQUSER(6)    HOLD LINEAR SPLI-STRUCTURE
+
+
+      DIMENSION    MMINDX(4), MMTEXT(4), MMSPLI(4), NNREPL(6)
+      DATA  MMINDX /4HINDX,60,0,60/
+      DATA  MMTEXT /4HTEXT, 2,1,2H**/
+      DATA  MMSPLI /4HSPLI, 2,1,1/
+      DATA  NNREPL /1H+,1H-,1H*,1H&,1H!,1H? /
+      DATA  NCHSKI /0/,  NCHFL /10/,  NCFULL /80/
+      DATA  LCOND  /0/, NFIX /0/, KFIX /7/, MREPL /0/, NAPDON /0/
+      DATA  NOPERS /0/
+
+
+C------            INITIALISE
+
+      CALL LIFTBK (LINDX,0,0,MMINDX(1),0)
+      LUNSCR = LUNVN(3)
+      NSPLIT = -1
+      NINDX  = 0
+      LIMITF = 0
+      MINSER = 80
+      MCONTI = 0
+      MCCTOU = -7
+
+      MCCDF(NCCDFI+MCCPAM)= 4
+
+      LUNPAM = IQREAD
+      NCHKD  = -1
+      CALL KDNGO
+
+C------    READ DATA CARDS FOR SEARCH, BUILD SEARCH-DIRECTORY
+
+   11 CALL KDNEXT (KDHOLD(1))
+      IF (NCHKD.LT.0)        GO TO 41
+      CALL UBLOW  (KDHOLD(1),KARDCC(1),NCHKD)
+
+      JCCTYP = JARTYP (KDHOLD(1))
+      IF (JCCTYP.EQ.MCCPAM)  GO TO 14
+      IF (JCCTYP.NE.MCCOPT)  GO TO 20
+   14 WRITE (IQPRNT,9011)  (KARDCC(J),J=1,NCHKD)
+      CALL CCKRAK (KDHOLD(1))
+
+      IF (JCCBAD.NE.0)       GO TO 18
+      IF (JCCPT.EQ.0)        GO TO 15
+      CALL SETOPT
+      CALL LOGLV (MOPTIO(31),0,0)
+      LOGLVG = LOGLEV
+   15 IF (JCCTYP.NE.MCCOPT)  GO TO 40
+      NAPDON = 0
+
+
+C--                +OPTION, ACTION, N=CHAR
+
+      NPARC = MCCPAR(JCCPC+1)
+      NPARN = MCCPAR(JCCPN+1)
+      JCLR  = 1
+      IF (MOPTIO(1).EQ.0)    GO TO 151
+      J     = MIN  (6,NPARN)
+      J     = MAX  (1,J)
+      MREPL = NNREPL(J)
+      MCONTI= NPARC
+      GO TO 17
+
+C--                +OPT, IF  (,FIX, COL=N)
+
+  151 IF (MOPTIO(9).EQ.0)    GO TO 153
+      IF (MOPTIO(14).EQ.0)   GO TO 154
+  153 LCOND = 0
+      CALL SBIT0 (MOPTIO(31),14)
+      MOPTIO(14) = 0
+
+C--                +OPT, FIX, COL=N
+
+  154 IF (MOPTIO(6).EQ.0)    GO TO 156
+      JCLR = 6
+      NFIX = NPARC
+      GO TO 17
+
+C--                +OPT, BYPASS,JOIN,SPLIT, C=COL, N=NCHSKIP
+
+  156 IF (NCCPN.NE.0)  NCHSKI=NPARN
+      IF (NCCPC.EQ.0)        GO TO 19
+      N = MIN  (NPARC,81)
+      IF (N.GE.2)  NCHFL=N-1
+      IF (NCCPC.EQ.1)        GO TO 19
+      NCFULL = MIN  (MCCPAR(JCCPC+4),80)
+      NCFULL = MAX  (NCFULL,NCHFL)
+      GO TO 19
+
+   17 CALL SBIT0 (MOPTIO(31),JCLR)
+      MOPTIO(JCLR) = 0
+      GO TO 11
+
+   18 WRITE (IQPRNT,9018)
+   19 GO TO 11
+
+
+C----              PRINT SEARCH CARD WITH ASSOCIATED FLAGS
+
+   20 IF (NAPDON.NE.0)       GO TO 202
+      NAPDON = 7
+      CALL VBLANK (MWK,80)
+      DO 201  J=1,80,NCHFL
+      N = J
+  201 MWK(N) = IQAPO
+      IF (MOPTIO(19).EQ.0)  N=NCHFL+1
+      WRITE (IQPRNT,9020) (MWK(J),J=1,N)
+
+  202 CALL VBLANK (MPR(1),30)
+      CALL SETNUM (NCHSKI,IQUEST(1),MPR(2))
+      MPR(11) = IQDOT
+      MPR(17) = IQDOT
+      MPR(23) = IQDOT
+      MPR(29) = IQMINS
+      MMTEXT(2) = 2
+
+      NCHKD  = MIN  (NCHKD,NCFULL)
+      MJOIN  = MIN  (MOPTIO(10),-(NSPLIT+1))
+      NWREP  = 0
+      NCHREP = 0
+      IF (MOPTIO(9).EQ.0)    GO TO 205
+      IF (LCOND.NE.0)        GO TO 204
+      CALL UCTOH1 ('SET ACCEPT IF',MPR(9),13)
+      MMTEXT(2) = 3
+      NCHREP = -511
+      GO TO 207
+
+  203 MOPTIO(2) = 1
+      CALL SBIT1 (MOPTIO(31),2)
+      WRITE (IQPRNT,9022) NQBITW
+      GO TO 205
+
+  204 CALL UBLOW (5HIF OK,MPR(9),5)
+  205 IF (MOPTIO(2).EQ.0)    GO TO 206
+      CALL UBLOW  (6HBYPASS,MPR(16),6)
+      NCHREP = -255
+      GO TO 207
+
+  206 IF (NFIX.EQ.0)  LIMITF=80
+      IF (MOPTIO(19).EQ.0)   GO TO 207
+      N = - (NSPLIT+MJOIN)
+      IF (N.GT.NQBITW)       GO TO 203
+      CALL SETNUM (N,IQUEST(1),MPR(17))
+      CALL UBLOW  (5HSPLIT,MPR(15),5)
+
+  207 IF (NFIX.EQ.0)         GO TO 209
+      CALL SETNUM (NFIX,IQUEST(1),MPR(23))
+      CALL UBLOW  (3HFIX,MPR(23),3)
+      LIMITF = MAX  (LIMITF,NFIX)
+  209 WRITE (IQPRNT,9021) MPR,(KARDCC(J),J=1,NCHKD)
+
+
+C----              ANALYSE SEARCH-CARD
+
+C--                DISCARD TRAILING BLANKS IN BOTH FIELDS
+
+   22 J = MIN  (NCHFL,NCHKD)
+   23 IF (KARDCC(J).NE.IQBLAN)  GO TO 24
+      J = J - 1
+      IF (J.NE.0)            GO TO 23
+      GO TO 11
+
+   24 IF (KARDCC(J).EQ.IQDOLL)  J=J-1
+      NCHSER = MAX  (J,1)
+
+      IF (NCHREP.LE.-255)    GO TO 31
+      NOPERS = NOPERS + 1
+      NF2 = 0
+      IF (NCHKD.LE.NCHFL)    GO TO 28
+      J = NCHKD
+   26 IF (KARDCC(J).NE.IQBLAN)  GO TO 27
+      J = J-1
+      IF (J.NE.NCHFL)        GO TO 26
+      GO TO 28
+
+   27 IF (KARDCC(J).EQ.IQDOLL)  J=J-1
+      NF2    = J - NCHFL
+   28 NCHREP = NSPLIT + MJOIN
+      IF (MOPTIO(19).NE.0)   GO TO 31
+      NCHREP = NF2
+      IF (NCHREP.EQ.0)       GO TO 31
+      NWREP  = (NCHREP-1)/IQCHAW+1
+
+C--        CHECK FIRST LETTER IS IN INDEX
+
+   31 IFIRST = KARDCC(1)
+      IF (NINDX.EQ.0)        GO TO 33
+      J = IUCOMP (IFIRST,IQ(LINDX+1),NINDX)
+      IF (J.NE.0)            GO TO 34
+   33 NINDX = NINDX + 1
+      IQ(LINDX+NINDX) = IFIRST
+      J = NINDX
+
+
+C--                CREATE TEXT-BANK,
+C--                LINKED INTO TEXT-CHAIN FOR THIS FIRST LETTER
+
+   34 K = KQLAST (LINDX-J)
+      MMTEXT(4) = 4 + NCHSER + NWREP
+      CALL LIFTBK (L,K,0,MMTEXT(1),0)
+      IQ(L-2) = LCOND
+      IQ(L+1) = NCHREP
+      IQ(L+2) = NCHSER - 1
+      IQ(L+3) = NCHSKI
+      IQ(L+4) = NFIX
+      CALL UCOPY (KARDCC(2),IQ(L+6),NCHSER-1)
+      IF (NCHREP.LE.-255)    GO TO 351
+      MINSER = MIN  (MINSER,NCHSER-1)
+      IF  (NCHREP)           36,11,35
+   35 CALL UBUNCH (KARDCC(NCHFL+1),IQ(L+NCHSER+5),NCHREP)
+      GO TO 11
+
+C--             CONDITION STRING
+
+  351 IF (NCHREP.NE.-511)    GO TO 11
+      IQ(KFIX) = L
+      IQ(L+5)  = -7
+      KFIX  = L-3
+      LCOND = L
+      NFIX  = 0
+      GO TO 11
+
+C--                SPLIT-OUTPUT STRING
+
+   36 CALL LIFTBK (LM,6,0,MMSPLI,0)
+      IQ(LM-2) = L
+      IQ(LM+1) = IFIRST
+      NSPLIT   = NSPLIT - 1  + MJOIN
+      IF (NF2.EQ.0)          GO TO 11
+      MJOIN = 1
+      NCHKD = NCHKD - NCHFL
+      CALL UCOPY (KARDCC(NCHFL+1),KARDCC(1),NCHKD)
+      GO TO 22
+
+
+C----      END OF DATA CARDS ON INPUT
+
+   40 N = MCCPAR(JCCPN+1)
+      IF (N.NE.0)  MAXEOF=N
+   41 IF (NOPERS.EQ.0)       GO TO 84
+      WRITE (IQPRNT,9011)
+      CALL AUXFIL (324,NVNEW(1),5HCARDS)
+C-                 324 =  4 CARDS, 64 OUTPUT, 256 INIT
+
+      IQ(LBUF+1) = 7
+      NVOLD(7)   = -1
+      IOTON = 256
+
+C---------         SEARCH PACKED PAM-FILE
+
+C--                READ FILE-NAME RECORD
+
+   47 IF (NVOLD(7)+1.GE.MAXEOF)   GO TO 91
+      CALL AUXFIL (0,NVOLD(1),4HPAM )
+      CALL POPIN
+      IF (NVARRI(1).EQ.4)    GO TO 90
+      CALL UCOPY (IDEOF(1),IDOLDV(1),9)
+      IDOLDV(5) = NVARRI(5)
+      IDOLDV(6) = NVARRI(6)                                             -A8M
+      NEWPAT    = NDECKR
+      WRITE (IQPRNT,9042) IDF,NDECKR
+      IF (LQUSER(6).NE.0)    CALL YSERBF
+      IF (MOPTIO(20).EQ.0)   GO TO 49
+   48 CALL POPIN
+      IF (NVARRI(3).EQ.0)    GO TO 48
+      GO TO 66
+
+   49 IF (MOPTIO(3).EQ.0)    GO TO 60
+      WRITE (LUNEW,8042)
+      NRNEW  = NRNEW + 1
+
+
+C--                READ NEXT RECORD
+
+   60 NEWDEC = 7
+      LASTEX = -7
+   61 CALL POPIN
+      LTK    = LINBIN + NVARRI(9)
+      NTOTCC = JCARD  + NVARRI(8)
+
+C--                PROCESS CURRENT RECORD
+
+      JCARD = JCARD - 1
+   62 CALL YSFIND
+      IF (NCHOVF.LT.0)       GO TO 66
+      IF (MREPL.NE.0)  WRITE (LUNEW,9061) MREPL,IDP,IDD,JCARD
+      IF (NEWPAT.EQ.0)       GO TO 63
+      WRITE (IQPRNT,9068) IDP,NEWPAT
+      NEWPAT = 0
+   63 IF (NEWDEC.EQ.0)       GO TO 64
+      NEWDEC = 0
+      WRITE (IQPRNT,9062)  NDECKR,IDD,JCARD,(KARDCC(J),J=1,NCHCCT)
+      GO TO 65
+
+   64 WRITE (IQPRNT,9063)             JCARD,(KARDCC(J),J=1,NCHCCT)
+   65 WRITE (LUNEW, 8062)                   (KARDCC(J),J=1,NCHCCT)
+      LASTEX = JCARD
+      NRNEW  = NRNEW + 1
+      IF (NCHOVF.EQ.0)       GO TO 62
+      WRITE (IQPRNT,9065) (MWK(J),J=73,NCHOVF)
+      GO TO 62
+
+C--                RECORD FINISHED, CHECK NEXT IS P/D
+
+   66 IF (NVARRI(3).EQ.0)    GO TO 61
+      L = LQUSER(7)
+   67 IF (L.EQ.0)            GO TO 68
+      IQ(L+5) = -7
+      L = IQ(L-3)
+      GO TO 67
+   68 IF (NVARRI(3).GE.3)    GO TO 47
+      CALL SETID (IDOLDV(1))
+      IF (JPDOLD.EQ.1)       GO TO 69
+      NEWPAT = NDECKR + 1
+      IF (LOGLEV.LT.1)       GO TO 69
+      WRITE (IQPRNT,9068) IDP,NEWPAT
+      NEWPAT = 0
+
+   69 IF (LQUSER(6).EQ.0)    GO TO 60
+      CALL YSERBF
+      GO TO 60
+
+
+C--                NO SEARCH CARDS
+
+   84 WRITE (IQPRNT,9084)
+      CALL PABEND
+
+C--        END OF INFORMATION ON PAM
+
+   90 CONTINUE
+   91 CALL AUXFIL (512,NVOLD(1),0)
+      CALL AUXFIL (512,NVNEW(1),0)
+
+      IF (IQ(6).EQ.0)        RETURN
+      JPDOLD = 4
+      CALL YSERBF
+      RETURN
+
+ 8042 FORMAT ('+TITLE.')
+ 8062 FORMAT (80A1)
+ 9011 FORMAT (1X/1X,80A1)
+ 9018 FORMAT (1X/1X,40(1H*),'  FAULTY CONTROL CARD IGNORED.')
+ 9020 FORMAT (7H NCHSKI,23X,81A1)
+ 9021 FORMAT (110A1)
+ 9022 FORMAT (1X/' *** ONLY UP TO',I4,
+     F' SPLIT-OUTPUT STRINGS CAN BE HANDLED, SET BYPASS.'/1X)
+C9042 FORMAT (1X/1X,19(1H-)/1X/2H ',A8,I9)                               A8M
+C9042 FORMAT (1X/1X,19(1H-)/1X/2H ',2A6,I5)                              A6
+C9042 FORMAT (1X/1X,19(1H-)/1X/2H ',2A5,I7)                              A5
+ 9042 FORMAT (1X/1X,19(1H-)/1X/2H ',2A4,I9)                              A4
+C9061 FORMAT (A1,6HREPL, ,A8,   2H, ,A8,   1H,,I7)                       A8M
+C9061 FORMAT (A1,6HREPL, ,A6,A2,2H, ,A6,A2,1H,,I7)                       A6
+C9061 FORMAT (A1,6HREPL, ,A5,A3,2H, ,A5,A3,1H,,I7)                       A5
+ 9061 FORMAT (A1,6HREPL, ,2A4,  2H, ,2A4,  1H,,I7)                       A4
+C9062 FORMAT (13X,I6,3H D=,A8,   I6,3H - ,72A1,1H.,8A1)                  A8M
+C9062 FORMAT (13X,I6,3H D=,A6,A2,I6,3H - ,72A1,1H.,8A1)                  A6
+C9062 FORMAT (13X,I6,3H D=,A5,A3,I6,3H - ,72A1,1H.,8A1)                  A5
+ 9062 FORMAT (13X,I6,3H D=,2A4,  I6,3H - ,72A1,1H.,8A1)                  A4
+ 9063 FORMAT (30X,I6,3H - ,72A1,1H.,8A1)
+ 9065 FORMAT (29X,10HOVERFLOW ',80A1)
+C9068 FORMAT (3X,2HP=,A8,I6)                                             A8M
+C9068 FORMAT (3X,2HP=,A6,A2,I6)                                          A6
+C9068 FORMAT (3X,2HP=,A5,A3,I6)                                          A5
+ 9068 FORMAT (3X,2HP=,2A4,I6)                                            A4
+ 9084 FORMAT (1X/' *** NO REAL OPERATION REQUESTED.')
+      END

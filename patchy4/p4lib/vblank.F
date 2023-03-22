@@ -1,0 +1,14 @@
+CDECK  ID>, VBLANK.
+      SUBROUTINE VBLANK (A,N)
+C
+C CERN PROGLIB# F121    VBLANK          .VERSION KERNFOR  4.08  840613
+C ORIG. 01/07/71
+C
+      INTEGER      A(*), BLANK
+      DATA  BLANK  / 4H     /
+C
+      IF (N.LE.0)  RETURN
+      DO 9 I= 1,N
+    9 A(I)= BLANK
+      RETURN
+      END

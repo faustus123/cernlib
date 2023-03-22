@@ -1,0 +1,6 @@
+INCLUDES=	 hepevts.inc hepzbr.inc herwig.inc obuf.inc \ @@\
+	pdgtbl.inc stdcm1.inc stdcnt.inc stdhep.inc stdhep_old.inc \ @@\
+	stdlun.inc stdtbl.inc stdtmp.inc stdver.inc stdcm1.h stdcnt.h \ @@\
+	stdhep.h stdlun.h stdtmp.h stdver.h
+
+InstallIncludes($(INCLUDES),$(CERN_INCLUDEDIR),stdhep)

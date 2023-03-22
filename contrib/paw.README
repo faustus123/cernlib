@@ -1,0 +1,61 @@
+Notes on paw
+------------
+
+1) Graphics window corruption
+
+If you experience corruption of the graphics window when other windows are
+moved over top of it, turn on the BackingStore option of the X server.
+In the "Screen" section of your /etc/X11/XF86Config-4 or /etc/X11/xorg.conf
+file (whichever one exists), you should have something like:
+
+Section "Screen"
+	.
+	.
+	.
+    Option "BackingStore"
+	.
+	.
+	.
+EndSection
+
+2) Remote data files
+
+PAW can read files remotely from computers running the distributed PAW
+(pawserv) server, which is included in the cernlib-packlib package.  This is
+done from within PAW using 'rlogin' and 'rshell' commands; see the PAW
+User's Guide for details.  Please note that these commands transmit passwords
+in clear text and should be used only within a secured LAN.
+
+3) Path issues
+
+If you compile a FORTRAN script within PAW, the path to the file cannot
+be excessively long (more than 256 characters).
+
+4) Filename case issues
+
+The default behavior has been set so that PAW is case-sensitive in its 
+treatment of filenames.  If you have any old Paw scripts that do not
+treat filenames in a case-sensitive way, you may need to add the line
+
+        filecase convert
+
+to the beginning of them.
+
+5) Shared and static libs
+
+There are 2 sets of binaries installed. In one set the binaries are 
+statically linked with the cernlib (but still dynamically linked with 
+the other libraries), these are the binaries used in the default case 
+(pawX11 and paw++). 
+
+The other binaries are compiled dynamically (pawX11.dynamic and
+paw++.dynamic), therefore the pawlib used is selected by the 
+/etc/ld.so.conf or $LD_LIBRARY_PATH settings.
+
+The statically compiled one are used in the default case because 
+dynamically linked one fail on some 64 bit architectures.
+
+-- Kevin McCarty <kmccarty@debian.org>, Tue, 22 Nov 2005
+
+Adapted to the rpm package by 
+-- Dumas Patrice <dumas@centre-cired.fr>

@@ -1,0 +1,68 @@
+LNX       Cradle
+YPATCHY cradle for export ASM generation
+ 
+      C/C meaning :  ? and !  card active on the sending computer
+                     ? and *  card active on the receiving computer
+ 
++ASM, 23, 33, T=BY.
+!ASM, 33.
+!ASM, 23.
++ASM, 31.
++ASM, 24, LUN=21, R=! ./*DECK ID>, !. */
++ASM, 22, LUN=21, R=! .;DECK  ID>, !.
++ASM, 21, R=!         .CDECK  ID>, !.
+!USE, INSHELL.
+!USE, EXPLNX, D=LNXD, T=DIVERT.
++USE, UTYGEN, D=FCASPLIT, T=DIV.
+ 
++EXE.
++LIST, CRA*, T=ONLY.
++PARAM, LINES, N=110.
+ 
+----  select control options
+ 
+ 
+----  set control sequences
+ 
++KEEP, SPACEPAT.            dynamic store for YPATCHY
+     +,            ISPACE(160000),LAST
++KEEP, SPACEAUX.            dynamic store for Auxiliaries
+     +,            LOCALS(40),ISPACE(80000),LAST
++KEEP, MQINIT5.    for D=MQINIT in P=MQ
+      DATA  IMACH  /32,4,108,110,0,132,1H ,3,10,7,4,8,15,6,5,63/
+      DATA  IUNIT  /2,3,4,5,6/
+C
+C     NQLNOR = 108 normal number of lines per page
+C     NQLMAX = 110 maximum number of lines per page
+C     NQLPTH = 0   number of lines taken by the page-throw
+C
+C     IQREAD = 2   LUN for 'CARD READER'
+C     IQPRNT = 3   LUN for 'LINE PRINTER'
+C     IQTTIN = 5   LUN for TERMINAL INPUT
+C     IQTYPE = 6   LUN for TERMINAL OUTPUT
++KEEP, YLISTPP,    P=YLIST.
+      DATA  LPPAGE / 56, 62, 84, 110 /
++SELF.
+          Page-sizes in YLIST selected by options  0, 1, 2, or 3
+          will set   NQLMAX = LPPAGE(J+1)
+                     NQLNOR = NQLMAX
+                     NQLPTH = 0
+          if option given, else defaults operate
+ 
++KEEP, PAMPUBLIC.
+C-----------  Directory for Public PAM Files
+      CHARACTER    MPUBLI*(*)
+      PARAMETER   (MPUBLI = '/cern/pro/pam/')
+ 
++KEEP, QPOSTMTR.
+C     NO TRACE BACK NEEDED IN PRODUCTION
++OPT, ALL,MAPASM
+ 
+----  Standard USE selections
+ 
++USE, ALLPX*, MLNX*.         select Patchy + Hydra
++USE, MAINUIX.
++USE, *KLNX.                 select Kernlib
+ 
++PAM,11.
++QUIT.
