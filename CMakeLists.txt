@@ -34,7 +34,7 @@ endif(CMAKE_BUILD_TYPE)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules ${CMAKE_MODULE_PATH})
 
 if (APPLE)
-  set(CMAKE_VERBOSE_MAKEFILE ON)
+  # set(CMAKE_VERBOSE_MAKEFILE ON)
 endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 ###########################Options#####################################
